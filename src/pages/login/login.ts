@@ -120,7 +120,6 @@ export class LoginPage {
   login(){
 
     const actionSheet = this.actionSheetCtrl.create({
-      title: 'Modify your album',
       buttons: [
         {
           text: 'Admin',
