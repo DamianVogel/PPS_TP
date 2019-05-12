@@ -8,12 +8,12 @@
 
       <ion-item padding style="background-color: rgba(0,0,0,0.7) !important; color: white; border-radius: 10px;">
         <ion-label class="titulo" style="color: white;" fixed>Correo</ion-label>
-        <ion-input class="titulo" type="email" style="color: white;" [(ngModel)]="loginFields.nombre" name="email"></ion-input>
+        <ion-input disabled class="titulo" type="email" style="color: white;" [(ngModel)]="loginFields.nombre" name="email"></ion-input>
       </ion-item>
 
       <ion-item padding style="background-color: rgba(0,0,0,0.7) !important; color: white; border-radius: 10px;">
         <ion-label class="titulo" style="color: white;" fixed>Contraseña</ion-label>
-        <ion-input class="titulo" style="color: white;" type="password" [(ngModel)]="loginFields.clave" name="clave"></ion-input>
+        <ion-input disabled class="titulo" style="color: white;" type="password" [(ngModel)]="loginFields.clave" name="clave"></ion-input>
       </ion-item>
 
       <div padding>
@@ -29,24 +29,6 @@
   <ion-fab bottom right>
     <button ion-fab class="loginProfileButton" (click)="login()"><ion-icon name="people"></ion-icon></button>
   </ion-fab>  
-  <!--<ion-list padding margin>
-    
-    <button class="loginProfileButton" medium (click)="loginAdmin()" ion-button color="secondary" block>
-      <ion-icon name="people"></ion-icon> &nbsp; Ingresar como Admin 
-    </button>
-    
-    <button class="loginProfileButton" medium (click)="loginInvitado()" ion-button color="secondary" block>
-      <ion-icon name="people"></ion-icon> &nbsp; Ingresar como Invitado 
-    </button>
-
-    <button class="loginProfileButton" medium (click)="loginUsuario()" ion-button color="secondary" block>
-      <ion-icon name="people"></ion-icon> &nbsp; Ingresar como Usuario 
-    </button>
-
-    <button class="loginProfileButton" medium (click)="loginTester()" ion-button color="secondary" block>
-      <ion-icon name="people"></ion-icon> &nbsp; Ingresar como Tester 
-    </button>
-
-  </ion-list>-->
+  
 </ion-footer>
 </div>

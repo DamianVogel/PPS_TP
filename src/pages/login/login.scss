@@ -293,27 +293,41 @@ page-login {
 }
 
 .loginButton{
-    background-color: rgba(209, 152, 209, 0.9);
+    background: -webkit-gradient(linear, left top, right top, from(white), to(gray));
+    background: linear-gradient(to right, rgb(230,230,230), gray);
+    text-shadow: 3px 3px 3px black;
     border-radius: 20px;
+    -webkit-box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
+    box-shadow: 3px 6px 2px rgba(0, 0, 0, 0.9);
 
     &.activated {
-      background-color: rgba(163,73,164,0.9);
+      background-color:darkgray;
     }
 }
 
+.text-input[disabled] {
+  opacity: 1;
+}
+
 .loginProfileButton{
-    background-color: rgba(163,73,164,0.9) !important;
+    background: -webkit-gradient(linear, left top, right top, from(gray), to(darkgray));
+    background: linear-gradient(to right, gray, darkgray);
     border-radius: 20px !important;
+    text-shadow: 3px 3px 3px black;
+    -webkit-box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
+    box-shadow: 3px 6px 2px rgba(0, 0, 0, 0.9);
 
     &.activated {
       background-color: rgba(209, 152, 209, 0.9) !important;
     }
 }
 
-.action-sheet-group{
-    background-color: transparent !important;
+.action-sheet-md .action-sheet-group {
+  background: transparent;
 }
 
-.action-sheet-title{
-    display: none !important;
+.action-sheet-md .action-sheet-button {
+  background: gray;
+  font-size: 20px;
+  text-shadow: none;
 }
