@@ -1,4 +1,4 @@
-# The Ionic Super Starter 🎮
+# Practica profesional - Primer cuatrimestre 2019 - Restaurante - Equipo 5
 
 <img src="https://vignette.wikia.nocookie.net/vrchat-legends/images/f/ff/Teem_five.jpg/revision/latest?cb=20180527122115" width="400" />
 
