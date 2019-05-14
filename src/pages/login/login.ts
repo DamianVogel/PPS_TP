@@ -8,6 +8,7 @@ import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/fires
 
 import { User } from '../../providers';
 import { SpinnerPage } from "../../pages/pages-spinner/pages-spinner";
+import { MainPage} from "../index";
 
 @IonicPage()
 @Component({
@@ -24,8 +25,8 @@ export class LoginPage {
   // The account fields for the login form.
   // If you're using the username field with or without email, make
   // sure to add it to the type
-  loginFields: { nombre: string, clave: string } = {
-    nombre: '',
+  loginFields: { email: string, clave: string } = {
+    email: '',
     clave: ''
   };
 
@@ -52,7 +53,7 @@ export class LoginPage {
   // Attempt to login in through our User service
   doLogin() {
 
-    if(this.loginFields.nombre == "" || this.loginFields.clave == ""){
+    if(this.loginFields.email == "" || this.loginFields.clave == ""){
 
       let toast = this.toastCtrl.create({
         message: "Debe ingresar todos los datos.",
@@ -65,7 +66,7 @@ export class LoginPage {
 
       let modal = this.modalVotacion.create(SpinnerPage);
       modal.present();
-      this.coleccionTipadaFirebase = this.objFirebase.collection<Usuario>('users_recursada', ref=> ref.orderBy('id','asc'));
+      this.coleccionTipadaFirebase = this.objFirebase.collection<any>('SP_usuarios', ref=> ref.orderBy('id','asc'));
       this.ListadoUsuariosObservable = this.coleccionTipadaFirebase.valueChanges();
       this.ListadoUsuariosObservable.subscribe(x => {
         console.info("Conexión correcta con Firebase. Usuarios: ", x);
@@ -73,12 +74,48 @@ export class LoginPage {
       
       this.ListadoUsuariosObservable.forEach((el)=>{
         this.accounts = el;
-        let user: Usuario = this.accounts.find(elem => ( this.loginFields.nombre == elem.nombre && (this.loginFields.clave == elem.clave)));
+        let user: Usuario = this.accounts.find(elem => ( this.loginFields.email == elem.email && (this.loginFields.clave == elem.clave)));
         modal.dismiss();
         if( user !== undefined ) {
           sessionStorage.setItem('usuario', JSON.stringify(user));
           this.ModalVotacion();
           //this.navCtrl.push(MainPage);
+          
+          /* SWITCH CON DIFERENTES PERFILES */
+
+          switch (user.perfil) {
+            case 'supervisor':
+              //this.navCtrl.push(MainPage);
+              break;
+          
+            case 'empleado':
+              //this.navCtrl.push(MainPage);
+              break;
+            
+            case 'cliente':
+              //this.navCtrl.push(MainPage);
+              break;
+
+            case 'dueno':
+              //this.navCtrl.push(MainPage);
+              break;
+            
+            default:
+              
+              break;
+          }
+
+
+
+
+
+
+
+
+
+
+
+        
         } else {
           let toast = this.toastCtrl.create({
             message: "Acceso denegado.",
@@ -98,23 +135,28 @@ export class LoginPage {
   }
 
   loginAdmin(){
-    this.loginFields.nombre ="admin@gmail.com";
+    this.loginFields.email ="admin@gmail.com";
     this.loginFields.clave ="11";
   }
 
   loginInvitado(){
-    this.loginFields.nombre ="invitado@gmail.com";
+    this.loginFields.email ="invitado@gmail.com";
     this.loginFields.clave ="22";
   }
 
   loginUsuario(){
-    this.loginFields.nombre ="usuario@gmail.com";
+    this.loginFields.email ="usuario@gmail.com";
     this.loginFields.clave ="33";
   }
 
   loginTester(){
-    this.loginFields.nombre ="tester@gmail.com";
+    this.loginFields.email ="tester@gmail.com";
     this.loginFields.clave ="55";
+  }
+
+  loginDueno(){
+    this.loginFields.email ="dueño@comanda.com";
+    this.loginFields.clave ="1234";
   }
 
   login(){
@@ -122,11 +164,11 @@ export class LoginPage {
     const actionSheet = this.actionSheetCtrl.create({
       buttons: [
         {
-          text: 'Admin',
+          text: 'dueno',
           icon: 'people',
           cssClass: 'loginProfileButton',
           handler: () => {
-            this.loginAdmin();
+            this.loginDueno();
           }
         },{
           text: 'Invitado',
