@@ -66,7 +66,7 @@ export class LoginPage {
 
       let modal = this.modalVotacion.create(SpinnerPage);
       modal.present();
-      this.coleccionTipadaFirebase = this.objFirebase.collection<any>('SP_usuarios', ref=> ref.orderBy('id','asc'));
+      this.coleccionTipadaFirebase = this.objFirebase.collection<Usuario>('SP_usuarios', ref=> ref.orderBy('id','asc'));
       this.ListadoUsuariosObservable = this.coleccionTipadaFirebase.valueChanges();
       this.ListadoUsuariosObservable.subscribe(x => {
         console.info("Conexión correcta con Firebase. Usuarios: ", x);
