@@ -104,18 +104,7 @@ export class LoginPage {
               
               break;
           }
-
-
-
-
-
-
-
-
-
-
-
-        
+     
         } else {
           let toast = this.toastCtrl.create({
             message: "Acceso denegado.",
@@ -134,64 +123,99 @@ export class LoginPage {
     //this.modalVotacion.create(PagesModalVotacionPage).present();
   }
 
-  loginAdmin(){
-    this.loginFields.email ="admin@gmail.com";
-    this.loginFields.clave ="11";
-  }
-
-  loginInvitado(){
-    this.loginFields.email ="invitado@gmail.com";
-    this.loginFields.clave ="22";
-  }
-
-  loginUsuario(){
-    this.loginFields.email ="usuario@gmail.com";
-    this.loginFields.clave ="33";
-  }
-
-  loginTester(){
-    this.loginFields.email ="tester@gmail.com";
-    this.loginFields.clave ="55";
-  }
-
+  
   loginDueno(){
     this.loginFields.email ="dueño@comanda.com";
     this.loginFields.clave ="1234";
   }
+
+  loginSupervisor(){
+    this.loginFields.email ="supervisor@comanda.com";
+    this.loginFields.clave ="1234";
+  }
+
+  loginCocinero(){
+    this.loginFields.email ="cocinero@comanda.com";
+    this.loginFields.clave ="1234";
+  }
+
+  loginMozo(){
+    this.loginFields.email ="mozo@comanda.com";
+    this.loginFields.clave ="1234";
+  }
+
+  loginBarTender(){
+    this.loginFields.email ="bartender@comanda.com";
+    this.loginFields.clave ="1234";
+  }
+
+  loginDelivery(){
+    this.loginFields.email ="delivery@comanda.com";
+    this.loginFields.clave ="1234";
+  }
+
+  loginCliente(){
+    this.loginFields.email ="cliente@comanda.com";
+    this.loginFields.clave ="1234";
+  }
+
+
+
 
   login(){
 
     const actionSheet = this.actionSheetCtrl.create({
       buttons: [
         {
-          text: 'dueno',
+          text: 'Dueno',
           icon: 'people',
           cssClass: 'loginProfileButton',
           handler: () => {
             this.loginDueno();
           }
         },{
-          text: 'Invitado',
+          text: 'Supervisor',
           icon: 'people',
           cssClass: 'loginProfileButton',
           handler: () => {
-            this.loginInvitado();
+            this.loginSupervisor();
           }
         },{
-          text: 'Usuario',
-          icon: 'people',
-          cssClass: 'loginProfileButton',
-          handler: () => {
-            this.loginUsuario();
-          }
+            text: 'Cocinero',
+            icon: 'people',
+            cssClass: 'loginProfileButton',
+            handler: () => {
+              this.loginCocinero();
+            }        
         },{
-          text: 'Tester',
+          text: 'Mozo',
           icon: 'people',
           cssClass: 'loginProfileButton',
           handler: () => {
-            this.loginTester();
-          }
-        }
+            this.loginMozo();
+          }        
+        },{
+          text: 'Bar Tender',
+          icon: 'people',
+          cssClass: 'loginProfileButton',
+          handler: () => {
+            this.loginBarTender();
+          }        
+      },{
+        text: 'Delivery',
+        icon: 'people',
+        cssClass: 'loginProfileButton',
+        handler: () => {
+          this.loginDelivery();
+        }        
+      },{
+        text: 'Cliente',
+        icon: 'people',
+        cssClass: 'loginProfileButton',
+        handler: () => {
+          this.loginCliente();
+        }        
+    }
       ]
     });
     actionSheet.present();
