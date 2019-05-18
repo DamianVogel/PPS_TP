@@ -8,7 +8,14 @@ import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/fires
 
 import { User } from '../../providers';
 import { SpinnerPage } from "../../pages/pages-spinner/pages-spinner";
-import { MainPage} from "../index";
+//import { PagesDuenoPage } from "../index";
+
+import { PagesDuenoPage } from '../pages-dueno/pages-dueno';
+import { PagesSupervisorPage } from '../pages-supervisor/pages-supervisor';
+import { PagesEmpleadoPage } from '../pages-empleado/pages-empleado';
+import { PagesClientePage } from '../pages-cliente/pages-cliente';
+
+
 
 @IonicPage()
 @Component({
@@ -85,19 +92,19 @@ export class LoginPage {
 
           switch (user.perfil) {
             case 'supervisor':
-              //this.navCtrl.push(MainPage);
+              this.navCtrl.push(PagesSupervisorPage);
               break;
           
             case 'empleado':
-              //this.navCtrl.push(MainPage);
+              this.navCtrl.push(PagesEmpleadoPage);
               break;
             
             case 'cliente':
-              //this.navCtrl.push(MainPage);
+              this.navCtrl.push(PagesClientePage);
               break;
 
             case 'dueno':
-              //this.navCtrl.push(MainPage);
+              this.navCtrl.push(PagesDuenoPage);
               break;
             
             default:
@@ -159,6 +166,11 @@ export class LoginPage {
     this.loginFields.clave ="1234";
   }
 
+  loginClienteRegistrado(){
+    this.loginFields.email ="clienteregistrado@comanda.com";
+    this.loginFields.clave ="1234";
+  }
+
 
 
 
@@ -215,8 +227,16 @@ export class LoginPage {
         handler: () => {
           this.loginCliente();
         }        
-    }
-      ]
+      },{
+        text: 'Cliente Registrado',
+        icon: 'people',
+        cssClass: 'loginProfileButton',
+        handler: () => {
+          this.loginClienteRegistrado();
+        }        
+      }
+      
+    ]
     });
     actionSheet.present();
 

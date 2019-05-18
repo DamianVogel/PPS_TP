@@ -29,8 +29,17 @@ import { environment } from '../environments/environment';
 import {AngularFireModule} from 'angularfire2';
 import {AngularFirestoreModule} from 'angularfire2/firestore';
 
+
+//PAGES
 import { PagesModalPage } from "../pages/pages-modal/pages-modal";
 import { SpinnerPage } from '../pages/pages-spinner/pages-spinner';
+import { PagesDuenoPage } from '../pages/pages-dueno/pages-dueno';
+import { PagesSupervisorPage } from '../pages/pages-supervisor/pages-supervisor';
+import { PagesEmpleadoPage } from '../pages/pages-empleado/pages-empleado';
+import { PagesClientePage } from '../pages/pages-cliente/pages-cliente';
+
+
+
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
@@ -57,7 +66,11 @@ export function provideSettings(storage: Storage) {
   declarations: [
     MyApp,
     PagesModalPage,
-    SpinnerPage
+    SpinnerPage,
+    PagesDuenoPage,
+    PagesSupervisorPage,
+    PagesEmpleadoPage,
+    PagesClientePage
   ],
   imports: [
     BrowserModule,
@@ -78,7 +91,11 @@ export function provideSettings(storage: Storage) {
   entryComponents: [
     MyApp,
     PagesModalPage,
-    SpinnerPage
+    SpinnerPage,
+    PagesDuenoPage,
+    PagesSupervisorPage,
+    PagesEmpleadoPage,
+    PagesClientePage
   ],
   providers: [
     Api,
