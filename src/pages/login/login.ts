@@ -11,6 +11,9 @@ import { SpinnerPage } from "../../pages/pages-spinner/pages-spinner";
 //import { PagesDuenoPage } from "../index";
 
 import { PagesDuenoPage } from '../pages-dueno/pages-dueno';
+import { PagesSupervisorPage } from '../pages-supervisor/pages-supervisor';
+import { PagesEmpleadoPage } from '../pages-empleado/pages-empleado';
+import { PagesClientePage } from '../pages-cliente/pages-cliente';
 
 
 
@@ -89,19 +92,19 @@ export class LoginPage {
 
           switch (user.perfil) {
             case 'supervisor':
-              this.navCtrl.push(PagesDuenoPage);
+              this.navCtrl.push(PagesSupervisorPage);
               break;
           
             case 'empleado':
-              //this.navCtrl.push(MainPage);
+              this.navCtrl.push(PagesEmpleadoPage);
               break;
             
             case 'cliente':
-              //this.navCtrl.push(MainPage);
+              this.navCtrl.push(PagesClientePage);
               break;
 
             case 'dueno':
-              this.navCtrl.push('page-pages-dueno');
+              this.navCtrl.push(PagesDuenoPage);
               break;
             
             default:
