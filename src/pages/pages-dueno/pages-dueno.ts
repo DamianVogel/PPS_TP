@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 
 /**
  * Generated class for the PagesDuenoPage page.
@@ -15,11 +15,38 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class PagesDuenoPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  loginFields: { nombre: string, apellido: string, dni: number, cuil: number } = {
+    nombre: '',
+    apellido: '',
+    dni: null,
+    cuil: null
+  };
+
+
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams,
+    public toastCtrl: ToastController,    
+    ) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad PagesDuenoPage');
   }
 
+  
+  Alta() {
+
+  }
+
+
+
+
+
+
 }
+
+
+
+
+
