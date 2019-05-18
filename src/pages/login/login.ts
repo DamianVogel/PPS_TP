@@ -89,6 +89,7 @@ export class LoginPage {
           //this.navCtrl.push(MainPage);
           
           /* SWITCH CON DIFERENTES PERFILES */
+          //// minima diferencia
 
           switch (user.perfil) {
             case 'supervisor':
