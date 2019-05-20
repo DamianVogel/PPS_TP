@@ -37,6 +37,10 @@ import { PagesDuenoPage } from '../pages/pages-dueno/pages-dueno';
 import { PagesSupervisorPage } from '../pages/pages-supervisor/pages-supervisor';
 import { PagesEmpleadoPage } from '../pages/pages-empleado/pages-empleado';
 import { PagesClientePage } from '../pages/pages-cliente/pages-cliente';
+import { PagesClientePageModule } from '../pages/pages-cliente/pages-cliente.module';
+import { PagesDuenoPageModule } from '../pages/pages-dueno/pages-dueno.module';
+import { PagesSupervisorPageModule } from '../pages/pages-supervisor/pages-supervisor.module';
+import { PagesEmpleadoPageModule } from '../pages/pages-empleado/pages-empleado.module';
 
 
 
@@ -67,10 +71,11 @@ export function provideSettings(storage: Storage) {
     MyApp,
     PagesModalPage,
     SpinnerPage,
-    PagesDuenoPage,
-    PagesSupervisorPage,
-    PagesEmpleadoPage,
-    PagesClientePage
+    // PagesDuenoPage,
+    // PagesSupervisorPage,
+    // PagesEmpleadoPage,
+    // PagesClientePage
+    
   ],
   imports: [
     BrowserModule,
@@ -85,7 +90,15 @@ export function provideSettings(storage: Storage) {
       }
     }),
     IonicModule.forRoot(MyApp),
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot(),
+    PagesClientePageModule,
+    PagesDuenoPageModule,
+    PagesEmpleadoPageModule,
+    PagesSupervisorPageModule
+   
+  
+  
+  
   ],
   bootstrap: [IonicApp],
   entryComponents: [
