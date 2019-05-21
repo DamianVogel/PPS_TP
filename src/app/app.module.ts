@@ -37,6 +37,13 @@ import { PagesDuenoPage } from '../pages/pages-dueno/pages-dueno';
 import { PagesSupervisorPage } from '../pages/pages-supervisor/pages-supervisor';
 import { PagesEmpleadoPage } from '../pages/pages-empleado/pages-empleado';
 import { PagesClientePage } from '../pages/pages-cliente/pages-cliente';
+import { PagesRegistroUsuarioPage } from '../pages/pages-registro-usuario/pages-registro-usuario';
+import { PagesClientePageModule } from '../pages/pages-cliente/pages-cliente.module';
+import { PagesDuenoPageModule } from '../pages/pages-dueno/pages-dueno.module';
+import { PagesEmpleadoPageModule } from '../pages/pages-empleado/pages-empleado.module';
+import { PagesSupervisorPageModule } from '../pages/pages-supervisor/pages-supervisor.module';
+import { PagesRegistroUsuarioPageModule } from '../pages/pages-registro-usuario/pages-registro-usuario.module';
+
 
 
 
@@ -67,10 +74,11 @@ export function provideSettings(storage: Storage) {
     MyApp,
     PagesModalPage,
     SpinnerPage,
-    PagesDuenoPage,
-    PagesSupervisorPage,
-    PagesEmpleadoPage,
-    PagesClientePage
+  //  PagesDuenoPage,
+  //  PagesSupervisorPage,
+  //  PagesEmpleadoPage,
+  //  PagesClientePage,
+  // PagesRegistroUsuarioPage
   ],
   imports: [
     BrowserModule,
@@ -85,7 +93,12 @@ export function provideSettings(storage: Storage) {
       }
     }),
     IonicModule.forRoot(MyApp),
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot(),
+    PagesClientePageModule,
+    PagesDuenoPageModule,
+    PagesEmpleadoPageModule,
+    PagesSupervisorPageModule,
+    PagesRegistroUsuarioPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -95,7 +108,8 @@ export function provideSettings(storage: Storage) {
     PagesDuenoPage,
     PagesSupervisorPage,
     PagesEmpleadoPage,
-    PagesClientePage
+    PagesClientePage,
+    PagesRegistroUsuarioPage
   ],
   providers: [
     Api,
