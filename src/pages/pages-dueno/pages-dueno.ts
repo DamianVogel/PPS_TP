@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
+import { Usuario } from '../../clases/usuario';
+
 
 /**
  * Generated class for the PagesDuenoPage page.
@@ -26,7 +29,8 @@ export class PagesDuenoPage {
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
-    public toastCtrl: ToastController,    
+    public toastCtrl: ToastController,
+    private objFirebase: AngularFirestore
     ) {
   }
 
@@ -36,6 +40,25 @@ export class PagesDuenoPage {
 
   
   Alta() {
+    let usuario = new Usuario();
+
+    usuario.apellido = 'Test';
+    usuario.nombre = 'test';
+    usuario.email = 'test@gmail.com'
+    
+    //this.objFirebase.createId()
+    return new Promise<any>((resolve, reject) =>{
+      this.objFirebase
+          .collection("SP_usuarios")
+          .add({
+            //'hola':'chau', 'chau':'nos vemos'
+            'apellido': usuario.apellido,
+            'nombre':usuario.nombre,
+            'email': usuario.email 
+          })
+          .then(res => {}, err => reject(err));
+  });
+
 
   }
 
