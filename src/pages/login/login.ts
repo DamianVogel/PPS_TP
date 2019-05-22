@@ -14,6 +14,7 @@ import { PagesDuenoPage } from '../pages-dueno/pages-dueno';
 import { PagesSupervisorPage } from '../pages-supervisor/pages-supervisor';
 import { PagesEmpleadoPage } from '../pages-empleado/pages-empleado';
 import { PagesClientePage } from '../pages-cliente/pages-cliente';
+import { PagesRegistroUsuarioPage } from '../pages-registro-usuario/pages-registro-usuario';
 
 
 
@@ -241,6 +242,11 @@ export class LoginPage {
     });
     actionSheet.present();
 
+  }
+
+  irARegistro()
+  {
+    this.navCtrl.push(PagesRegistroUsuarioPage);
   }
 
 }
