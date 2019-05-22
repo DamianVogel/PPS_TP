@@ -44,10 +44,6 @@ import { PagesEmpleadoPageModule } from '../pages/pages-empleado/pages-empleado.
 import { PagesSupervisorPageModule } from '../pages/pages-supervisor/pages-supervisor.module';
 import { PagesRegistroUsuarioPageModule } from '../pages/pages-registro-usuario/pages-registro-usuario.module';
 
-
-
-
-
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
 export function createTranslateLoader(http: HttpClient) {
