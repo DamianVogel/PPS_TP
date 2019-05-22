@@ -56,29 +56,37 @@ export class PagesDuenoPage {
 
     } else {
 
-      let usuario = new Usuario();
-
-      usuario.apellido = 'Test';
-      usuario.nombre = 'test';
-      usuario.email = 'test@gmail.com';
-      usuario.dni  = 12345678;
-      usuario.cuil = 20123456782;
-      usuario.foto = 'rutaFoto'
-      
-      //this.objFirebase.createId()
-      //return new Promise<any>((resolve, reject) =>{
         this.objFirebase
             .collection("SP_usuarios")
             .add({
-              //'hola':'chau', 'chau':'nos vemos'
-              'apellido': usuario.apellido,
-              'nombre':usuario.nombre,
-              'email': usuario.email,
-              'dni': usuario.dni,
-              'cuil': usuario.cuil,
-              'foto': usuario.foto 
+              'apellido': this.loginFields.apellido,
+              'nombre':this.loginFields.nombre,
+              'email': this.loginFields.email,
+              'clave': this.loginFields.clave,
+              'dni': this.loginFields.dni,
+              'cuil': this.loginFields.cuil,
+              'foto': '' 
             })
-            .then(res => {}, err => console.log(err));
+            .then(res => {
+
+              console.log(res);
+              let toast = this.toastCtrl.create({
+                message: "Registracion Exitosa!",
+                duration: 3000,
+                position: 'middle' //middle || top
+              });
+              toast.present();
+
+              this.loginFields.apellido = '';
+              this.loginFields.nombre = '';
+              this.loginFields.email = '';
+              this.loginFields.clave = '';
+              this.loginFields.dni = null;
+              this.loginFields.cuil = null;
+              
+
+
+            }, err => console.log(err));
     }
   }
 }
