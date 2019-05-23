@@ -43,6 +43,9 @@ import { PagesDuenoPageModule } from '../pages/pages-dueno/pages-dueno.module';
 import { PagesEmpleadoPageModule } from '../pages/pages-empleado/pages-empleado.module';
 import { PagesSupervisorPageModule } from '../pages/pages-supervisor/pages-supervisor.module';
 import { PagesRegistroUsuarioPageModule } from '../pages/pages-registro-usuario/pages-registro-usuario.module';
+import { CocineroMenuPageModule } from '../pages/pages-cocinero/pages-cocinero-menu/pages-cocinero-menu.module';
+import { BartenderMenuPageModule } from '../pages/pages-bartender/pages-bartender-menu/pages-bartender-menu.module'
+
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
@@ -94,7 +97,9 @@ export function provideSettings(storage: Storage) {
     PagesDuenoPageModule,
     PagesEmpleadoPageModule,
     PagesSupervisorPageModule,
-    PagesRegistroUsuarioPageModule
+    PagesRegistroUsuarioPageModule,
+    CocineroMenuPageModule,
+    BartenderMenuPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
