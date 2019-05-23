@@ -1,6 +1,7 @@
 
 <div class="contenidoLogin">
 <ion-content padding>
+  <h1 style="color: white">Registro</h1>
 
   <form [formGroup]="registroForm" (submit)="Registrar()">
     <ion-list>  
@@ -20,7 +21,7 @@
         </ion-item>
 
         <ion-item padding style="background-color: rgba(0,0,0,0.7) !important; color: white; border-radius: 10px;">    
-          <ion-input type="text" style="color: white;" name="email" [formControl]="email" placeholder="Correo" required  >
+          <ion-input type="email" style="color: white;" name="email" [formControl]="email" placeholder="Correo" required  >
           </ion-input>
         </ion-item>
 
@@ -42,7 +43,7 @@
 <ion-footer>
 
     <ion-fab bottom right>
-      <button ion-fab class="loginProfileButton" (click)="SacarFoto()"><ion-icon name="camera"></ion-icon></button>
+      <button ion-fab class="loginProfileButton" (click)="SacarFoto()" [disabled]="!registroForm.valid"><ion-icon name="camera"></ion-icon></button>
     </ion-fab>  
     
   </ion-footer>
