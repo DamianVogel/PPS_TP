@@ -3,6 +3,8 @@ import { IonicPage, NavController, NavParams, ToastController, ModalController }
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { Usuario } from '../../clases/usuario';
 import { SpinnerPage } from "../../pages/pages-spinner/pages-spinner";
+import { CameraOptions, Camera } from '@ionic-native/camera';
+import { storage } from 'firebase';
 
 
 /**
@@ -35,6 +37,7 @@ export class PagesDuenoPage {
     public toastCtrl: ToastController,
     private objFirebase: AngularFirestore,
     public modalVotacion: ModalController,
+    private camera: Camera
     ) {
   }
 
@@ -89,6 +92,34 @@ export class PagesDuenoPage {
             }, err => console.log(err));
     }
   }
+
+  async SacarFoto(){
+
+    const options: CameraOptions = {
+      quality: 50,
+      //destinationType: this.camera.DestinationType.FILE_URI,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+      saveToPhotoAlbum: true
+    }
+    
+     let hora= new Date();
+     
+     const result= await this.camera.getPicture(options);
+     
+     const fotos = storage().ref('clientes/'+ this.loginFields.dni);
+     const imagen= 'data:image/jpeg;base64,'+result;
+     fotos.putString(imagen,'data_url');
+
+    
+  }
+
+
+
+
+
+
 }
 
 
