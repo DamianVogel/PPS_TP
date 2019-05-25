@@ -4,6 +4,7 @@ import { Validators, FormBuilder, FormControl, FormGroup } from '@angular/forms'
 import { Usuario } from '../../clases/usuario';
 import { CameraOptions, Camera } from '@ionic-native/camera';
 import { storage } from 'firebase';
+import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
 
 /**
  * Generated class for the PagesRegistroUsuarioPage page.
@@ -23,7 +24,8 @@ export class PagesRegistroUsuarioPage {
     public navParams: NavParams, 
     private builder: FormBuilder,
     public toastCtrl: ToastController,
-    private camera: Camera
+    private camera: Camera,
+    private objFirebase: AngularFirestore
   ) {}
 
   nombre = new FormControl('', [
@@ -67,6 +69,34 @@ export class PagesRegistroUsuarioPage {
      usuario.email= this.registroForm.get('email').value;
      usuario.clave= this.registroForm.get('clave').value;
      usuario.perfil= "Cliente";
+     usuario.cuil=null;
+  
+
+     
+     this.objFirebase
+     .collection("SP_usuarios")
+     .add({
+       'apellido': usuario.apellido,
+       'nombre':usuario.nombre,
+       'email': usuario.email,
+       'clave': usuario.clave,
+       'dni': usuario.dni,
+       'cuil': usuario.cuil,
+       'foto': 'clientes/' + usuario.dni 
+     })
+     .then(res => {
+
+       console.log(res);
+       let toast = this.toastCtrl.create({
+         message: "Registracion Exitosa!",
+         duration: 3000,
+         position: 'middle' //middle || top
+       });
+       toast.present();
+       
+
+
+     }, err => console.log(err));
 
     
   }
