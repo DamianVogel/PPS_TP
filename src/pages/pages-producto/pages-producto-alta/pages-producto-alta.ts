@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Producto } from '../../../clases/Producto';
 
 @IonicPage()
 @Component({
@@ -8,11 +9,13 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class ProductoAltaPage {
 
-  producto = {}
+  producto: Producto;
 
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams) {
+
+      this.producto = new Producto();
   }
 
   cargar() {
