@@ -10,4 +10,4 @@ import { ProductoAltaPage } from './pages-producto-alta';
     IonicPageModule.forChild(ProductoAltaPage),
   ],
 })
-export class AltaPageModule {}
+export class ProductoAltaPageModule {}

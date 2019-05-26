@@ -44,7 +44,8 @@ import { PagesEmpleadoPageModule } from '../pages/pages-empleado/pages-empleado.
 import { PagesSupervisorPageModule } from '../pages/pages-supervisor/pages-supervisor.module';
 import { PagesRegistroUsuarioPageModule } from '../pages/pages-registro-usuario/pages-registro-usuario.module';
 import { CocineroMenuPageModule } from '../pages/pages-cocinero/pages-cocinero-menu/pages-cocinero-menu.module';
-import { BartenderMenuPageModule } from '../pages/pages-bartender/pages-bartender-menu/pages-bartender-menu.module'
+import { BartenderMenuPageModule } from '../pages/pages-bartender/pages-bartender-menu/pages-bartender-menu.module';
+import { ProductoAltaPageModule } from '../pages/pages-producto/pages-producto-alta/pages-producto-alta.module'
 
 
 // The translate loader needs to know where to load i18n files
@@ -72,12 +73,7 @@ export function provideSettings(storage: Storage) {
   declarations: [
     MyApp,
     PagesModalPage,
-    SpinnerPage,
-  //  PagesDuenoPage,
-  //  PagesSupervisorPage,
-  //  PagesEmpleadoPage,
-  //  PagesClientePage,
-  // PagesRegistroUsuarioPage
+    SpinnerPage
   ],
   imports: [
     BrowserModule,
@@ -99,7 +95,8 @@ export function provideSettings(storage: Storage) {
     PagesSupervisorPageModule,
     PagesRegistroUsuarioPageModule,
     CocineroMenuPageModule,
-    BartenderMenuPageModule
+    BartenderMenuPageModule,
+    ProductoAltaPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
