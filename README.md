@@ -8,23 +8,29 @@
 
 ## <a name="responsabilidades"></a><b>Responsabilidades</b>
 
-### Nicolas Saavedra (NicolasSaavedraBranch)
+## ==========================================
+
+### **Nicolas Saavedra (NicolasSaavedraBranch)**
 
   #### Alta de productos (platos y bebidas) (25/05/2019 - TBD)
   9) Se carga el nombre, la descripción, tiempo promedio de elaboración y el precio.
   10) Con 3 fotos tomadas del celular.
   11) Lector de código QR relacionado con los productos.
   12) Esta acción la podrá realizar el cocinero o el bar tender.
+  
+## ==========================================
 
-### Damian Vogel (DamianVogelBranch)
+### **Damian Vogel (DamianVogelBranch)**
 
   #### Alta de dueño / supervisor (TBD - TBD)
   1) Se cargarán: nombre, apellido, DNI, CUIL, foto y perfil.
   2) La foto se tomará del celular.
   3) Brindar la posibilidad de contar con un lector de código QR para el DNI, que cargará la información disponible (sólo aplicable a aquellos documentos que lo posean).
   4) Esta acción la podrá realizar el supervisor o el dueño.
+  
+## ==========================================
 
-### Augusto Morelli (AugustoMorelli / AugustoBranch)
+### **Augusto Morelli (AugustoMorelli / AugustoBranch)**
 
   #### Alta de cliente (TBD - TBD)
   13) Se ingresará el nombre, apellido, DNI, y foto.
