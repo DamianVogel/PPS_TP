@@ -7,7 +7,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { Camera } from '@ionic-native/camera';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
-import { QRScanner } from '@ionic-native/qr-scanner';
+//import { QRScanner } from '@ionic-native/qr-scanner';
 import { NativeAudio } from '@ionic-native/native-audio';
 //Movimiento
 import { Shake } from '@ionic-native/shake';
@@ -28,6 +28,9 @@ import { environment } from '../environments/environment';
 
 import {AngularFireModule} from 'angularfire2';
 import {AngularFirestoreModule} from 'angularfire2/firestore';
+
+//PLUGIN QR DNI
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 
 //PAGES
@@ -118,11 +121,12 @@ export function provideSettings(storage: Storage) {
     User,
     Camera,
     SplashScreen,
-    QRScanner,
+    //QRScanner,
     NativeAudio,
     Shake,
     DeviceMotion,
     StatusBar,
+    BarcodeScanner,
     { provide: Settings, useFactory: provideSettings, deps: [Storage] },
     // Keep this to enable Ionic's runtime error handling during development
     { provide: ErrorHandler, useClass: IonicErrorHandler }
