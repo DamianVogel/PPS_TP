@@ -8,29 +8,33 @@
 
 ## <a name="responsabilidades"></a><b>Responsabilidades</b>
 
-### Nicolas Saavedra
+## ==========================================
 
-1. Saavedra
-2. Nicolas
-3. TBD
-4. TBD
-5. TBD
-6. NicolasSaavedraBranch
+### **Nicolas Saavedra (NicolasSaavedraBranch)**
 
-### Damian Vogel
+  #### Alta de productos (platos y bebidas) (25/05/2019 - TBD)
+  9) Se carga el nombre, la descripción, tiempo promedio de elaboración y el precio.
+  10) Con 3 fotos tomadas del celular.
+  11) Lector de código QR relacionado con los productos.
+  12) Esta acción la podrá realizar el cocinero o el bar tender.
+  
+## ==========================================
 
-1. Vogel
-2. Damian
-3. TBD
-4. TBD
-5. TBD
-6. DamianVogelBranch
+### **Damian Vogel (DamianVogelBranch)**
 
-### Augusto Morelli
+  #### Alta de dueño / supervisor (TBD - TBD)
+  1) Se cargarán: nombre, apellido, DNI, CUIL, foto y perfil.
+  2) La foto se tomará del celular.
+  3) Brindar la posibilidad de contar con un lector de código QR para el DNI, que cargará la información disponible (sólo aplicable a aquellos documentos que lo posean).
+  4) Esta acción la podrá realizar el supervisor o el dueño.
+  
+## ==========================================
 
-1. Morelli
-2. Augusto
-3. TBD
-4. TBD
-5. TBD
-6. TBD
+### **Augusto Morelli (AugustoMorelli / AugustoBranch)**
+
+  #### Alta de cliente (TBD - TBD)
+  13) Se ingresará el nombre, apellido, DNI, y foto.
+  14) La foto se tomará del celular.
+  15) Si se registra como ‘anónimo’ solo se cargarán el nombre y la foto.
+  16) Brindar la posibilidad de contar con un lector de código QR para el DNI, que cargará la información disponible (sólo aplicable a aquellos documentos que lo posean).
+  17) Esta acción la podrá realizar el cliente o el metre.

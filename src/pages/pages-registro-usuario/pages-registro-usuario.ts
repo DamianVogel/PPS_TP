@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { Validators, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Usuario } from '../../clases/usuario';
+import { CameraOptions, Camera } from '@ionic-native/camera';
+import { storage } from 'firebase';
+import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
 
 /**
  * Generated class for the PagesRegistroUsuarioPage page.
@@ -20,7 +23,9 @@ export class PagesRegistroUsuarioPage {
   constructor(public navCtrl: NavController, 
     public navParams: NavParams, 
     private builder: FormBuilder,
-    public toastCtrl: ToastController
+    public toastCtrl: ToastController,
+    private camera: Camera,
+    private objFirebase: AngularFirestore
   ) {}
 
   nombre = new FormControl('', [
@@ -64,6 +69,56 @@ export class PagesRegistroUsuarioPage {
      usuario.email= this.registroForm.get('email').value;
      usuario.clave= this.registroForm.get('clave').value;
      usuario.perfil= "Cliente";
+     usuario.cuil=null;
+  
+
+     
+     this.objFirebase
+     .collection("SP_usuarios")
+     .add({
+       'apellido': usuario.apellido,
+       'nombre':usuario.nombre,
+       'email': usuario.email,
+       'clave': usuario.clave,
+       'dni': usuario.dni,
+       'cuil': usuario.cuil,
+       'foto': 'clientes/' + usuario.dni 
+     })
+     .then(res => {
+
+       console.log(res);
+       let toast = this.toastCtrl.create({
+         message: "Registracion Exitosa!",
+         duration: 3000,
+         position: 'middle' //middle || top
+       });
+       toast.present();
+       
+
+
+     }, err => console.log(err));
+
+    
+  }
+
+  async SacarFoto(){
+
+    const options: CameraOptions = {
+      quality: 50,
+      //destinationType: this.camera.DestinationType.FILE_URI,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+      saveToPhotoAlbum: true
+    }
+    
+     let hora= new Date();
+     
+     const result= await this.camera.getPicture(options);
+     
+     const fotos = storage().ref('clientes/'+ this.registroForm.get('dni').value);
+     const imagen= 'data:image/jpeg;base64,'+result;
+     fotos.putString(imagen,'data_url');
 
     
   }
