@@ -24,14 +24,10 @@ import { BarcodeScanner, BarcodeScannerOptions } from '@ionic-native/barcode-sca
 })
 export class PagesDuenoPage {
 
-  // loginFields: { nombre: string, apellido: string, clave:string, email:string, dni: number, cuil: number } = {
-  //   nombre: '',
-  //   apellido: '',
-  //   clave:'',
-  //   email:'',
-  //   dni: null,
-  //   cuil: null
-  // };
+  //Muestra botones:
+  registrarDuenoSupervisor:boolean;
+  registrarEmpleado:boolean;
+
 
   nombre = new FormControl('', [
     Validators.required
@@ -67,6 +63,10 @@ export class PagesDuenoPage {
     Validators.required
   ]);
 
+  tipo = new FormControl('', [
+    Validators.required
+  ]);
+
   
   
   registroForm: FormGroup = this.builder.group({
@@ -79,6 +79,20 @@ export class PagesDuenoPage {
     perfil: this.perfil
     
   });
+
+  registroFormEmpleado: FormGroup = this.builder.group({
+    nombre: this.nombre,
+    apellido: this.apellido,
+    dni: this.dni,
+    cuil: this.cuil,
+    email: this.email,
+    clave: this.clave,
+    tipo: this.tipo
+  });
+
+
+
+
 
   validation_messages = {
     'dni': [        
@@ -102,53 +116,121 @@ export class PagesDuenoPage {
     private camera: Camera,
     private barcodeScanner: BarcodeScanner
     ) {
+      this.registrarDuenoSupervisor = false;
+      this.registrarEmpleado = false;
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad PagesDuenoPage');
   }
 
-  
-  Alta() {
+
+  muestraFormularioRegistracion(tipo){
     
-    let usuario= new Usuario();
+    switch(tipo){
+      case 'duenoSupervisor':
+        if(this.registrarDuenoSupervisor)
+          this.registrarDuenoSupervisor = false;
+        else
+          this.registrarDuenoSupervisor = true;
+      
+      break;
 
-     usuario.nombre= this.registroForm.get('nombre').value;
-     usuario.apellido= this.registroForm.get('apellido').value;
-     usuario.dni= this.registroForm.get('dni').value;
-     usuario.cuil = this.registroForm.get('cuil').value;
-     usuario.email= this.registroForm.get('email').value;
-     usuario.clave= this.registroForm.get('clave').value;
-     usuario.perfil = this.registroForm.get('perfil').value;
-     
-    this.objFirebase.collection("SP_usuarios")
-      .add({
-              'apellido': usuario.apellido,
-              'nombre':usuario.nombre,
-              'email': usuario.email,
-              'clave': usuario.clave,
-              'dni': usuario.dni,
-              'cuil': usuario.cuil,
-              'perfil':usuario.perfil,
-              'foto': 'clientes/' + usuario.dni
-      }).then(res => {
-
-              console.log(res);
-              let toast = this.toastCtrl.create({
-                message: "Registracion Exitosa!",
-                duration: 3000,
-                position: 'middle' //middle || top
-              });
-              toast.present();
-
-              this.registroForm.reset();
-
-            }, err => console.log(err));
+      case 'empleado':
+          if(this.registrarEmpleado)
+            this.registrarEmpleado = false;
+          else
+            this.registrarEmpleado = true;
+    
+      break;
+    }
   }
-  
 
-  
-  
+
+  Alta(tipo) {
+    
+
+    switch(tipo){
+      case 'duenoSupervisor':
+        var usuarioDuenoSupervisor= new Usuario();  
+
+        usuarioDuenoSupervisor.nombre= this.registroForm.get('nombre').value;
+        usuarioDuenoSupervisor.apellido= this.registroForm.get('apellido').value;
+        usuarioDuenoSupervisor.dni= this.registroForm.get('dni').value;
+        usuarioDuenoSupervisor.cuil = this.registroForm.get('cuil').value;
+        usuarioDuenoSupervisor.email= this.registroForm.get('email').value;
+        usuarioDuenoSupervisor.clave= this.registroForm.get('clave').value;
+        usuarioDuenoSupervisor.perfil = this.registroForm.get('perfil').value;
+        
+        this.objFirebase.collection("SP_usuarios")
+          .add({
+                  'apellido': usuarioDuenoSupervisor.apellido,
+                  'nombre':usuarioDuenoSupervisor.nombre,
+                  'email': usuarioDuenoSupervisor.email,
+                  'clave': usuarioDuenoSupervisor.clave,
+                  'dni': usuarioDuenoSupervisor.dni,
+                  'cuil': usuarioDuenoSupervisor.cuil,
+                  'perfil':usuarioDuenoSupervisor.perfil,
+                  'foto': 'usuarios/' + usuarioDuenoSupervisor.dni,
+                  'timestamp': Date()
+          }).then(res => {
+
+                  console.log(res);
+                  let toast = this.toastCtrl.create({
+                    message: "Registracion Exitosa!",
+                    duration: 3000,
+                    position: 'middle' //middle || top
+                  });
+                  toast.present();
+
+                  this.registroForm.reset();
+
+                }, err => console.log(err));
+      
+      break;
+
+      case 'empleado':
+        let usuarioEmpleado= new Usuario();
+
+        usuarioEmpleado.nombre= this.registroFormEmpleado.get('nombre').value;
+        usuarioEmpleado.apellido= this.registroFormEmpleado.get('apellido').value;
+        usuarioEmpleado.dni= this.registroFormEmpleado.get('dni').value;
+        usuarioEmpleado.cuil = this.registroFormEmpleado.get('cuil').value;
+        usuarioEmpleado.email= this.registroFormEmpleado.get('email').value;
+        usuarioEmpleado.clave= this.registroFormEmpleado.get('clave').value;
+        usuarioEmpleado.perfil = 'empleado';
+        usuarioEmpleado.tipo = this.registroFormEmpleado.get('tipo').value;
+        
+        this.objFirebase.collection("SP_usuarios")
+          .add({
+                  'apellido': usuarioEmpleado.apellido,
+                  'nombre':usuarioEmpleado.nombre,
+                  'email': usuarioEmpleado.email,
+                  'clave': usuarioEmpleado.clave,
+                  'dni': usuarioEmpleado.dni,
+                  'cuil': usuarioEmpleado.cuil,
+                  'perfil':usuarioEmpleado.perfil,
+                  'tipo': usuarioEmpleado.tipo,
+                  'foto': 'usuarios/' + usuarioEmpleado.dni,
+                  'timestamp': Date()
+          }).then(res => {
+
+                  console.log(res);
+                  let toast = this.toastCtrl.create({
+                    message: "Registracion Exitosa!",
+                    duration: 3000,
+                    position: 'middle' //middle || top
+                  });
+                  toast.present();
+
+                  this.registroFormEmpleado.reset();
+
+                }, err => console.log(err));
+      
+      break;
+        
+    }
+  }
   
   async SacarFoto(){
 
@@ -165,7 +247,7 @@ export class PagesDuenoPage {
      
      const result= await this.camera.getPicture(options);
      
-     const fotos = storage().ref('clientes/'+ this.registroForm.get('dni').value);
+     const fotos = storage().ref('usuarios/'+ this.registroForm.get('dni').value);
      const imagen= 'data:image/jpeg;base64,'+result;
      fotos.putString(imagen,'data_url');
 
@@ -188,8 +270,6 @@ export class PagesDuenoPage {
           disableSuccessBeep: false // iOS and Android
     }
     
-
-
     this.barcodeScanner.scan(opciones).then(barcodeData => {
       //console.log('Barcode data', barcodeData);
 
@@ -203,7 +283,7 @@ export class PagesDuenoPage {
 
       }).catch(err => {
          console.log('Error', err);
-     });
+    });
 
   }
 
