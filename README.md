@@ -22,7 +22,12 @@
 
 ### **Damian Vogel (DamianVogelBranch)**
 
-  #### Alta de dueño / supervisor (TBD - TBD)
+  #### Login / Generacion de pages y perfiles de acceso (11/05 a 18/05)
+  1) Switch de acceso para cada perfil.
+  2) Adecuacion de perfiles en DB.
+  3) Generacion de pages para perfiles.
+
+  #### Alta de dueño / supervisor (TBD - TBD) (18/05 al 25/05)
   1) Se cargarán: nombre, apellido, DNI, CUIL, foto y perfil.
   2) La foto se tomará del celular.
   3) Brindar la posibilidad de contar con un lector de código QR para el DNI, que cargará la información disponible (sólo aplicable a aquellos documentos que lo posean).
