@@ -13,10 +13,10 @@ export class Producto {
         this.descripcion = descripcion;
         this.tiempo = tiempo;
         this.precio = precio;
-                
-        this.foto1 = foto1+'/'+nombre.toString()+'/foto1.jpg';
-        this.foto2 = foto2+'/'+nombre.toString()+'/foto2.jpg';
-        this.foto3 = foto3+'/'+nombre.toString()+'/foto3.jpg';
+
+        (foto1 !== undefined) ? this.foto1 = foto1+'/'+nombre.toString()+'/foto1.jpg' : this.foto1 = "";
+        (foto2 !== undefined) ? this.foto2 = foto2+'/'+nombre.toString()+'/foto2.jpg' : this.foto2 = "";
+        (foto3 !== undefined) ? this.foto3 = foto3+'/'+nombre.toString()+'/foto3.jpg' : this.foto3 = "";
     
     }
 
