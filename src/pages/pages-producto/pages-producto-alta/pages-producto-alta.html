@@ -4,7 +4,7 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding class="productoMenu">
-    <form (ngSubmit)="cargar()">
+    <form>
         <ion-item padding class="formItem">
           <ion-input type="text" [(ngModel)]="producto.nombre" name="nombre" placeholder="Nombre"></ion-input>
         </ion-item>
@@ -32,8 +32,8 @@
           <ion-input type="text" [(ngModel)]="producto.foto3" name="foto3" placeholder="Foto 3" disabled></ion-input>
         </ion-item>
         <ion-item padding class="formItem">
-            <button ion-button name="foto3" block large>Cargar con QR</button>
+            <button ion-button block large>Cargar con QR</button>
         </ion-item>
-        <button ion-button type="submit" block large>Añadir producto</button>
+        <button ion-button type="submit" block large (click)="cargar()">Añadir producto</button>
       </form>
 </ion-content>

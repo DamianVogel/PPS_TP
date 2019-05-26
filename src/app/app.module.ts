@@ -120,6 +120,7 @@ export function provideSettings(storage: Storage) {
     SplashScreen,
     //QRScanner,
     NativeAudio,
+    BarcodeScanner,
     Shake,
     DeviceMotion,
     StatusBar,
@@ -129,4 +130,5 @@ export function provideSettings(storage: Storage) {
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })
-export class AppModule { }
+export class AppModule {}
+
