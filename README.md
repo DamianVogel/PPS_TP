@@ -12,7 +12,7 @@
 
 ### **Nicolas Saavedra (NicolasSaavedraBranch)**
 
-  #### Alta de productos (platos y bebidas) (25/05/2019 - TBD)
+  #### Alta de productos (platos y bebidas) (25/05/2019 - 26/05/2019)
   9) Se carga el nombre, la descripción, tiempo promedio de elaboración y el precio.
   10) Con 3 fotos tomadas del celular.
   11) Lector de código QR relacionado con los productos.
