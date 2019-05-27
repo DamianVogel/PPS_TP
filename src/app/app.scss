@@ -17,7 +17,7 @@
 
 
 .alert-wrapper{
-    background-color: rgba(223, 223, 223, 0.8) !important;
+    background-color: rgba(131, 131, 131, 1) !important;
     border-radius: 20px !important;
     box-shadow: 10px 10px 10px black !important;
 }
@@ -25,10 +25,19 @@
 .alert-md .alert-message {
     color:rgba(255, 255, 255, 0.76);
     font-size: 25px;
+    text-shadow: 2px 2px 1px black;
+}
+
+.alert-md .alert-title {
+    text-shadow: 2px 2px 1px white;
 }
 
 .alert-md .alert-button {
     color: black !important;
+}
+
+.alert-md .alert-radio-label {
+    font-size: 20px;
 }
 
 .toolbar-background-md {
