@@ -5,6 +5,7 @@ import { Usuario } from '../../clases/usuario';
 import { CameraOptions, Camera } from '@ionic-native/camera';
 import { storage } from 'firebase';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
+import { BarcodeScanner, BarcodeScannerOptions } from '@ionic-native/barcode-scanner';
 
 /**
  * Generated class for the PagesRegistroUsuarioPage page.
@@ -25,7 +26,8 @@ export class PagesRegistroUsuarioPage {
     private builder: FormBuilder,
     public toastCtrl: ToastController,
     private camera: Camera,
-    private objFirebase: AngularFirestore
+    private objFirebase: AngularFirestore,
+    private barcodeScanner: BarcodeScanner
   ) {}
 
   nombre = new FormControl('', [
@@ -121,6 +123,39 @@ export class PagesRegistroUsuarioPage {
      fotos.putString(imagen,'data_url');
 
     
+  }
+
+  LeerDni(){
+    
+    const opciones: BarcodeScannerOptions = {
+          preferFrontCamera : false, // iOS and Android
+          showFlipCameraButton : true, // iOS and Android
+          showTorchButton : true, // iOS and Android
+          torchOn: true, // Android, launch with the torch switched on (if available)
+          //saveHistory: true, // Android, save scan history (default false)
+          prompt : "Scanee el DNI", // Android
+          resultDisplayDuration: 500, // Android, display scanned text for X ms. 0 suppresses it entirely, default 1500
+          formats : "PDF_417", // default: all but PDF_417 and RSS_EXPANDED
+          orientation : "landscape", // Android only (portrait|landscape), default unset so it rotates with the device
+          disableAnimations : true, // iOS
+          disableSuccessBeep: false // iOS and Android
+    }
+    
+    this.barcodeScanner.scan(opciones).then(barcodeData => {
+      //console.log('Barcode data', barcodeData);
+
+      var split = barcodeData.text.split("@");
+      console.log(split);
+
+      this.registroForm.controls['nombre'].setValue(split[2]);
+      this.registroForm.controls['apellido'].setValue(split[1]);
+      this.registroForm.controls['dni'].setValue(parseInt(split[4]));
+      
+
+      }).catch(err => {
+         console.log('Error', err);
+    });
+
   }
 
 
