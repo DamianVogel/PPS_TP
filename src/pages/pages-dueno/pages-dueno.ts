@@ -7,6 +7,7 @@ import { SpinnerPage } from "../../pages/pages-spinner/pages-spinner";
 import { CameraOptions, Camera } from '@ionic-native/camera';
 import { storage } from 'firebase';
 import { BarcodeScanner, BarcodeScannerOptions } from '@ionic-native/barcode-scanner';
+import {AltaMesaComponent} from '../../components/alta-mesa/alta-mesa';
 
 
 
@@ -27,6 +28,7 @@ export class PagesDuenoPage {
   //Muestra botones:
   registrarDuenoSupervisor:boolean;
   registrarEmpleado:boolean;
+  MuestraAltaMesa:boolean;
 
 
   nombre = new FormControl('', [
@@ -286,6 +288,13 @@ export class PagesDuenoPage {
     });
 
   }
+
+  AltaMesa(){
+    this.navCtrl.push(AltaMesaComponent);
+  }
+
+
+
 
   
 

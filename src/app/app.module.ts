@@ -50,6 +50,9 @@ import { CocineroMenuPageModule } from '../pages/pages-cocinero/pages-cocinero-m
 import { BartenderMenuPageModule } from '../pages/pages-bartender/pages-bartender-menu/pages-bartender-menu.module';
 import { ProductoAltaPageModule } from '../pages/pages-producto/pages-producto-alta/pages-producto-alta.module'
 
+//COMPONENT
+import { AltaMesaComponent } from '../components/alta-mesa/alta-mesa';
+
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
@@ -76,7 +79,8 @@ export function provideSettings(storage: Storage) {
   declarations: [
     MyApp,
     PagesModalPage,
-    SpinnerPage
+    SpinnerPage,
+    AltaMesaComponent
   ],
   imports: [
     BrowserModule,
@@ -110,7 +114,8 @@ export function provideSettings(storage: Storage) {
     PagesSupervisorPage,
     PagesEmpleadoPage,
     PagesClientePage,
-    PagesRegistroUsuarioPage
+    PagesRegistroUsuarioPage,
+    AltaMesaComponent
   ],
   providers: [
     Api,
