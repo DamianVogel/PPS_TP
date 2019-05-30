@@ -1,0 +1,53 @@
+<div class="contenidoLogin">
+  
+  <!--ALTA DE MESA -->
+  <ion-content >
+    <div padding>
+      <button ion-button large color="primary" class="loginButton" (click)="Volver()">Volver</button>
+    </div>
+    <ion-title>Alta de Mesa</ion-title>
+        
+    <form [formGroup]="altaMesaForm" (submit)="AltaMesa()">
+      <ion-list>
+
+        <ion-item padding style="background-color: rgba(0,0,0,0.7) !important; color: white; border-radius: 10px;">
+          <ion-label class="titulo" style="color: white;" fixed>Numero</ion-label>
+          <ion-input  class="titulo" style="color: white;" type="number"  [formControl]="numero" required name="numero"></ion-input>
+        </ion-item>
+
+        <ion-item padding style="background-color: rgba(0,0,0,0.7) !important; color: white; border-radius: 10px;">
+            <ion-label class="titulo" style="color: white;" fixed>Cantidad de Comensales</ion-label>
+            <ion-input  class="titulo" style="color: white;" type="number"  [formControl]="cantidadComensales" name="cantidadComensales"></ion-input>
+        </ion-item>
+
+      
+        <ion-item padding style="background-color: rgba(0,0,0,0.7) !important; color: white; border-radius: 10px;">
+          <ion-label class="titulo" style="color: white;" fixed>Tipo</ion-label>
+          <!-- <ion-input  class="titulo" style="color: white;" type="number" [(ngModel)]="loginFields.cuil" name="cuil"></ion-input> -->
+          <ion-select class="titulo" style="color: white;"  name="tipoMesa" [formControl]="tipoMesa"  placeholder="Seleccionar">
+            <ion-option value="vip">VIP</ion-option>
+            <ion-option value="discapacitados">Discapacitados</ion-option>
+          </ion-select>
+        </ion-item>
+
+          
+        <div padding>
+          <button class="loginButton" large ion-button color="primary" [disabled]="!altaMesaForm.valid" block>ALTA</button>
+        </div>
+  
+      </ion-list>
+    </form>
+  
+  </ion-content>
+ 
+
+  <ion-footer>
+
+    <ion-fab bottom right  >
+      <button ion-fab class="loginProfileButton" (click)="SacarFoto()" [disabled]="!altaMesaForm.valid"><ion-icon name="camera"></ion-icon></button>
+    
+    </ion-fab>  
+    
+  </ion-footer>
+</div>
+  

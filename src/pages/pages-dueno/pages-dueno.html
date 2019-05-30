@@ -13,6 +13,10 @@
     <button *ngIf="!registrarEmpleado && !registrarDuenoSupervisor" ion-button large color="primary" class="loginButton" (click)="muestraFormularioRegistracion('empleado')">Registrar Empleado</button>
   </div>
 
+  <div padding>
+    <button ion-button large color="primary" class="loginButton" (click)="AltaMesa()">Alta Mesa</button>
+  </div>
+
   <!--ALTA DE SUPERVISOR -->
   <ion-content *ngIf="registrarDuenoSupervisor">
     <ion-title>Registrar Dueño / Supervisor</ion-title>
