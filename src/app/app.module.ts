@@ -52,6 +52,8 @@ import { ProductoAltaPageModule } from '../pages/pages-producto/pages-producto-a
 
 //COMPONENT
 import { AltaMesaComponent } from '../components/alta-mesa/alta-mesa';
+import { AltaDuenoComponent } from '../components/alta-dueno/alta-dueno';
+import { AltaEmpleadoComponent } from '../components/alta-empleado/alta-empleado';
 
 
 // The translate loader needs to know where to load i18n files
@@ -80,7 +82,9 @@ export function provideSettings(storage: Storage) {
     MyApp,
     PagesModalPage,
     SpinnerPage,
-    AltaMesaComponent
+    AltaMesaComponent,
+    AltaDuenoComponent,
+    AltaEmpleadoComponent
   ],
   imports: [
     BrowserModule,
@@ -115,7 +119,9 @@ export function provideSettings(storage: Storage) {
     PagesEmpleadoPage,
     PagesClientePage,
     PagesRegistroUsuarioPage,
-    AltaMesaComponent
+    AltaMesaComponent,
+    AltaDuenoComponent,
+    AltaEmpleadoComponent
   ],
   providers: [
     Api,

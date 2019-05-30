@@ -6,15 +6,23 @@
   </ion-header> -->
 
   <div padding>
-    <button *ngIf="!registrarDuenoSupervisor && !registrarEmpleado" ion-button large color="primary" class="loginButton" (click)="muestraFormularioRegistracion('duenoSupervisor')">Registrar Dueño/Supervisor</button>
+    <button *ngIf="!registrarDuenoSupervisor && !registrarEmpleado" ion-button large color="primary" class="loginButton" (click)="muestraFormularioRegistracion('duenoSupervisor')">Alta Dueño/Supervisor</button>
   </div>
 
   <div padding>
-    <button *ngIf="!registrarEmpleado && !registrarDuenoSupervisor" ion-button large color="primary" class="loginButton" (click)="muestraFormularioRegistracion('empleado')">Registrar Empleado</button>
+    <button *ngIf="!registrarEmpleado && !registrarDuenoSupervisor" ion-button large color="primary" class="loginButton" (click)="muestraFormularioRegistracion('empleado')">Alta Empleado</button>
   </div>
 
   <div padding>
     <button ion-button large color="primary" class="loginButton" (click)="AltaMesa()">Alta Mesa</button>
+  </div>
+
+  <div padding>
+    <button ion-button large color="primary" class="loginButton" (click)="AltaDueno()">Alta Dueño Component</button>
+  </div>
+
+  <div padding>
+    <button ion-button large color="primary" class="loginButton" (click)="AltaEmpleado()">Alta Empleado Component</button>
   </div>
 
   <!--ALTA DE SUPERVISOR -->

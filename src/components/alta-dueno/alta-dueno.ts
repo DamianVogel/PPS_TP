@@ -7,31 +7,19 @@ import { SpinnerPage } from "../../pages/pages-spinner/pages-spinner";
 import { CameraOptions, Camera } from '@ionic-native/camera';
 import { storage } from 'firebase';
 import { BarcodeScanner, BarcodeScannerOptions } from '@ionic-native/barcode-scanner';
-import { AltaMesaComponent } from '../../components/alta-mesa/alta-mesa';
-import { AltaDuenoComponent } from '../../components/alta-dueno/alta-dueno';
-import { AltaEmpleadoComponent } from '../../components/alta-empleado/alta-empleado';
-
-
+import {AltaMesaComponent} from '../../components/alta-mesa/alta-mesa';
 
 /**
- * Generated class for the PagesDuenoPage page.
+ * Generated class for the AltaDueñoComponent component.
  *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
+ * See https://angular.io/api/core/Component for more info on Angular
+ * Components.
  */
-
-@IonicPage()
 @Component({
-  selector: 'page-pages-dueno',
-  templateUrl: 'pages-dueno.html',
+  selector: 'alta-dueno',
+  templateUrl: 'alta-dueno.html'
 })
-export class PagesDuenoPage {
-
-  //Muestra botones:
-  registrarDuenoSupervisor:boolean;
-  registrarEmpleado:boolean;
-  MuestraAltaMesa:boolean;
-
+export class AltaDuenoComponent {
 
   nombre = new FormControl('', [
     Validators.required
@@ -72,7 +60,6 @@ export class PagesDuenoPage {
   ]);
 
   
-  
   registroForm: FormGroup = this.builder.group({
     nombre: this.nombre,
     apellido: this.apellido,
@@ -83,20 +70,6 @@ export class PagesDuenoPage {
     perfil: this.perfil
     
   });
-
-  registroFormEmpleado: FormGroup = this.builder.group({
-    nombre: this.nombre,
-    apellido: this.apellido,
-    dni: this.dni,
-    cuil: this.cuil,
-    email: this.email,
-    clave: this.clave,
-    tipo: this.tipo
-  });
-
-
-
-
 
   validation_messages = {
     'dni': [        
@@ -119,43 +92,16 @@ export class PagesDuenoPage {
     private builder: FormBuilder,
     private camera: Camera,
     private barcodeScanner: BarcodeScanner
-    ) {
-      this.registrarDuenoSupervisor = false;
-      this.registrarEmpleado = false;
+  ) {
+    
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad PagesDuenoPage');
+  Volver(){
+    this.navCtrl.pop();
   }
 
-
-  muestraFormularioRegistracion(tipo){
+  AltaDueno() {
     
-    switch(tipo){
-      case 'duenoSupervisor':
-        if(this.registrarDuenoSupervisor)
-          this.registrarDuenoSupervisor = false;
-        else
-          this.registrarDuenoSupervisor = true;
-      
-      break;
-
-      case 'empleado':
-          if(this.registrarEmpleado)
-            this.registrarEmpleado = false;
-          else
-            this.registrarEmpleado = true;
-    
-      break;
-    }
-  }
-
-
-  Alta(tipo) {
-    
-
-    switch(tipo){
-      case 'duenoSupervisor':
         var usuarioDuenoSupervisor= new Usuario();  
 
         usuarioDuenoSupervisor.nombre= this.registroForm.get('nombre').value;
@@ -190,50 +136,7 @@ export class PagesDuenoPage {
                   this.registroForm.reset();
 
                 }, err => console.log(err));
-      
-      break;
-
-      case 'empleado':
-        let usuarioEmpleado= new Usuario();
-
-        usuarioEmpleado.nombre= this.registroFormEmpleado.get('nombre').value;
-        usuarioEmpleado.apellido= this.registroFormEmpleado.get('apellido').value;
-        usuarioEmpleado.dni= this.registroFormEmpleado.get('dni').value;
-        usuarioEmpleado.cuil = this.registroFormEmpleado.get('cuil').value;
-        usuarioEmpleado.email= this.registroFormEmpleado.get('email').value;
-        usuarioEmpleado.clave= this.registroFormEmpleado.get('clave').value;
-        usuarioEmpleado.perfil = 'empleado';
-        usuarioEmpleado.tipo = this.registroFormEmpleado.get('tipo').value;
-        
-        this.objFirebase.collection("SP_usuarios")
-          .add({
-                  'apellido': usuarioEmpleado.apellido,
-                  'nombre':usuarioEmpleado.nombre,
-                  'email': usuarioEmpleado.email,
-                  'clave': usuarioEmpleado.clave,
-                  'dni': usuarioEmpleado.dni,
-                  'cuil': usuarioEmpleado.cuil,
-                  'perfil':usuarioEmpleado.perfil,
-                  'tipo': usuarioEmpleado.tipo,
-                  'foto': 'usuarios/' + usuarioEmpleado.dni,
-                  'timestamp': Date()
-          }).then(res => {
-
-                  console.log(res);
-                  let toast = this.toastCtrl.create({
-                    message: "Registracion Exitosa!",
-                    duration: 3000,
-                    position: 'middle' //middle || top
-                  });
-                  toast.present();
-
-                  this.registroFormEmpleado.reset();
-
-                }, err => console.log(err));
-      
-      break;
-        
-    }
+    
   }
   
   async SacarFoto(){
@@ -257,6 +160,7 @@ export class PagesDuenoPage {
 
     
   }
+
 
   LeerDni(){
     
@@ -291,31 +195,4 @@ export class PagesDuenoPage {
 
   }
 
-  AltaMesa(){
-    this.navCtrl.push(AltaMesaComponent);
-  }
-
-  AltaDueno(){
-    this.navCtrl.push(AltaDuenoComponent);
-  }
-
-  AltaEmpleado(){
-    this.navCtrl.push(AltaEmpleadoComponent);
-  }
-
-
-
-
-
-  
-
-
-
-
-
 }
-
-
-
-
-
