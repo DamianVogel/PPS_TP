@@ -11,7 +11,7 @@ import {AltaMesaComponent} from '../../components/alta-mesa/alta-mesa';
 
 /**
  * Generated class for the AltaDueñoComponent component.
- *
+ * ionic generate component mycomponent --no-module
  * See https://angular.io/api/core/Component for more info on Angular
  * Components.
  */
