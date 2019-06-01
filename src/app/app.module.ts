@@ -48,7 +48,10 @@ import { PagesSupervisorPageModule } from '../pages/pages-supervisor/pages-super
 import { PagesRegistroUsuarioPageModule } from '../pages/pages-registro-usuario/pages-registro-usuario.module';
 import { CocineroMenuPageModule } from '../pages/pages-cocinero/pages-cocinero-menu/pages-cocinero-menu.module';
 import { BartenderMenuPageModule } from '../pages/pages-bartender/pages-bartender-menu/pages-bartender-menu.module';
-import { ProductoAltaPageModule } from '../pages/pages-producto/pages-producto-alta/pages-producto-alta.module'
+import { ProductoAltaPageModule } from '../pages/pages-producto/pages-producto-alta/pages-producto-alta.module';
+import { PagesReservaPageModule } from '../pages/pages-reserva/pages-reserva.module';
+import { PagesReservaPage } from '../pages/pages-reserva/pages-reserva';
+
 
 
 // The translate loader needs to know where to load i18n files
@@ -99,7 +102,8 @@ export function provideSettings(storage: Storage) {
     PagesRegistroUsuarioPageModule,
     CocineroMenuPageModule,
     BartenderMenuPageModule,
-    ProductoAltaPageModule
+    ProductoAltaPageModule,
+    PagesReservaPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -110,7 +114,8 @@ export function provideSettings(storage: Storage) {
     PagesSupervisorPage,
     PagesEmpleadoPage,
     PagesClientePage,
-    PagesRegistroUsuarioPage
+    PagesRegistroUsuarioPage,
+    PagesReservaPage
   ],
   providers: [
     Api,
