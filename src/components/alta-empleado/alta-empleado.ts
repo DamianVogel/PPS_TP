@@ -9,23 +9,16 @@ import { storage } from 'firebase';
 import { BarcodeScanner, BarcodeScannerOptions } from '@ionic-native/barcode-scanner';
 
 /**
- * Generated class for the PagesSupervisorPage page.
+ * Generated class for the AltaEmpleadoComponent component.
  *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
+ * See https://angular.io/api/core/Component for more info on Angular
+ * Components.
  */
-
-@IonicPage()
 @Component({
-  selector: 'page-pages-supervisor',
-  templateUrl: 'pages-supervisor.html',
+  selector: 'alta-empleado',
+  templateUrl: 'alta-empleado.html'
 })
-export class PagesSupervisorPage {
-
-  //Muestra botones:
-  registrarDuenoSupervisor:boolean;
-  registrarEmpleado:boolean;
-
+export class AltaEmpleadoComponent {
 
   nombre = new FormControl('', [
     Validators.required
@@ -57,26 +50,10 @@ export class PagesSupervisorPage {
     Validators.required
   ]);
 
-  perfil = new FormControl('', [
-    Validators.required
-  ]);
-
   tipo = new FormControl('', [
     Validators.required
   ]);
 
-  
-  
-  registroForm: FormGroup = this.builder.group({
-    nombre: this.nombre,
-    apellido: this.apellido,
-    dni: this.dni,
-    cuil: this.cuil,
-    email: this.email,
-    clave: this.clave,
-    perfil: this.perfil
-    
-  });
 
   registroFormEmpleado: FormGroup = this.builder.group({
     nombre: this.nombre,
@@ -88,22 +65,6 @@ export class PagesSupervisorPage {
     tipo: this.tipo
   });
 
-
-
-
-
-  validation_messages = {
-    'dni': [        
-        { type: 'minlength', message: 'El dni debe ser minimo de 7 caracteres.' },
-        { type: 'maxlength', message: 'El dni debe ser maximo de 8 caracteres.' },       
-    ],
-    'cuil': [
-      { type: 'minlength', message: 'El CUIL debe ser minimo de 10 caracteres.' },
-      { type: 'maxlength', message: 'El CUIL debe ser maximo de 11 caracteres.' },
-    ],
-       
-  }
-
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -113,80 +74,16 @@ export class PagesSupervisorPage {
     private builder: FormBuilder,
     private camera: Camera,
     private barcodeScanner: BarcodeScanner
-    ) {
-      this.registrarDuenoSupervisor = false;
-      this.registrarEmpleado = false;
+  ) {
+    
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad PagesSupervisorPage');
+  Volver(){
+    this.navCtrl.pop();
   }
 
-  muestraFormularioRegistracion(tipo){
-    
-    switch(tipo){
-      case 'duenoSupervisor':
-        if(this.registrarDuenoSupervisor)
-          this.registrarDuenoSupervisor = false;
-        else
-          this.registrarDuenoSupervisor = true;
-      
-      break;
-
-      case 'empleado':
-          if(this.registrarEmpleado)
-            this.registrarEmpleado = false;
-          else
-            this.registrarEmpleado = true;
-    
-      break;
-    }
-  }
-
-
-  Alta(tipo) {
-    
-
-    switch(tipo){
-      case 'duenoSupervisor':
-        var usuarioDuenoSupervisor= new Usuario();  
-
-        usuarioDuenoSupervisor.nombre= this.registroForm.get('nombre').value;
-        usuarioDuenoSupervisor.apellido= this.registroForm.get('apellido').value;
-        usuarioDuenoSupervisor.dni= this.registroForm.get('dni').value;
-        usuarioDuenoSupervisor.cuil = this.registroForm.get('cuil').value;
-        usuarioDuenoSupervisor.email= this.registroForm.get('email').value;
-        usuarioDuenoSupervisor.clave= this.registroForm.get('clave').value;
-        usuarioDuenoSupervisor.perfil = this.registroForm.get('perfil').value;
-        
-        this.objFirebase.collection("SP_usuarios")
-          .add({
-                  'apellido': usuarioDuenoSupervisor.apellido,
-                  'nombre':usuarioDuenoSupervisor.nombre,
-                  'email': usuarioDuenoSupervisor.email,
-                  'clave': usuarioDuenoSupervisor.clave,
-                  'dni': usuarioDuenoSupervisor.dni,
-                  'cuil': usuarioDuenoSupervisor.cuil,
-                  'perfil':usuarioDuenoSupervisor.perfil,
-                  'foto': 'usuarios/' + usuarioDuenoSupervisor.dni,
-                  'timestamp': Date()
-          }).then(res => {
-
-                  console.log(res);
-                  let toast = this.toastCtrl.create({
-                    message: "Registracion Exitosa!",
-                    duration: 3000,
-                    position: 'middle' //middle || top
-                  });
-                  toast.present();
-
-                  this.registroForm.reset();
-
-                }, err => console.log(err));
-      
-      break;
-
-      case 'empleado':
+  AltaEmpleado() {
+   
         let usuarioEmpleado= new Usuario();
 
         usuarioEmpleado.nombre= this.registroFormEmpleado.get('nombre').value;
@@ -223,10 +120,7 @@ export class PagesSupervisorPage {
                   this.registroFormEmpleado.reset();
 
                 }, err => console.log(err));
-      
-      break;
-        
-    }
+    
   }
   
   async SacarFoto(){
@@ -244,7 +138,7 @@ export class PagesSupervisorPage {
      
      const result= await this.camera.getPicture(options);
      
-     const fotos = storage().ref('usuarios/'+ this.registroForm.get('dni').value);
+     const fotos = storage().ref('usuarios/'+ this.registroFormEmpleado.get('dni').value);
      const imagen= 'data:image/jpeg;base64,'+result;
      fotos.putString(imagen,'data_url');
 
@@ -273,9 +167,9 @@ export class PagesSupervisorPage {
       var split = barcodeData.text.split("@");
       console.log(split);
 
-      this.registroForm.controls['nombre'].setValue(split[2]);
-      this.registroForm.controls['apellido'].setValue(split[1]);
-      this.registroForm.controls['dni'].setValue(parseInt(split[4]));
+      this.registroFormEmpleado.controls['nombre'].setValue(split[2]);
+      this.registroFormEmpleado.controls['apellido'].setValue(split[1]);
+      this.registroFormEmpleado.controls['dni'].setValue(parseInt(split[4]));
       
 
       }).catch(err => {
@@ -284,5 +178,11 @@ export class PagesSupervisorPage {
 
   }
 
-  
+
+
+
+
+
+
+
 }

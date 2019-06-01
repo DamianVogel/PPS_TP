@@ -53,6 +53,11 @@ import { PagesReservaPageModule } from '../pages/pages-reserva/pages-reserva.mod
 import { PagesReservaPage } from '../pages/pages-reserva/pages-reserva';
 
 
+//COMPONENT
+import { AltaMesaComponent } from '../components/alta-mesa/alta-mesa';
+import { AltaDuenoComponent } from '../components/alta-dueno/alta-dueno';
+import { AltaEmpleadoComponent } from '../components/alta-empleado/alta-empleado';
+
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
@@ -79,7 +84,10 @@ export function provideSettings(storage: Storage) {
   declarations: [
     MyApp,
     PagesModalPage,
-    SpinnerPage
+    SpinnerPage,
+    AltaMesaComponent,
+    AltaDuenoComponent,
+    AltaEmpleadoComponent
   ],
   imports: [
     BrowserModule,
@@ -115,7 +123,10 @@ export function provideSettings(storage: Storage) {
     PagesEmpleadoPage,
     PagesClientePage,
     PagesRegistroUsuarioPage,
-    PagesReservaPage
+    PagesReservaPage,
+    AltaMesaComponent,
+    AltaDuenoComponent,
+    AltaEmpleadoComponent
   ],
   providers: [
     Api,
