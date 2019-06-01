@@ -1,0 +1,29 @@
+
+
+
+    <div class="contenidoLogin">
+<ion-content padding>
+
+    <ion-item padding style="background-color: rgba(0,0,0,0.7) !important; color: white; border-radius: 10px;">
+        <ion-label>Fecha</ion-label>
+        <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="fecha"></ion-datetime>
+      </ion-item>
+
+    <ion-item padding style="background-color: rgba(0,0,0,0.7) !important; color: white; border-radius: 10px;">
+        <ion-label>Hora</ion-label>
+        <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="hora"></ion-datetime>
+      </ion-item>
+
+      <ion-item padding style="background-color: rgba(0,0,0,0.7) !important; color: white; border-radius: 10px;">
+          <ion-label>Cantidad de comensales</ion-label>
+          <ion-input type="number" [(ngModel)]="cant_comensales"></ion-input>
+        </ion-item>
+
+      <div padding>
+          <button type="submit" class="loginButton" large ion-button color="primary">Reservar</button>
+        </div>
+
+
+
+</ion-content>
+</div>

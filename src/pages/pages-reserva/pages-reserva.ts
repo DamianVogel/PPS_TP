@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { PagesReservaPage } from '../pages-reserva/pages-reserva';
 
 /**
- * Generated class for the PagesClientePage page.
+ * Generated class for the PagesReservaPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -11,23 +10,22 @@ import { PagesReservaPage } from '../pages-reserva/pages-reserva';
 
 @IonicPage()
 @Component({
-  selector: 'page-pages-cliente',
-  templateUrl: 'pages-cliente.html',
+  selector: 'page-pages-reserva',
+  templateUrl: 'pages-reserva.html',
 })
-export class PagesClientePage {
+export class PagesReservaPage {
 
-  reservaPage = PagesReservaPage;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
-  IrA()
-  {
-    this.navCtrl.push(this.reservaPage);
+
   }
 
+fecha:string;
+hora:string;
+cant_comensales:number;
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad PagesClientePage');
+    console.log('ionViewDidLoad PagesReservaPage');
   }
 
 }
