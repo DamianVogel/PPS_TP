@@ -57,6 +57,8 @@ import { PagesReservaPage } from '../pages/pages-reserva/pages-reserva';
 import { AltaMesaComponent } from '../components/alta-mesa/alta-mesa';
 import { AltaDuenoComponent } from '../components/alta-dueno/alta-dueno';
 import { AltaEmpleadoComponent } from '../components/alta-empleado/alta-empleado';
+import { MesasProvider } from '../providers/mesas/mesas';
+import { ReservasProvider } from '../providers/reservas/reservas';
 
 
 // The translate loader needs to know where to load i18n files
@@ -143,7 +145,9 @@ export function provideSettings(storage: Storage) {
     BarcodeScanner,
     { provide: Settings, useFactory: provideSettings, deps: [Storage] },
     // Keep this to enable Ionic's runtime error handling during development
-    { provide: ErrorHandler, useClass: IonicErrorHandler }
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
+    MesasProvider,
+    ReservasProvider
   ]
 })
 export class AppModule {}
