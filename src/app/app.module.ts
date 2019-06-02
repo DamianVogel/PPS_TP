@@ -60,6 +60,10 @@ import { AltaEmpleadoComponent } from '../components/alta-empleado/alta-empleado
 import { MesasProvider } from '../providers/mesas/mesas';
 import { ReservasProvider } from '../providers/reservas/reservas';
 
+//SERVICES
+import { ProductoService } from '../services/producto-service';
+import { CameraService } from '../services/camera-service';
+import { QRService } from '../services/QR-service';
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
@@ -136,7 +140,6 @@ export function provideSettings(storage: Storage) {
     User,
     Camera,
     SplashScreen,
-    //QRScanner,
     NativeAudio,
     BarcodeScanner,
     Shake,
@@ -147,7 +150,11 @@ export function provideSettings(storage: Storage) {
     // Keep this to enable Ionic's runtime error handling during development
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     MesasProvider,
-    ReservasProvider
+    ReservasProvider,
+    // Services
+    ProductoService,
+    CameraService,
+    QRService
   ]
 })
 export class AppModule {}

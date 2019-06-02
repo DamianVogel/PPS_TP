@@ -26,18 +26,6 @@ export class CocineroMenuPage {
           this.navCtrl.push(ProductoAltaPage);
         }
       }, {
-        text: 'Modificar',
-        icon: 'build',
-        handler: () => {
-          //console.log('Share clicked');
-        }
-      }, {
-        text: 'Borrar',
-        icon: 'trash',
-        handler: () => {
-          //console.log('Play clicked');
-        }
-      }, {
         text: 'Cancelar',
         icon: 'close',
         role: 'cancel',
