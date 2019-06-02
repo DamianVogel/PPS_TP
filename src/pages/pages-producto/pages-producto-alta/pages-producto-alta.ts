@@ -1,59 +1,46 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController, AlertController } from 'ionic-angular';
 import { Producto } from '../../../clases/Producto';
-import { Camera, CameraOptions } from '@ionic-native/camera';
+import { showAlert, round, uploadImage, wait, spin} from '../../../environments/environment';
 
-import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
+//Services
+import { ProductoService } from '../../../services/producto-service';
+import { CameraService } from '../../../services/camera-service';
+import { QRService } from '../../../services/QR-service';
 
-import { Observable } from 'rxjs/Observable';
-
-import { BarcodeScanner } from '@ionic-native/barcode-scanner';
-
-import { showAlert, spin, wait, uploadImage, round } from '../../../environments/environment';
- 
 @IonicPage()
 @Component({
   selector: 'page-alta',
   templateUrl: 'pages-producto-alta.html',
 })
 export class ProductoAltaPage {
-
+  
   producto: Producto;
-  private spinner;
   photoData: Array<any>;
 
   foto1Disabled = false;
   foto2Disabled = false;
   foto3Disabled = false;
 
-  private listaProductosFirebase: AngularFirestoreCollection<Producto>;
-  private listaProductosObservable: Observable<Producto[]>;
-
-  productos: Array<any>;
+  productos: Producto[];
 
   constructor(
     public alertCtrl: AlertController,
     public navCtrl: NavController, 
-    private camera: Camera,
     public modalCtrl: ModalController,
     public navParams: NavParams,
-    private objFirebase: AngularFirestore,
-    private barcodeScanner: BarcodeScanner) {
+    private productoService: ProductoService,
+    private cameraService: CameraService,
+    private qrService: QRService) {
       this.producto = new Producto();
       this.photoData = new Array<any>();
-      this.traerProductos();
   }
 
-  traerProductos() {
-    this.listaProductosFirebase = this.objFirebase.collection<Producto>("SP_productos", ref => ref.orderBy('nombre', 'desc') );
-    this.listaProductosObservable = this.listaProductosFirebase.valueChanges();
-    this.listaProductosObservable.subscribe(arr => {
+  ionViewWillEnter(){
+    this.productoService.traerProductos().subscribe(arr => {
       console.info("Conexión correcta con Firebase: productos", arr);
-      this.productos = new Array<any>();
-      arr.forEach((x: Producto) => {
-        this.productos.push(x);
-      });
-    });
+      this.productos = arr;
+    });;
   }
 
   cargar() {
@@ -70,15 +57,11 @@ export class ProductoAltaPage {
       if(this.producto.foto2 !== "") productoAGuardar.setFoto2();
       if(this.producto.foto3 !== "") productoAGuardar.setFoto3();
 
-      let productoAGuardarJSON = productoAGuardar.dameJSON();
-      
-      spin(this.modalCtrl, this.spinner, true);
+      spin(this.modalCtrl, true);
 
-      this.objFirebase.collection<Producto>("SP_productos").add(productoAGuardarJSON)
-      .then(ret => {
+      this.productoService.cargarProducto(productoAGuardar.dameJSON()).then(() => {
         if(this.photoData.length !== 0){
           this.photoData.forEach((photo:any) => {
-            //TODO Probar subir fotos
             if(photo.foto === "foto1"){
               uploadImage(photo.imageData, productoAGuardar.foto1);
             }
@@ -90,21 +73,20 @@ export class ProductoAltaPage {
             }
             wait(5000);
           });
-        }
+        };
+        spin(this.modalCtrl, false);
         showAlert(this.alertCtrl,"Exito","Producto dado de alta exitosamente");
         this.navCtrl.pop();
-        spin(this.modalCtrl, this.spinner, false);
       })
       .catch( error => {
         console.log(error);
-        spin(this.modalCtrl, this.spinner, false);
+        spin(this.modalCtrl, false);
       });
-
     }
   }
 
   cargarConQR() {
-    this.barcodeScanner.scan().then(barcodeData => {
+    this.qrService.readQR().then(barcodeData => {
         try{
           this.producto = JSON.parse(barcodeData.text);
         } catch(err) {
@@ -116,17 +98,7 @@ export class ProductoAltaPage {
   }
 
   sacarFoto(foto: string){
-    const options: CameraOptions = {
-      quality: 60,
-      destinationType: this.camera.DestinationType.DATA_URL,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE,
-      correctOrientation: true,
-      saveToPhotoAlbum: false
-    }
-    
-    this.camera.getPicture(options).then((imageData) => {
-
+    this.cameraService.takePhoto().then((imageData) => {
       this.photoData.push({
         "foto": foto,
         "imageData": imageData
@@ -140,7 +112,6 @@ export class ProductoAltaPage {
     }).catch((erro) => { 
       showAlert(this.alertCtrl,"Error",erro);
     });
-
   }
 
   validarCampos(){

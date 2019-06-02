@@ -13,8 +13,6 @@ import { ProductoAltaPage } from '../pages-producto-alta/pages-producto-alta';
 export class ProductoMenuPage {
 
   alta = ProductoAltaPage;
-  //baja = AboutPage;
-  //modificacion = ContactPage;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }

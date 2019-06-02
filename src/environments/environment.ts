@@ -7,6 +7,8 @@
 import { SpinnerPage } from "../pages/pages-spinner/pages-spinner";
 import * as firebase from 'firebase';
 
+export let spinner = undefined;
+
 export const environment = {
     production: false,
     firebase: {
@@ -36,7 +38,7 @@ export const showAlert = function (alertCtrl: any, title: string, message: strin
   alert.present();
 }
 
-export const spin = function (modalCtrl:any, spinner:any, status: boolean) {
+export const spin = function (modalCtrl:any, status: boolean) {
   if(spinner === undefined && status === true) {
     spinner = modalCtrl.create(SpinnerPage);
     spinner.present();
