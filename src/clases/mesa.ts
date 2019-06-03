@@ -3,7 +3,8 @@ export class Mesa {
   numero: number;         
   cantidadComensales: number;     
   tipoMesa: string;       
-  codigoQr: string;      
+  codigoQr: string;  
+  estado: string;   //Estados: {"disponible", "ocupada", "reservada" } 
          
   constructor(){
     
