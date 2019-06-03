@@ -62,7 +62,7 @@ export class PagesDuenoPage {
   }
 
   ChequearMesa(){
-    this.mesasProvider.EstadoMesa();
+    this.mesasProvider.Prueba();
   }
 
 

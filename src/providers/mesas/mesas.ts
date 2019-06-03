@@ -28,7 +28,8 @@ export class MesasProvider {
     private objFirebase: AngularFirestore,
     private qrService: QRService   
     ) {  
-    this.TraerMesas();
+    //this.TraerMesas();
+    //this.MesasDisponibles();
   }
 
   TraerMesas()
@@ -38,7 +39,10 @@ export class MesasProvider {
     this.listaMesasObservable.subscribe(arr => {
      // console.info("Conexión correcta con Firebase: mesas", arr);
       //this.mesas = new Array<any>();
+      //console.log(arr);
+      
       arr.forEach((x: Mesa) => {
+        
         this.mesas.push(x);
        
       });
@@ -73,6 +77,46 @@ export class MesasProvider {
 
 
   }
+
+  MesasDisponibles(){
+    let mesasFiltradas = [];
+    mesasFiltradas = this.mesas.filter(mesas => mesas.estado == 'disponible');
+    return mesasFiltradas;
+  }
+
+  Prueba(){
+    console.log("entro");
+    //const racesCollection: AngularFirestoreCollection<Mesa>;
+    this.listaMesasFirebase = this.objFirebase.collection<any>("SP_mesas");
+    
+    this.listaMesasObservable =  this.listaMesasFirebase.snapshotChanges().map(actions => {       
+       return actions.map(a => {
+        const mesa = a.payload.doc.data() as Mesa;
+        mesa.docId = a.payload.doc.id;
+        //console.log(mesa);
+        return mesa;
+      });
+    });
+
+    console.log(this.listaMesasObservable);
+
+    // this.listaMesasObservable.subscribe(arr => {
+    //   // console.info("Conexión correcta con Firebase: mesas", arr);
+    //    //this.mesas = new Array<any>();
+    //    console.log(arr);
+       
+    //    arr.forEach((x: Mesa) => {
+         
+    //      this.mesas.push(x);
+        
+    //    });
+    // });
+
+    // console.log(this.mesas);
+
+
+  }
+
 
 
 }
