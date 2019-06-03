@@ -1,30 +1,23 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { PagesReservaPage } from '../pages-reserva/pages-reserva';
-
-/**
- * Generated class for the PagesClientePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { PagesReservaPage } from '../../pages-reserva/pages-reserva';
 
 @IonicPage()
 @Component({
-  selector: 'page-pages-cliente',
-  templateUrl: 'pages-cliente.html',
+  selector: 'pages-cliente-menu',
+  templateUrl: 'pages-cliente-menu.html',
 })
-export class PagesClientePage {
+export class PagesClienteMenuPage {
 
   reservaPage = PagesReservaPage;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
-  IrA()
+
+  reserva()
   {
     this.navCtrl.push(this.reservaPage);
   }
-
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad PagesClientePage');
