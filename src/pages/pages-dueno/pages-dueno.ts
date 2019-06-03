@@ -1,15 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController, ModalController } from 'ionic-angular';
-import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
-import { Validators, FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { Usuario } from '../../clases/usuario';
-import { SpinnerPage } from "../../pages/pages-spinner/pages-spinner";
-import { CameraOptions, Camera } from '@ionic-native/camera';
-import { storage } from 'firebase';
-import { BarcodeScanner, BarcodeScannerOptions } from '@ionic-native/barcode-scanner';
 import { AltaMesaComponent } from '../../components/alta-mesa/alta-mesa';
 import { AltaDuenoComponent } from '../../components/alta-dueno/alta-dueno';
 import { AltaEmpleadoComponent } from '../../components/alta-empleado/alta-empleado';
+import { MesasProvider } from '../../providers/mesas/mesas';
 
 
 
@@ -44,11 +38,8 @@ export class PagesDuenoPage {
     public navCtrl: NavController, 
     public navParams: NavParams,
     public toastCtrl: ToastController,
-    private objFirebase: AngularFirestore,
     public modalVotacion: ModalController,
-    private builder: FormBuilder,
-    private camera: Camera,
-    private barcodeScanner: BarcodeScanner
+    private mesasProvider: MesasProvider
     ) {
 
     }
@@ -69,6 +60,11 @@ export class PagesDuenoPage {
   AltaEmpleado(){
     this.navCtrl.push(AltaEmpleadoComponent);
   }
+
+  ChequearMesa(){
+    this.mesasProvider.EstadoMesa();
+  }
+
 
 
 
