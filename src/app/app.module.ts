@@ -43,6 +43,7 @@ import { PagesClienteMenuPage } from '../pages/pages-cliente/pages-cliente-menu/
 import { PagesClienteAnonimoPage } from '../pages/pages-cliente-anonimo/pages-cliente-anonimo';
 import { PagesClienteAnonimoMenuPage } from '../pages/pages-cliente-anonimo/pages-cliente-anonimo-menu/pages-cliente-anonimo-menu';
 import { PagesRegistroUsuarioPage } from '../pages/pages-registro-usuario/pages-registro-usuario';
+import { ListaDeEsperaMenuPage } from '../pages/pages-lista-de-espera/pages-lista-de-espera-menu/pages-lista-de-espera-menu';
 import { PagesClienteMenuPageModule } from '../pages/pages-cliente/pages-cliente-menu/pages-cliente-menu.module';
 import { PagesClienteAnonimoPageModule } from '../pages/pages-cliente-anonimo/pages-cliente-anonimo.module';
 import { PagesClienteAnonimoMenuPageModule } from '../pages/pages-cliente-anonimo/pages-cliente-anonimo-menu/pages-cliente-anonimo-menu.module';
@@ -54,8 +55,8 @@ import { CocineroMenuPageModule } from '../pages/pages-cocinero/pages-cocinero-m
 import { BartenderMenuPageModule } from '../pages/pages-bartender/pages-bartender-menu/pages-bartender-menu.module';
 import { ProductoAltaPageModule } from '../pages/pages-producto/pages-producto-alta/pages-producto-alta.module';
 import { PagesReservaPageModule } from '../pages/pages-reserva/pages-reserva.module';
+import { ListaDeEsperaMenuPageModule } from '../pages/pages-lista-de-espera/pages-lista-de-espera-menu/pages-lista-de-espera-menu.module';
 import { PagesReservaPage } from '../pages/pages-reserva/pages-reserva';
-
 
 //COMPONENT
 import { AltaMesaComponent } from '../components/alta-mesa/alta-mesa';
@@ -68,6 +69,7 @@ import { ReservasProvider } from '../providers/reservas/reservas';
 import { ProductoService } from '../services/producto-service';
 import { CameraService } from '../services/camera-service';
 import { QRService } from '../services/QR-service';
+import { UsuarioService } from '../services/usuario-service';
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
@@ -123,7 +125,8 @@ export function provideSettings(storage: Storage) {
     CocineroMenuPageModule,
     BartenderMenuPageModule,
     ProductoAltaPageModule,
-    PagesReservaPageModule
+    PagesReservaPageModule,
+    ListaDeEsperaMenuPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -138,6 +141,7 @@ export function provideSettings(storage: Storage) {
     PagesClienteAnonimoMenuPage,
     PagesRegistroUsuarioPage,
     PagesReservaPage,
+    ListaDeEsperaMenuPage,
     AltaMesaComponent,
     AltaDuenoComponent,
     AltaEmpleadoComponent
@@ -162,7 +166,8 @@ export function provideSettings(storage: Storage) {
     // Services
     ProductoService,
     CameraService,
-    QRService
+    QRService,
+    UsuarioService
   ]
 })
 export class AppModule {}
