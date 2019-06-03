@@ -21,7 +21,8 @@ import { SpinnerPage } from "../../pages/pages-spinner/pages-spinner";
 import { PagesDuenoPage } from "../pages-dueno/pages-dueno";
 import { PagesSupervisorPage } from "../pages-supervisor/pages-supervisor";
 import { PagesEmpleadoPage } from "../pages-empleado/pages-empleado";
-import { PagesClientePage } from "../pages-cliente/pages-cliente";
+import { PagesClienteMenuPage } from "../pages-cliente/pages-cliente-menu/pages-cliente-menu";
+import { PagesClienteAnonimoPage } from "../pages-cliente-anonimo/pages-cliente-anonimo";
 import { PagesRegistroUsuarioPage } from "../pages-registro-usuario/pages-registro-usuario";
 import { BartenderMenuPage } from "../pages-bartender/pages-bartender-menu/pages-bartender-menu";
 import { CocineroMenuPage } from "../pages-cocinero/pages-cocinero-menu/pages-cocinero-menu";
@@ -63,12 +64,7 @@ export class LoginPage {
 
   doLogin() {
     if (this.loginFields.email == "" || this.loginFields.clave == "") {
-      let toast = this.toastCtrl.create({
-        message: "Debe ingresar todos los datos.",
-        duration: 4000,
-        position: "top"
-      });
-      toast.present();
+      this.navCtrl.push(PagesClienteAnonimoPage);
     } else {
       let modal = this.modalVotacion.create(SpinnerPage);
       modal.present();
@@ -114,7 +110,7 @@ export class LoginPage {
               break;
 
             case "cliente":
-              this.navCtrl.push(PagesClientePage);
+              this.navCtrl.push(PagesClienteMenuPage);
               break;
 
             case "dueno":
@@ -193,11 +189,11 @@ export class LoginPage {
           }
         },
         {
-          text: "Cliente",
+          text: "Cliente Anónimo",
           icon: "people",
           cssClass: "loginProfileButton",
           handler: () => {
-            this.loadLoginFields("cliente@comanda.com", "1234");
+            this.loadLoginFields("", "");
           }
         },
         {

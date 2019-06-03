@@ -39,9 +39,13 @@ import { SpinnerPage } from '../pages/pages-spinner/pages-spinner';
 import { PagesDuenoPage } from '../pages/pages-dueno/pages-dueno';
 import { PagesSupervisorPage } from '../pages/pages-supervisor/pages-supervisor';
 import { PagesEmpleadoPage } from '../pages/pages-empleado/pages-empleado';
-import { PagesClientePage } from '../pages/pages-cliente/pages-cliente';
+import { PagesClienteMenuPage } from '../pages/pages-cliente/pages-cliente-menu/pages-cliente-menu';
+import { PagesClienteAnonimoPage } from '../pages/pages-cliente-anonimo/pages-cliente-anonimo';
+import { PagesClienteAnonimoMenuPage } from '../pages/pages-cliente-anonimo/pages-cliente-anonimo-menu/pages-cliente-anonimo-menu';
 import { PagesRegistroUsuarioPage } from '../pages/pages-registro-usuario/pages-registro-usuario';
-import { PagesClientePageModule } from '../pages/pages-cliente/pages-cliente.module';
+import { PagesClienteMenuPageModule } from '../pages/pages-cliente/pages-cliente-menu/pages-cliente-menu.module';
+import { PagesClienteAnonimoPageModule } from '../pages/pages-cliente-anonimo/pages-cliente-anonimo.module';
+import { PagesClienteAnonimoMenuPageModule } from '../pages/pages-cliente-anonimo/pages-cliente-anonimo-menu/pages-cliente-anonimo-menu.module';
 import { PagesDuenoPageModule } from '../pages/pages-dueno/pages-dueno.module';
 import { PagesEmpleadoPageModule } from '../pages/pages-empleado/pages-empleado.module';
 import { PagesSupervisorPageModule } from '../pages/pages-supervisor/pages-supervisor.module';
@@ -109,7 +113,9 @@ export function provideSettings(storage: Storage) {
     }),
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
-    PagesClientePageModule,
+    PagesClienteMenuPageModule,
+    PagesClienteAnonimoPageModule,
+    PagesClienteAnonimoMenuPageModule,
     PagesDuenoPageModule,
     PagesEmpleadoPageModule,
     PagesSupervisorPageModule,
@@ -127,7 +133,9 @@ export function provideSettings(storage: Storage) {
     PagesDuenoPage,
     PagesSupervisorPage,
     PagesEmpleadoPage,
-    PagesClientePage,
+    PagesClienteMenuPage,
+    PagesClienteAnonimoPage,
+    PagesClienteAnonimoMenuPage,
     PagesRegistroUsuarioPage,
     PagesReservaPage,
     AltaMesaComponent,
