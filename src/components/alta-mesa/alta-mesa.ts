@@ -12,11 +12,11 @@ import { storage } from 'firebase';
 })
 export class AltaMesaComponent {
 
-  numero = new FormControl('', [
+  numero = new FormControl(null, [
     Validators.required
   ]);
 
-  cantidadComensales = new FormControl('', [
+  cantidadComensales = new FormControl(null, [
     Validators.required
   ]);
 
@@ -44,36 +44,47 @@ export class AltaMesaComponent {
 
   }
 
-  AltaMesa() {
-    var nuevaMesa = new Mesa();
+  AltaMesa(){
+    var nuevaMesa= new Mesa();  
 
-    nuevaMesa.numero = this.altaMesaForm.get('numero').value;
-    nuevaMesa.cantidadComensales = this.altaMesaForm.get('cantidadComensales').value;
-    nuevaMesa.tipoMesa = this.altaMesaForm.get('tipoMesa').value;
+    nuevaMesa.numero= parseInt(this.altaMesaForm.get('numero').value);
+    nuevaMesa.cantidadComensales= parseInt(this.altaMesaForm.get('cantidadComensales').value);
+    nuevaMesa.tipoMesa= this.altaMesaForm.get('tipoMesa').value;
+    
+      
+      //this.barcodeScanner.encode(this.barcodeScanner.Encode.TEXT_TYPE, nuevaMesa).then((encodedData) => {
+  
+          //console.log(encodedData);
+          //nuevaMesa.codigoQr = encodedData;
+  
+          this.objFirebase.collection("SP_mesas")
+          .add({
+                  
+              'numero': nuevaMesa.numero,
+              'cantidadComensales':nuevaMesa.cantidadComensales,
+              'tipoMesa': nuevaMesa.tipoMesa,
+              'estado':'disponible',
+              'timestamp': Date()
+                  
+          }).then(res => {
 
-    this.objFirebase.collection("SP_mesas")
-      .add({
+                  console.log(res);
+                  let toast = this.toastCtrl.create({
+                    message: "Alta de Mesa correcta!",
+                    duration: 3000,
+                    position: 'middle' //middle || top
+                  });
+                  toast.present();
 
-        'numero': nuevaMesa.numero,
-        'cantidadComensales': nuevaMesa.cantidadComensales,
-        'tipoMesa': nuevaMesa.tipoMesa,
-        //'codigoQr': encodedData,
-        'timestamp': Date()
+                  this.altaMesaForm.reset();
 
-      }).then(res => {
+                }, err => console.log(err));
 
-        console.log(res);
-        let toast = this.toastCtrl.create({
-          message: "Alta de Mesa correcta!",
-          duration: 3000,
-          position: 'middle' //middle || top
-        });
-        toast.present();
-
-        this.altaMesaForm.reset();
-
-      }, err => console.log(err));
-
+    //  }, (err) => {
+    //      console.log("Error occured : " + err);
+    //  });                 
+     
+    
   }
 
   Volver() {

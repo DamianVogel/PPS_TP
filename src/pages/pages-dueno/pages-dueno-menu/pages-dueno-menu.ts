@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams, ToastController, ModalController, 
 import { AltaMesaComponent } from '../../../components/alta-mesa/alta-mesa';
 import { AltaDuenoComponent } from '../../../components/alta-dueno/alta-dueno';
 import { AltaEmpleadoComponent } from '../../../components/alta-empleado/alta-empleado';
-import { ProductoAltaPage } from '../../pages-producto/pages-producto-alta/pages-producto-alta';
+import { MesasProvider } from '../../../providers/mesas/mesas';
 
 @IonicPage()
 @Component({
@@ -28,9 +28,10 @@ export class PagesDuenoMenuPage {
     public navCtrl: NavController, 
     public navParams: NavParams,
     public toastCtrl: ToastController,
-    public modalVotacion: ModalController, 
+    public modalVotacion: ModalController,
+    private mesasProvider: MesasProvider, 
     public actionSheetController: ActionSheetController
-  ) {
+    ) {
 
   }
 
@@ -62,6 +63,10 @@ export class PagesDuenoMenuPage {
       }]
     });
     actionSheet.present();
+  }
+
+  ChequearMesa(){
+    this.mesasProvider.ActualizarMesa();
   }
 }
 
