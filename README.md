@@ -32,6 +32,15 @@
   2) La foto se tomará del celular.
   3) Brindar la posibilidad de contar con un lector de código QR para el DNI, que cargará la información disponible (sólo aplicable a aquellos documentos que lo posean).
   4) Esta acción la podrá realizar el supervisor o el dueño.
+
+  #### Lectura de QR ### (01/06 al 08/06)
+
+  1) Lectura de estado de mesa via QR.
+  2) Para relacionar al cliente con una mesa.
+  3) Para ver el estado del pedido.
+  4) Para acceder a la encuesta de satisfacción.
+  
+
   
 ## ==========================================
 

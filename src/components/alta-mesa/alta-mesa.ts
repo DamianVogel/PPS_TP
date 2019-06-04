@@ -21,11 +21,11 @@ import { BarcodeScanner, BarcodeScannerOptions } from '@ionic-native/barcode-sca
 export class AltaMesaComponent {
 
   
-  numero = new FormControl('', [
+  numero = new FormControl(null, [
     Validators.required
   ]);
 
-  cantidadComensales = new FormControl('', [
+  cantidadComensales = new FormControl(null, [
     Validators.required
   ]);
 
@@ -59,8 +59,8 @@ export class AltaMesaComponent {
   AltaMesa(){
     var nuevaMesa= new Mesa();  
 
-    nuevaMesa.numero= this.altaMesaForm.get('numero').value;
-    nuevaMesa.cantidadComensales= this.altaMesaForm.get('cantidadComensales').value;
+    nuevaMesa.numero= parseInt(this.altaMesaForm.get('numero').value);
+    nuevaMesa.cantidadComensales= parseInt(this.altaMesaForm.get('cantidadComensales').value);
     nuevaMesa.tipoMesa= this.altaMesaForm.get('tipoMesa').value;
     
       
@@ -75,7 +75,7 @@ export class AltaMesaComponent {
               'numero': nuevaMesa.numero,
               'cantidadComensales':nuevaMesa.cantidadComensales,
               'tipoMesa': nuevaMesa.tipoMesa,
-              //'codigoQr': encodedData,
+              'estado':'disponible',
               'timestamp': Date()
                   
           }).then(res => {
@@ -96,10 +96,6 @@ export class AltaMesaComponent {
     //      console.log("Error occured : " + err);
     //  });                 
      
-
-
-
-
     
   }
 
