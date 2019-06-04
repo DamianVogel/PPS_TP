@@ -18,7 +18,7 @@ import {
 import { User } from "../../providers";
 import { SpinnerPage } from "../../pages/pages-spinner/pages-spinner";
 
-import { PagesDuenoPage } from "../pages-dueno/pages-dueno";
+import { PagesDuenoMenuPage } from "../pages-dueno/pages-dueno-menu/pages-dueno-menu";
 import { PagesSupervisorPage } from "../pages-supervisor/pages-supervisor";
 import { PagesEmpleadoPage } from "../pages-empleado/pages-empleado";
 import { PagesClienteMenuPage } from "../pages-cliente/pages-cliente-menu/pages-cliente-menu";
@@ -114,7 +114,7 @@ export class LoginPage {
               break;
 
             case "dueno":
-              this.navCtrl.push(PagesDuenoPage);
+              this.navCtrl.push(PagesDuenoMenuPage);
               break;
 
             default:

@@ -36,7 +36,7 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 //PAGES
 import { PagesModalPage } from "../pages/pages-modal/pages-modal";
 import { SpinnerPage } from '../pages/pages-spinner/pages-spinner';
-import { PagesDuenoPage } from '../pages/pages-dueno/pages-dueno';
+import { PagesDuenoMenuPage } from '../pages/pages-dueno/pages-dueno-menu/pages-dueno-menu';
 import { PagesSupervisorPage } from '../pages/pages-supervisor/pages-supervisor';
 import { PagesEmpleadoPage } from '../pages/pages-empleado/pages-empleado';
 import { PagesClienteMenuPage } from '../pages/pages-cliente/pages-cliente-menu/pages-cliente-menu';
@@ -47,7 +47,7 @@ import { ListaDeEsperaMenuPage } from '../pages/pages-lista-de-espera/pages-list
 import { PagesClienteMenuPageModule } from '../pages/pages-cliente/pages-cliente-menu/pages-cliente-menu.module';
 import { PagesClienteAnonimoPageModule } from '../pages/pages-cliente-anonimo/pages-cliente-anonimo.module';
 import { PagesClienteAnonimoMenuPageModule } from '../pages/pages-cliente-anonimo/pages-cliente-anonimo-menu/pages-cliente-anonimo-menu.module';
-import { PagesDuenoPageModule } from '../pages/pages-dueno/pages-dueno.module';
+import { PagesDuenoMenuPageModule } from '../pages/pages-dueno/pages-dueno-menu/pages-dueno-menu.module';
 import { PagesEmpleadoPageModule } from '../pages/pages-empleado/pages-empleado.module';
 import { PagesSupervisorPageModule } from '../pages/pages-supervisor/pages-supervisor.module';
 import { PagesRegistroUsuarioPageModule } from '../pages/pages-registro-usuario/pages-registro-usuario.module';
@@ -118,7 +118,7 @@ export function provideSettings(storage: Storage) {
     PagesClienteMenuPageModule,
     PagesClienteAnonimoPageModule,
     PagesClienteAnonimoMenuPageModule,
-    PagesDuenoPageModule,
+    PagesDuenoMenuPageModule,
     PagesEmpleadoPageModule,
     PagesSupervisorPageModule,
     PagesRegistroUsuarioPageModule,
@@ -133,7 +133,7 @@ export function provideSettings(storage: Storage) {
     MyApp,
     PagesModalPage,
     SpinnerPage,
-    PagesDuenoPage,
+    PagesDuenoMenuPage,
     PagesSupervisorPage,
     PagesEmpleadoPage,
     PagesClienteMenuPage,
