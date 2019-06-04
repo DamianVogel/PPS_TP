@@ -98,24 +98,30 @@ export class MesasProvider {
     return mesasFiltradas;
   }
 
-  Pruebas(){
-  
-    //const racesCollection: AngularFirestoreCollection<Mesa>;
+  TraerMesasConId(){
     this.listaMesasFirebase = this.objFirebase.collection<any>("SP_mesas");
     
-    this.listaMesasObservable =  this.listaMesasFirebase.snapshotChanges().map(actions => {       
-       return actions.map(a => {
-        const mesa = a.payload.doc.data() as Mesa;
-        mesa.docId = a.payload.doc.id;
-        //console.log(mesa);
-        return mesa;
-      });
-    });
-
-    console.log(this.listaMesasObservable);
+    this.listaMesasFirebase.snapshotChanges().subscribe( (mesas)=>{
+      var mesasArray = [];
+      mesas.forEach((mesaObservable: any) => {
+        mesasArray.push({
+          id: mesaObservable.payload.doc.id,
+          data: mesaObservable.payload.doc.data()
+        });
+      })
+      console.log(mesasArray);
+    })
 
   }
 
-
+  ActualizarMesa(){
+    
+    this.objFirebase.collection("SP_mesas").doc('PbRaBSRdPBB8HHWhWdEc').set({tipoMesa:'actualizado'}).then(() => {
+     
+      console.log('Documento editado exitósamente');
+    }, (error) => {
+      console.log(error);
+    });
+  }
 
 }
