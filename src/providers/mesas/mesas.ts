@@ -1,8 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFirestoreCollection, AngularFirestore } from 'angularfire2/firestore';
+import { ToastController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { Mesa } from '../../clases/mesa';
+
 
 
 //servicios
@@ -26,7 +28,8 @@ export class MesasProvider {
   constructor(
     public http: HttpClient,  
     private objFirebase: AngularFirestore,
-    private qrService: QRService   
+    private qrService: QRService,
+    public toastCtrl: ToastController,   
     ) {  
     //this.TraerMesas();
     //this.MesasDisponibles();
@@ -51,26 +54,37 @@ export class MesasProvider {
   }
 
   EstadoMesa(){
-    /*
-    const opciones: BarcodeScannerOptions = {
-      preferFrontCamera : false, // iOS and Android
-      showFlipCameraButton : true, // iOS and Android
-      showTorchButton : true, // iOS and Android
-      torchOn: true, // Android, launch with the torch switched on (if available)
-      //saveHistory: true, // Android, save scan history (default false)
-      prompt : "Scanee el DNI", // Android
-      resultDisplayDuration: 500, // Android, display scanned text for X ms. 0 suppresses it entirely, default 1500
-      formats : "PDF_417", // default: all but PDF_417 and RSS_EXPANDED
-      orientation : "landscape", // Android only (portrait|landscape), default unset so it rotates with the device
-      disableAnimations : true, // iOS
-      disableSuccessBeep: false // iOS and Android
-    }
-    */
-    
+    this.TraerMesas();
+
     this.qrService.readQR().then(QRdata => {
-      //console.log('Barcode data', barcodeData);
+      
       console.log(QRdata.text);
-    
+      let flag = false;
+      this.mesas.forEach((mesa:Mesa) =>{
+        
+
+        if(mesa.numero == parseInt(QRdata.text)){
+          flag = true;
+          let toast = this.toastCtrl.create({            
+            message: "La mesa nro: "+QRdata.text +" se encuentra "+ mesa.estado+".",
+            duration: 3000,
+            position: 'middle' //middle || top
+          });
+          toast.present();
+          
+        }
+
+      });
+
+      if(!flag){
+        let toast = this.toastCtrl.create({            
+          message: "Codigo QR incorrecto",
+          duration: 3000,
+          position: 'middle' //middle || top
+        });
+        toast.present();
+      }
+
       }).catch(err => {
          console.log('Error', err);
     });
@@ -84,8 +98,8 @@ export class MesasProvider {
     return mesasFiltradas;
   }
 
-  Prueba(){
-    console.log("entro");
+  Pruebas(){
+  
     //const racesCollection: AngularFirestoreCollection<Mesa>;
     this.listaMesasFirebase = this.objFirebase.collection<any>("SP_mesas");
     
@@ -99,21 +113,6 @@ export class MesasProvider {
     });
 
     console.log(this.listaMesasObservable);
-
-    // this.listaMesasObservable.subscribe(arr => {
-    //   // console.info("Conexión correcta con Firebase: mesas", arr);
-    //    //this.mesas = new Array<any>();
-    //    console.log(arr);
-       
-    //    arr.forEach((x: Mesa) => {
-         
-    //      this.mesas.push(x);
-        
-    //    });
-    // });
-
-    // console.log(this.mesas);
-
 
   }
 
