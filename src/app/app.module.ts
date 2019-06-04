@@ -70,6 +70,8 @@ import { ProductoService } from '../services/producto-service';
 import { CameraService } from '../services/camera-service';
 import { QRService } from '../services/QR-service';
 import { UsuarioService } from '../services/usuario-service';
+import { PagesEncuestasUsuariosPage } from '../pages/pages-encuestas/pages-encuestas-usuarios/pages-encuestas-usuarios';
+import { PagesEncuestasUsuariosPageModule } from '../pages/pages-encuestas/pages-encuestas-usuarios/pages-encuestas-usuarios.module';
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
@@ -126,7 +128,8 @@ export function provideSettings(storage: Storage) {
     BartenderMenuPageModule,
     ProductoAltaPageModule,
     PagesReservaPageModule,
-    ListaDeEsperaMenuPageModule
+    ListaDeEsperaMenuPageModule,
+    PagesEncuestasUsuariosPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -142,6 +145,7 @@ export function provideSettings(storage: Storage) {
     PagesRegistroUsuarioPage,
     PagesReservaPage,
     ListaDeEsperaMenuPage,
+    PagesEncuestasUsuariosPage,
     AltaMesaComponent,
     AltaDuenoComponent,
     AltaEmpleadoComponent
