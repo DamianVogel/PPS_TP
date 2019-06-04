@@ -31,6 +31,15 @@ export class UsuarioService {
     return this.objFirebase.collection<Usuario>("SP_usuarios").add(productoAGuardarJSON);
   }
 
+  validarUsuarioExiste(usuarios: Usuario[], nombre: string){
+    if(usuarios.filter(function(user){
+      return user.nombre === nombre
+    }).length === 1){
+      return true
+    }
+    return false;
+  }
+
   traerListaDeEspera(){
     this.listaEsperaFirebase = this.objFirebase.collection<any>("SP_listaEspera", ref => ref.orderBy('fecha', 'asc') );
     this.listaEsperaObservable = this.listaEsperaFirebase.valueChanges();
