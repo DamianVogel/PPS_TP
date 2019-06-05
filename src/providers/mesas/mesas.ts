@@ -5,12 +5,8 @@ import { ToastController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { Mesa } from '../../clases/mesa';
 
-
-
 //servicios
 import { QRService } from '../../services/QR-service';
-import { dateDataSortValue } from 'ionic-angular/umd/util/datetime-util';
-
 
 /*
   Generated class for the MesasProvider provider.
@@ -116,41 +112,25 @@ export class MesasProvider {
           data: mesaObservable.payload.doc.data()
         });
       })
-      console.log(this.mesasId);
+      console.log("Las mesas con id son: "+this.mesasId);
     })
-
   }
 
   RelacionMesaUsuario(numeroMesa){
-
-    this.mesasId.forEach( mesa => {
-      
-      if(mesa.data.numero == numeroMesa){
-      
+    this.mesasId.forEach( mesa => {      
+      if(mesa.data.numero == numeroMesa){      
         let mesaAbuscar = this.objFirebase.collection("SP_mesas").doc(mesa.id).collection("ocupadaPor");
-
         mesaAbuscar.snapshotChanges().subscribe( usuario => {
           usuario.forEach(usuario =>{
-            console.log(usuario.payload.doc.data())
+            console.log("El usuario que esta usando la mesa es: "+ usuario.payload.doc.data())
           })          
         })
       } 
-
     });
-
-
-
-
   }
 
-
-
-  
-  
   CambiarEstadoMesaOcupada(){
     var usuario = JSON.parse(sessionStorage.getItem('usuario'));
-
-
 
     this.qrService.readQR().then(QRdata => {
       
@@ -159,29 +139,23 @@ export class MesasProvider {
 
         if(mesa.data.numero == parseInt(QRdata.text)){          
           flag = true;
-
           let mesaUpdate =  new Mesa();
-
           mesaUpdate = mesa.data;
-
           mesaUpdate.estado = 'ocupada';
-          
-          
+                   
           this.objFirebase.collection("SP_mesas").doc(mesa.id).set(mesaUpdate).then(() => {
             
-            //const usuarioOcupaMesa = this.objFirebase.collection("SP_mesas/"+mesa.id+"/");
-            const usuarioOcupaMesa = this.objFirebase.collection("SP_mesas").doc(mesa.id).collection("ocupadaPor");
-            
+            const usuarioOcupaMesa = this.objFirebase.collection("SP_mesas").doc(mesa.id).collection("ocupadaPor");            
             usuarioOcupaMesa.add({ usuario: usuario, timestamp: Date() });
 
-
             console.log('Documento editado exitósamente');
+
           }, (error) => {
             console.log(error);
           });
                    
           let toast = this.toastCtrl.create({            
-            message: "La mesa nro: "+mesa.data.numero +" fue ocupada por usuario",
+            message: "La mesa nro: "+mesa.data.numero +" fue ocupada por "+ usuario.nombre,
             duration: 3000,
             position: 'middle' //middle || top
           });
