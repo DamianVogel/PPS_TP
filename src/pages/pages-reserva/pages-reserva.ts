@@ -118,7 +118,7 @@ BuscarMesaReserva(fecha_hora, cant_comensales, tipo)
         laReserva.mesas=mesa.numero;
         laReserva.fecha_hora=fecha_hora;
         laReserva.cliente=this.usuario;
-        laReserva.estado="Ocupado";
+        laReserva.estado="pendiente";
         ok=false;
        
         this.reservaProv.GuardarReserva(laReserva);

@@ -72,6 +72,8 @@ import { QRService } from '../services/QR-service';
 import { UsuarioService } from '../services/usuario-service';
 import { PagesEncuestasUsuariosPage } from '../pages/pages-encuestas/pages-encuestas-usuarios/pages-encuestas-usuarios';
 import { PagesEncuestasUsuariosPageModule } from '../pages/pages-encuestas/pages-encuestas-usuarios/pages-encuestas-usuarios.module';
+import { PagesReservasPageModule } from '../pages/pages-reservas/pages-reservas.module';
+import { PagesReservasPage } from '../pages/pages-reservas/pages-reservas';
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
@@ -129,7 +131,8 @@ export function provideSettings(storage: Storage) {
     ProductoAltaPageModule,
     PagesReservaPageModule,
     ListaDeEsperaMenuPageModule,
-    PagesEncuestasUsuariosPageModule
+    PagesEncuestasUsuariosPageModule,
+    PagesReservasPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -146,6 +149,7 @@ export function provideSettings(storage: Storage) {
     PagesReservaPage,
     ListaDeEsperaMenuPage,
     PagesEncuestasUsuariosPage,
+    PagesReservasPage,
     AltaMesaComponent,
     AltaDuenoComponent,
     AltaEmpleadoComponent
