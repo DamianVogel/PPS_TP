@@ -37,13 +37,12 @@ export class PagesDuenoMenuPage {
     public toastCtrl: ToastController,
     public modalVotacion: ModalController,
     private mesasProvider: MesasProvider,
-    private qrService: QRService,
     public actionSheetController: ActionSheetController
   ) {
 
   }
 
-  presentActionSheet() {
+  altas() {
     let actionSheet = this.actionSheetController.create({
       buttons: [{
         text: 'Mesa',
@@ -71,24 +70,6 @@ export class PagesDuenoMenuPage {
       }]
     });
     actionSheet.present();
-  }
-
-  encuestaUsuarios() {
-    this.qrService.readQR().then(barcodeData => {
-      try {
-        var data = JSON.parse(barcodeData.text);
-        if (
-          typeof (data.encuestaUsuarios) !== 'undefined' &&
-          data.encuestaUsuarios === true
-        ) {
-          this.navCtrl.push(PagesEncuestasUsuariosPage);
-        }
-      } catch (err) {
-        showAlert(this.alertCtrl, "Error", "QR invalido");
-      }
-    }).catch(err => {
-      console.log('Error', err);
-    });
   }
 
   ChequearMesa() {

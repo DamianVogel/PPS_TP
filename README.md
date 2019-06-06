@@ -22,6 +22,11 @@
   21) Para ponerse en la lista de espera (Leo QR y me agrego a la lista de espera)
   22) Para acceder a la encuesta de antiguos usuarios. (Supervisor)
   
+  #### Encuestas - Supervisor (04/06/2019 - 05/06/2019)
+  34) Puede seleccionar un empleado o un cliente para cargar un formulario con datos referentes al mismo.
+  35) Con mínimo un tipo de cada uno de estos controles (range, input, radio, check, select).
+  36) Mostrar los gráficos de las estadísticas obtenidas de cada uno de los ítems de ese empleado / cliente según corresponda.
+  
 ## ==========================================
 
 ### **Damian Vogel (DamianVogelBranch)**
