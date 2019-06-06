@@ -1,0 +1,65 @@
+<ion-header>
+  <ion-navbar class="bartenderNavBar">
+    <ion-title>{{usuario.nombre}}</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding class="bartenderMenu">
+  <button ion-button expand="block"
+    class="menuButtonPPT ios button button-block button-solid ion-activatable ion-focusable hydrated"
+    [disabled]="encuestaCargadaUsuarioSupervisor" (click)="mostrarEncuesta()">Cargar encuesta</button>
+  <button ion-button expand="block"
+    class="menuButtonPPT ios button button-block button-solid ion-activatable ion-focusable hydrated"
+    [disabled]="!encuestasCargadasUsuario" (click)="mostrarGrafico()">Mostrar grafico</button>
+  <!--Form-->
+  <form *ngIf="encuestaMostrada">
+    <ion-item padding class="formItem">
+      <ion-range min="1" max="5" color="secondary" snaps="true" pin="true" name="coordialidad"
+        placeholder="Coordialidad" [(ngModel)]="encuestaACargar.coordialidad">
+        <ion-label range-left>Coordialidad</ion-label>
+      </ion-range>
+    </ion-item>
+    <ion-item padding class="formItem">
+      <ion-input type="number" [(ngModel)]="encuestaACargar.puntualidad" name="puntualidad" placeholder="Puntualidad">
+      </ion-input>
+    </ion-item>
+    <ion-item padding class="formItem">
+      <ion-select name="tipo" [(ngModel)]="encuestaACargar.responsabilidad" placeholder="Responsabilidad">
+        <ion-option value="1">1</ion-option>
+        <ion-option value="2">2</ion-option>
+        <ion-option value="3">3</ion-option>
+        <ion-option value="4">4</ion-option>
+        <ion-option value="5">5</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item padding class="formItem">
+      <div>Conversacion</div>
+      <br>
+      <input type="radio" name="Conversacion" value="1" [(ngModel)]="encuestaACargar.conversacion"> 1
+      <input type="radio" name="Conversacion" value="2" [(ngModel)]="encuestaACargar.conversacion"> 2
+      <input type="radio" name="Conversacion" value="3" [(ngModel)]="encuestaACargar.conversacion"> 3
+      <input type="radio" name="Conversacion" value="4" [(ngModel)]="encuestaACargar.conversacion"> 4
+      <input type="radio" name="Conversacion" value="5" [(ngModel)]="encuestaACargar.conversacion"> 5
+    </ion-item>
+    <ion-item padding class="formItem">
+      <div>Limpieza</div>
+      <br>
+      <div id="radiocb" (click)="validarCheckboxes(event)">
+        <label><input type="checkbox" value="1" id="limpieza1" /> 1</label>
+        <label><input type="checkbox" value="2" id="limpieza2" /> 2</label>
+        <label><input type="checkbox" value="3" id="limpieza3" /> 3</label>
+        <label><input type="checkbox" value="4" id="limpieza4" /> 4</label>
+        <label><input type="checkbox" value="5" id="limpieza5" /> 5</label>
+      </div>
+    </ion-item>
+    <button ion-button type="submit" block large (click)="cargar()">Cargar encuesta</button>
+  </form>
+  <!--Grafico-->
+  <ion-card id="grafico" class="backgroundCard_graph">
+    <ion-card-header>
+      Promedio de calificaciones
+    </ion-card-header>
+    <ion-card-content>
+      <canvas #doughnutCanvas></canvas>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
