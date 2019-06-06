@@ -79,6 +79,10 @@ export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
+import { Firebase } from '@ionic-native/firebase';
+import { FcmProvider } from '../providers/fcm/fcm';
+
+
 export function provideSettings(storage: Storage) {
   /**
    * The Settings provider takes a set of default settings for your app.
@@ -171,7 +175,9 @@ export function provideSettings(storage: Storage) {
     ProductoService,
     CameraService,
     QRService,
-    UsuarioService
+    UsuarioService,
+    Firebase,
+    FcmProvider
   ]
 })
 export class AppModule {}
