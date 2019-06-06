@@ -5,11 +5,8 @@ import { ToastController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { Mesa } from '../../clases/mesa';
 
-
-
 //servicios
 import { QRService } from '../../services/QR-service';
-
 
 /*
   Generated class for the MesasProvider provider.
@@ -23,6 +20,7 @@ export class MesasProvider {
   private listaMesasFirebase: AngularFirestoreCollection<Mesa>;
   private listaMesasObservable: Observable<Mesa[]>;
   public mesas:Array<Mesa>;
+  public mesasId:Array<any>;
   //public mesasDisponibles: Array<Mesa>;
   
   constructor(
@@ -33,6 +31,7 @@ export class MesasProvider {
     ) {  
     //this.TraerMesas();
     //this.MesasDisponibles();
+    this.TraerMesasConId();
   }
 
   TraerMesas()
@@ -99,28 +98,84 @@ export class MesasProvider {
   }
 
   TraerMesasConId(){
+    this.mesasId = new Array<any>();
+    
     this.listaMesasFirebase = this.objFirebase.collection<any>("SP_mesas");
     
     this.listaMesasFirebase.snapshotChanges().subscribe( (mesas)=>{
-      var mesasArray = [];
+      //var mesasArray = [];
+      console.log(mesas);
+      
       mesas.forEach((mesaObservable: any) => {
-        mesasArray.push({
+        this.mesasId.push({
           id: mesaObservable.payload.doc.id,
           data: mesaObservable.payload.doc.data()
         });
       })
-      console.log(mesasArray);
+      console.log("Las mesas con id son: "+this.mesasId);
     })
-
   }
 
-  ActualizarMesa(){
-    
-    this.objFirebase.collection("SP_mesas").doc('PbRaBSRdPBB8HHWhWdEc').set({tipoMesa:'actualizado'}).then(() => {
-     
-      console.log('Documento editado exitósamente');
-    }, (error) => {
-      console.log(error);
+  RelacionMesaUsuario(numeroMesa){
+    this.mesasId.forEach( mesa => {      
+      if(mesa.data.numero == numeroMesa){      
+        let mesaAbuscar = this.objFirebase.collection("SP_mesas").doc(mesa.id).collection("ocupadaPor");
+        mesaAbuscar.snapshotChanges().subscribe( usuario => {
+          usuario.forEach(usuario =>{
+            console.log("El usuario que esta usando la mesa es: "+ usuario.payload.doc.data())
+          })          
+        })
+      } 
+    });
+  }
+
+  CambiarEstadoMesaOcupada(){
+    var usuario = JSON.parse(sessionStorage.getItem('usuario'));
+
+    this.qrService.readQR().then(QRdata => {
+      
+      let flag = false;
+      this.mesasId.forEach((mesa) =>{  
+
+        if(mesa.data.numero == parseInt(QRdata.text)){          
+          flag = true;
+          let mesaUpdate =  new Mesa();
+          mesaUpdate = mesa.data;
+          mesaUpdate.estado = 'ocupada';
+                   
+          this.objFirebase.collection("SP_mesas").doc(mesa.id).set(mesaUpdate).then(() => {
+            
+            const usuarioOcupaMesa = this.objFirebase.collection("SP_mesas").doc(mesa.id).collection("ocupadaPor");            
+            usuarioOcupaMesa.add({ usuario: usuario, timestamp: Date() });
+
+            console.log('Documento editado exitósamente');
+
+          }, (error) => {
+            console.log(error);
+          });
+                   
+          let toast = this.toastCtrl.create({            
+            message: "La mesa nro: "+mesa.data.numero +" fue ocupada por "+ usuario.nombre,
+            duration: 3000,
+            position: 'middle' //middle || top
+          });
+          toast.present();
+          
+        }
+
+      });
+
+      if(!flag){
+        let toast = this.toastCtrl.create({            
+          message: "Codigo QR incorrecto",
+          duration: 3000,
+          position: 'middle' //middle || top
+        });
+        toast.present();
+      }
+
+    }).catch(err => {
+        console.log('Error', err);
     });
   }
 

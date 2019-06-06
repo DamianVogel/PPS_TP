@@ -17,6 +17,10 @@
   10) Con 3 fotos tomadas del celular.
   11) Lector de código QR relacionado con los productos.
   12) Esta acción la podrá realizar el cocinero o el bar tender.
+
+  #### Qr de ingreso al local (26/05/2019 - 04/06/2019)
+  21) Para ponerse en la lista de espera (Leo QR y me agrego a la lista de espera)
+  22) Para acceder a la encuesta de antiguos usuarios. (Supervisor)
   
 ## ==========================================
 

@@ -55,8 +55,18 @@ export class PagesDuenoMenuPage {
   }
 
   ChequearMesa() {
-    this.mesasProvider.ActualizarMesa();
+    this.mesasProvider.EstadoMesa();
   }
+
+  OcuparMesa(){
+    this.mesasProvider.CambiarEstadoMesaOcupada();
+  }
+
+  RelacionMesaUsuario(){
+    this.mesasProvider.RelacionMesaUsuario(4);
+  }
+
+
 }
 
 
