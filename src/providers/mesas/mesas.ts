@@ -29,9 +29,10 @@ export class MesasProvider {
     private qrService: QRService,
     public toastCtrl: ToastController,   
     ) {  
-    //this.TraerMesas();
+    this.TraerMesas();
     //this.MesasDisponibles();
     this.TraerMesasConId();
+
   }
 
   TraerMesas()
