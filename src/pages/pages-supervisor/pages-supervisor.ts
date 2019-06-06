@@ -57,24 +57,21 @@ export class PagesSupervisorPage {
   }
 
   encuestaUsuarios() {
-    //TODO volver a poner cuando funcionen las encuestas
-    /*this.qrService.readQR().then(barcodeData => {
+    this.qrService.readQR().then(barcodeData => {
       try {
         var data = JSON.parse(barcodeData.text);
         if (
           typeof (data.encuestaUsuarios) !== 'undefined' &&
           data.encuestaUsuarios === true
-        ) {*/
-
+        ) {
           this.mostrarEncuestas(); //Comentar todo menos esto cuando se quiera probar sin lectura de QR
-/*
         }
       } catch (err) {
         showAlert(this.alertController, "Error", "QR invalido");
       }
     }).catch(err => {
       console.log('Error', err);
-    });*/
+    });
   }
 
   mostrarEncuestas() {
