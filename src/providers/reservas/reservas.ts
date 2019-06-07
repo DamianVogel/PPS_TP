@@ -23,10 +23,10 @@ export class ReservasProvider {
     private objFirebase: AngularFirestore,
     public toastCtrl: ToastController) {
    
-    this.TraerReservas();
+    //this.TraerReservas();
   }
 
-  TraerReservas()
+   TraerReservas()
   {
     this.reservas = new Array<any>();
     this.listaReservasFirebase = this.objFirebase.collection<Reserva>("SP_reservas", ref => ref.orderBy('fecha_hora', 'desc') );
@@ -43,12 +43,15 @@ export class ReservasProvider {
 
   GuardarReserva(reserva:Reserva)
   {
+    let usuario= JSON.parse(sessionStorage.getItem("usuario"));
     this.objFirebase
    .collection("SP_reservas")
    .add({
+    'id': reserva.fecha_hora + usuario.apellido,
      'fecha_hora': reserva.fecha_hora,
-     'cliente': JSON.parse(sessionStorage.getItem("usuario")), 
-     'mesas': reserva.mesas
+     'cliente': usuario, 
+     'mesas': reserva.mesas,
+     'estado': reserva.estado
    })
    .then(res => {
 
@@ -59,9 +62,37 @@ export class ReservasProvider {
        position: 'middle' //middle || top
      });
      toast.present();
-     
+   
 
 
    }, err => console.log(err));
+  }
+
+ AutorizarReseva(reserva: Reserva)
+  {
+    reserva.estado="Autorizada";
+
+    this.objFirebase.collection("SP_reservas").doc(reserva.id).set(reserva).then(() => {
+            
+    
+      console.log('Documento editado exitósamente');
+
+    }, (error) => {
+      console.log(error);
+    });
+  }
+
+
+  CancelarReserva(reserva: Reserva)
+  {
+    reserva.estado="Cancelada";
+
+    this.objFirebase.collection("SP_reservas").doc(reserva.id).set(reserva).then(() => {
+     
+      console.log('Documento editado exitósamente');
+
+    }, (error) => {
+      console.log(error);
+    });
   }
 }

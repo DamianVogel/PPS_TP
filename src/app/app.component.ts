@@ -21,7 +21,6 @@ import { tap } from 'rxjs/operators';
         <ion-title>Pages</ion-title>
       </ion-toolbar>
     </ion-header>
-
     <ion-content>
       <ion-list>
         <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
@@ -29,7 +28,6 @@ import { tap } from 'rxjs/operators';
         </button>
       </ion-list>
     </ion-content>
-
   </ion-menu>
   <ion-nav #content [root]="rootPage"></ion-nav>`
 })
@@ -98,7 +96,6 @@ export class MyApp {
     if (browserLang) {
       if (browserLang === 'zh') {
         const browserCultureLang = this.translate.getBrowserCultureLang();
-
         if (browserCultureLang.match(/-CN|CHS|Hans/i)) {
           this.translate.use('zh-cmn-Hans');
         } else if (browserCultureLang.match(/-TW|CHT|Hant/i)) {

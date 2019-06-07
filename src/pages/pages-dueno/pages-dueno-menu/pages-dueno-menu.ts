@@ -7,6 +7,7 @@ import { MesasProvider } from '../../../providers/mesas/mesas';
 import { QRService } from '../../../services/QR-service';
 import { showAlert } from '../../../environments/environment';
 import { PagesEncuestasUsuariosPage } from '../../pages-encuestas/pages-encuestas-usuarios/pages-encuestas-usuarios';
+import { PagesReservasPage } from '../../pages-reservas/pages-reservas';
 
 @IonicPage()
 @Component({
@@ -27,6 +28,8 @@ export class PagesDuenoMenuPage {
 
   }
 
+  reservasPage= PagesReservasPage;
+
   constructor(
     public alertCtrl: AlertController,
     public navCtrl: NavController,
@@ -34,13 +37,12 @@ export class PagesDuenoMenuPage {
     public toastCtrl: ToastController,
     public modalVotacion: ModalController,
     private mesasProvider: MesasProvider,
-    private qrService: QRService,
     public actionSheetController: ActionSheetController
   ) {
 
   }
 
-  presentActionSheet() {
+  altas() {
     let actionSheet = this.actionSheetController.create({
       buttons: [{
         text: 'Mesa',
@@ -70,24 +72,6 @@ export class PagesDuenoMenuPage {
     actionSheet.present();
   }
 
-  encuestaUsuarios() {
-    this.qrService.readQR().then(barcodeData => {
-      try {
-        var data = JSON.parse(barcodeData.text);
-        if (
-          typeof (data.encuestaUsuarios) !== 'undefined' &&
-          data.encuestaUsuarios === true
-        ) {
-          this.navCtrl.push(PagesEncuestasUsuariosPage);
-        }
-      } catch (err) {
-        showAlert(this.alertCtrl, "Error", "QR invalido");
-      }
-    }).catch(err => {
-      console.log('Error', err);
-    });
-  }
-
   ChequearMesa() {
     this.mesasProvider.EstadoMesa();
   }
@@ -98,6 +82,11 @@ export class PagesDuenoMenuPage {
 
   RelacionMesaUsuario(){
     this.mesasProvider.RelacionMesaUsuario(4);
+  }
+
+  Reservas()
+  {
+    this.navCtrl.push(this.reservasPage);
   }
 
 

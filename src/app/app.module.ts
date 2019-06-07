@@ -57,6 +57,10 @@ import { ProductoAltaPageModule } from '../pages/pages-producto/pages-producto-a
 import { PagesReservaPageModule } from '../pages/pages-reserva/pages-reserva.module';
 import { ListaDeEsperaMenuPageModule } from '../pages/pages-lista-de-espera/pages-lista-de-espera-menu/pages-lista-de-espera-menu.module';
 import { PagesReservaPage } from '../pages/pages-reserva/pages-reserva';
+import { PagesEncuestaUsuarioPage } from '../pages/pages-encuestas/pages-encuestas-usuarios/pages-encuesta-usuario/pages-encuesta-usuario';
+import { PagesEncuestasUsuariosPage } from '../pages/pages-encuestas/pages-encuestas-usuarios/pages-encuestas-usuarios';
+import { PagesEncuestasUsuariosPageModule } from '../pages/pages-encuestas/pages-encuestas-usuarios/pages-encuestas-usuarios.module';
+import { PagesEncuestaUsuarioPageModule } from '../pages/pages-encuestas/pages-encuestas-usuarios/pages-encuesta-usuario/pages-encuesta-usuario.module';
 
 //COMPONENT
 import { AltaMesaComponent } from '../components/alta-mesa/alta-mesa';
@@ -70,8 +74,9 @@ import { ProductoService } from '../services/producto-service';
 import { CameraService } from '../services/camera-service';
 import { QRService } from '../services/QR-service';
 import { UsuarioService } from '../services/usuario-service';
-import { PagesEncuestasUsuariosPage } from '../pages/pages-encuestas/pages-encuestas-usuarios/pages-encuestas-usuarios';
-import { PagesEncuestasUsuariosPageModule } from '../pages/pages-encuestas/pages-encuestas-usuarios/pages-encuestas-usuarios.module';
+import { PagesReservasPageModule } from '../pages/pages-reservas/pages-reservas.module';
+import { PagesReservasPage } from '../pages/pages-reservas/pages-reservas';
+import { EncuestaService } from '../services/encuesta-service';
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
@@ -133,7 +138,9 @@ export function provideSettings(storage: Storage) {
     ProductoAltaPageModule,
     PagesReservaPageModule,
     ListaDeEsperaMenuPageModule,
-    PagesEncuestasUsuariosPageModule
+    PagesEncuestasUsuariosPageModule,
+    PagesReservasPageModule,
+    PagesEncuestaUsuarioPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -150,6 +157,8 @@ export function provideSettings(storage: Storage) {
     PagesReservaPage,
     ListaDeEsperaMenuPage,
     PagesEncuestasUsuariosPage,
+    PagesReservasPage,
+    PagesEncuestaUsuarioPage,
     AltaMesaComponent,
     AltaDuenoComponent,
     AltaEmpleadoComponent
@@ -177,7 +186,9 @@ export function provideSettings(storage: Storage) {
     QRService,
     UsuarioService,
     Firebase,
-    FcmProvider
+    FcmProvider,
+    EncuestaService
+
   ]
 })
 export class AppModule {}

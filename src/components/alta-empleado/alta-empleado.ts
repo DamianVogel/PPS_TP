@@ -6,12 +6,15 @@ import { Usuario } from '../../clases/usuario';
 import { CameraOptions, Camera } from '@ionic-native/camera';
 import { storage } from 'firebase';
 import { BarcodeScanner, BarcodeScannerOptions } from '@ionic-native/barcode-scanner';
+import { UsuarioService } from '../../services/usuario-service';
 
 @Component({
   selector: 'alta-empleado',
   templateUrl: 'alta-empleado.html'
 })
 export class AltaEmpleadoComponent {
+
+  usuarios: Array<Usuario>;
 
   nombre = new FormControl('', [
     Validators.required
@@ -66,9 +69,12 @@ export class AltaEmpleadoComponent {
     public modalVotacion: ModalController,
     private builder: FormBuilder,
     private camera: Camera,
-    private barcodeScanner: BarcodeScanner
+    private barcodeScanner: BarcodeScanner,
+    private usuarioService: UsuarioService
   ) {
-
+    this.usuarioService.traerUsuarios().subscribe(usuarios => {
+      this.usuarios = usuarios;
+    })
   }
 
   Volver() {
@@ -77,42 +83,45 @@ export class AltaEmpleadoComponent {
 
   AltaEmpleado() {
 
-    let usuarioEmpleado = new Usuario();
+    if (!this.usuarioService.validarUsuarioExiste(this.usuarios, this.registroFormEmpleado.get('nombre').value)) {
 
-    usuarioEmpleado.nombre = this.registroFormEmpleado.get('nombre').value;
-    usuarioEmpleado.apellido = this.registroFormEmpleado.get('apellido').value;
-    usuarioEmpleado.dni = this.registroFormEmpleado.get('dni').value;
-    usuarioEmpleado.cuil = this.registroFormEmpleado.get('cuil').value;
-    usuarioEmpleado.email = this.registroFormEmpleado.get('email').value;
-    usuarioEmpleado.clave = this.registroFormEmpleado.get('clave').value;
-    usuarioEmpleado.perfil = 'empleado';
-    usuarioEmpleado.tipo = this.registroFormEmpleado.get('tipo').value;
+      let usuarioEmpleado = new Usuario();
 
-    this.objFirebase.collection("SP_usuarios")
-      .add({
-        'apellido': usuarioEmpleado.apellido,
-        'nombre': usuarioEmpleado.nombre,
-        'email': usuarioEmpleado.email,
-        'clave': usuarioEmpleado.clave,
-        'dni': usuarioEmpleado.dni,
-        'cuil': usuarioEmpleado.cuil,
-        'perfil': usuarioEmpleado.perfil,
-        'tipo': usuarioEmpleado.tipo,
-        'foto': 'usuarios/' + usuarioEmpleado.dni,
-        'timestamp': Date()
-      }).then(res => {
+      usuarioEmpleado.nombre = this.registroFormEmpleado.get('nombre').value;
+      usuarioEmpleado.apellido = this.registroFormEmpleado.get('apellido').value;
+      usuarioEmpleado.dni = this.registroFormEmpleado.get('dni').value;
+      usuarioEmpleado.cuil = this.registroFormEmpleado.get('cuil').value;
+      usuarioEmpleado.email = this.registroFormEmpleado.get('email').value;
+      usuarioEmpleado.clave = this.registroFormEmpleado.get('clave').value;
+      usuarioEmpleado.perfil = 'empleado';
+      usuarioEmpleado.tipo = this.registroFormEmpleado.get('tipo').value;
 
-        console.log(res);
-        let toast = this.toastCtrl.create({
-          message: "Registracion Exitosa!",
-          duration: 3000,
-          position: 'middle' //middle || top
-        });
-        toast.present();
+      this.objFirebase.collection("SP_usuarios")
+        .add({
+          'apellido': usuarioEmpleado.apellido,
+          'nombre': usuarioEmpleado.nombre,
+          'email': usuarioEmpleado.email,
+          'clave': usuarioEmpleado.clave,
+          'dni': usuarioEmpleado.dni,
+          'cuil': usuarioEmpleado.cuil,
+          'perfil': usuarioEmpleado.perfil,
+          'tipo': usuarioEmpleado.tipo,
+          'foto': 'usuarios/' + usuarioEmpleado.dni,
+          'timestamp': Date()
+        }).then(res => {
 
-        this.registroFormEmpleado.reset();
+          console.log(res);
+          let toast = this.toastCtrl.create({
+            message: "Registracion Exitosa!",
+            duration: 3000,
+            position: 'middle' //middle || top
+          });
+          toast.present();
 
-      }, err => console.log(err));
+          this.registroFormEmpleado.reset();
+
+        }, err => console.log(err));
+    }
 
   }
 
