@@ -86,6 +86,8 @@ export function createTranslateLoader(http: HttpClient) {
 
 import { Firebase } from '@ionic-native/firebase';
 import { FcmProvider } from '../providers/fcm/fcm';
+import { PagesJuegosMenuPage } from '../pages/pages-juegos/pages-juegos-menu/pages-juegos-menu';
+import { PagesJuegosMenuPageModule } from '../pages/pages-juegos/pages-juegos-menu/pages-juegos-menu.module';
 
 
 export function provideSettings(storage: Storage) {
@@ -140,7 +142,8 @@ export function provideSettings(storage: Storage) {
     ListaDeEsperaMenuPageModule,
     PagesEncuestasUsuariosPageModule,
     PagesReservasPageModule,
-    PagesEncuestaUsuarioPageModule
+    PagesEncuestaUsuarioPageModule,
+    PagesJuegosMenuPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -159,6 +162,7 @@ export function provideSettings(storage: Storage) {
     PagesEncuestasUsuariosPage,
     PagesReservasPage,
     PagesEncuestaUsuarioPage,
+    PagesJuegosMenuPage,
     AltaMesaComponent,
     AltaDuenoComponent,
     AltaEmpleadoComponent

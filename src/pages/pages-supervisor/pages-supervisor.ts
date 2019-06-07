@@ -35,7 +35,7 @@ export class PagesSupervisorPage {
           this.navCtrl.push(AltaMesaComponent);
         }
       }, {
-        text: 'Dueño',
+        text: 'Dueño/Supervisor',
         icon: 'add-circle',
         handler: () => {
           this.navCtrl.push(AltaDuenoComponent);
