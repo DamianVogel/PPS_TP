@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-navbar class="cocineroNavBar">
+    <ion-title>Juegos</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding class="cocineroMenu">
+  <button ion-button expand="block"
+    class="menuButtonPPT ios button button-block button-solid ion-activatable ion-focusable hydrated"
+    (click)="juegoDescuento()">10% de descuento</button>
+  <button ion-button expand="block"
+    class="menuButtonPPT ios button button-block button-solid ion-activatable ion-focusable hydrated"
+    (click)="bebida()">Bebida gratis</button>
+  <button ion-button expand="block"
+    class="menuButtonPPT ios button button-block button-solid ion-activatable ion-focusable hydrated"
+    (click)="postre()">Postre gratis</button>
+  <ion-card *ngIf="juegoDescuendoMostrado" class="cardJuego">
+    <ion-card-header>
+      Juego 10% de descuento
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item padding class="formItem">
+        <ion-input type="number" [(ngModel)]="descuentoJuego.primerValor" disabled></ion-input>
+      </ion-item>
+      <ion-item padding class="formItem">
+        <ion-input type="text" [(ngModel)]="descuentoJuego.calculo" disabled></ion-input>
+      </ion-item>
+      <ion-item padding class="formItem">
+        <ion-input type="number" [(ngModel)]="descuentoJuego.segundoValor" disabled></ion-input>
+      </ion-item>
+      <ion-item padding class="formItem resultado">
+        <ion-input type="number" [(ngModel)]="resultado"></ion-input>
+      </ion-item>
+      <button ion-button block large (click)="verificarResultado()">Calcular</button>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
