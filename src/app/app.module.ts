@@ -74,8 +74,6 @@ import { ProductoService } from '../services/producto-service';
 import { CameraService } from '../services/camera-service';
 import { QRService } from '../services/QR-service';
 import { UsuarioService } from '../services/usuario-service';
-import { PagesEncuestasUsuariosPage } from '../pages/pages-encuestas/pages-encuestas-usuarios/pages-encuestas-usuarios';
-import { PagesEncuestasUsuariosPageModule } from '../pages/pages-encuestas/pages-encuestas-usuarios/pages-encuestas-usuarios.module';
 import { PagesReservasPageModule } from '../pages/pages-reservas/pages-reservas.module';
 import { PagesReservasPage } from '../pages/pages-reservas/pages-reservas';
 import { EncuestaService } from '../services/encuesta-service';
@@ -85,6 +83,12 @@ import { EncuestaService } from '../services/encuesta-service';
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
+
+import { Firebase } from '@ionic-native/firebase';
+import { FcmProvider } from '../providers/fcm/fcm';
+import { PagesJuegosMenuPage } from '../pages/pages-juegos/pages-juegos-menu/pages-juegos-menu';
+import { PagesJuegosMenuPageModule } from '../pages/pages-juegos/pages-juegos-menu/pages-juegos-menu.module';
+
 
 export function provideSettings(storage: Storage) {
   /**
@@ -138,7 +142,8 @@ export function provideSettings(storage: Storage) {
     ListaDeEsperaMenuPageModule,
     PagesEncuestasUsuariosPageModule,
     PagesReservasPageModule,
-    PagesEncuestaUsuarioPageModule
+    PagesEncuestaUsuarioPageModule,
+    PagesJuegosMenuPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -157,6 +162,7 @@ export function provideSettings(storage: Storage) {
     PagesEncuestasUsuariosPage,
     PagesReservasPage,
     PagesEncuestaUsuarioPage,
+    PagesJuegosMenuPage,
     AltaMesaComponent,
     AltaDuenoComponent,
     AltaEmpleadoComponent
@@ -183,7 +189,10 @@ export function provideSettings(storage: Storage) {
     CameraService,
     QRService,
     UsuarioService,
+    Firebase,
+    FcmProvider,
     EncuestaService
+
   ]
 })
 export class AppModule {}

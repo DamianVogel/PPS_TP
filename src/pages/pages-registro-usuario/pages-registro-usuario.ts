@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, AlertController } from 'ionic-angular';
 import { Validators, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Usuario } from '../../clases/usuario';
 import { CameraOptions, Camera } from '@ionic-native/camera';
 import { storage } from 'firebase';
-import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
+import { AngularFirestore } from 'angularfire2/firestore';
 import { BarcodeScanner, BarcodeScannerOptions } from '@ionic-native/barcode-scanner';
+import { UsuarioService } from '../../services/usuario-service';
+import { showAlert } from '../../environments/environment';
 
 /**
  * Generated class for the PagesRegistroUsuarioPage page.
@@ -21,14 +23,22 @@ import { BarcodeScanner, BarcodeScannerOptions } from '@ionic-native/barcode-sca
 })
 export class PagesRegistroUsuarioPage {
 
-  constructor(public navCtrl: NavController, 
-    public navParams: NavParams, 
+  usuarios: Array<Usuario>;
+
+  constructor(public alertController: AlertController,
+    public navCtrl: NavController,
+    public navParams: NavParams,
     private builder: FormBuilder,
     public toastCtrl: ToastController,
     private camera: Camera,
     private objFirebase: AngularFirestore,
-    private barcodeScanner: BarcodeScanner
-  ) {}
+    private barcodeScanner: BarcodeScanner,
+    private usuarioService: UsuarioService
+  ) {
+    this.usuarioService.traerUsuarios().subscribe(usuarios => {
+      this.usuarios = usuarios;
+    })
+  }
 
   nombre = new FormControl('', [
     Validators.required
@@ -44,13 +54,13 @@ export class PagesRegistroUsuarioPage {
 
   email = new FormControl('', [
     Validators.compose([Validators.maxLength(70), Validators.pattern('^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$'), Validators.required])
-    
+
   ]);
-  
+
   clave = new FormControl('', [
     Validators.required
   ]);
-  
+
 
   registroForm: FormGroup = this.builder.group({
     nombre: this.nombre,
@@ -58,52 +68,49 @@ export class PagesRegistroUsuarioPage {
     dni: this.dni,
     email: this.email,
     clave: this.clave,
-    
+
   });
 
-  Registrar()
-  {
-    let usuario= new Usuario();
+  Registrar() {
 
-     usuario.nombre= this.registroForm.get('nombre').value;
-     usuario.apellido= this.registroForm.get('apellido').value;
-     usuario.dni= this.registroForm.get('dni').value;
-     usuario.email= this.registroForm.get('email').value;
-     usuario.clave= this.registroForm.get('clave').value;
-     usuario.perfil= "Cliente";
-     usuario.cuil=null;
-  
+    if (!this.usuarioService.validarUsuarioExiste(this.usuarios, this.registroForm.get('nombre').value)) {
+      let usuario = new Usuario();
 
-     
-     this.objFirebase
-     .collection("SP_usuarios")
-     .add({
-       'apellido': usuario.apellido,
-       'nombre':usuario.nombre,
-       'email': usuario.email,
-       'clave': usuario.clave,
-       'dni': usuario.dni,
-       'cuil': usuario.cuil,
-       'foto': 'clientes/' + usuario.dni 
-     })
-     .then(res => {
+      usuario.nombre = this.registroForm.get('nombre').value;
+      usuario.apellido = this.registroForm.get('apellido').value;
+      usuario.dni = this.registroForm.get('dni').value;
+      usuario.email = this.registroForm.get('email').value;
+      usuario.clave = this.registroForm.get('clave').value;
+      usuario.perfil = "Cliente";
+      usuario.cuil = null;
 
-       console.log(res);
-       let toast = this.toastCtrl.create({
-         message: "Registracion Exitosa!",
-         duration: 3000,
-         position: 'middle' //middle || top
-       });
-       toast.present();
-       
+      this.objFirebase
+        .collection("SP_usuarios")
+        .add({
+          'apellido': usuario.apellido,
+          'nombre': usuario.nombre,
+          'email': usuario.email,
+          'clave': usuario.clave,
+          'dni': usuario.dni,
+          'cuil': usuario.cuil,
+          'foto': 'clientes/' + usuario.dni
+        })
+        .then(res => {
 
+          console.log(res);
+          let toast = this.toastCtrl.create({
+            message: "Registracion Exitosa!",
+            duration: 3000,
+            position: 'middle' //middle || top
+          });
+          toast.present();
 
-     }, err => console.log(err));
+        }, err => console.log(err));
 
-    
+    }
   }
 
-  async SacarFoto(){
+  async SacarFoto() {
 
     const options: CameraOptions = {
       quality: 50,
@@ -113,34 +120,34 @@ export class PagesRegistroUsuarioPage {
       mediaType: this.camera.MediaType.PICTURE,
       saveToPhotoAlbum: true
     }
-    
-     let hora= new Date();
-     
-     const result= await this.camera.getPicture(options);
-     
-     const fotos = storage().ref('clientes/'+ this.registroForm.get('dni').value);
-     const imagen= 'data:image/jpeg;base64,'+result;
-     fotos.putString(imagen,'data_url');
 
-    
+    let hora = new Date();
+
+    const result = await this.camera.getPicture(options);
+
+    const fotos = storage().ref('clientes/' + this.registroForm.get('dni').value);
+    const imagen = 'data:image/jpeg;base64,' + result;
+    fotos.putString(imagen, 'data_url');
+
+
   }
 
-  LeerDni(){
-    
+  LeerDni() {
+
     const opciones: BarcodeScannerOptions = {
-          preferFrontCamera : false, // iOS and Android
-          showFlipCameraButton : true, // iOS and Android
-          showTorchButton : true, // iOS and Android
-          torchOn: true, // Android, launch with the torch switched on (if available)
-          //saveHistory: true, // Android, save scan history (default false)
-          prompt : "Scanee el DNI", // Android
-          resultDisplayDuration: 500, // Android, display scanned text for X ms. 0 suppresses it entirely, default 1500
-          formats : "PDF_417", // default: all but PDF_417 and RSS_EXPANDED
-          orientation : "landscape", // Android only (portrait|landscape), default unset so it rotates with the device
-          disableAnimations : true, // iOS
-          disableSuccessBeep: false // iOS and Android
+      preferFrontCamera: false, // iOS and Android
+      showFlipCameraButton: true, // iOS and Android
+      showTorchButton: true, // iOS and Android
+      torchOn: true, // Android, launch with the torch switched on (if available)
+      //saveHistory: true, // Android, save scan history (default false)
+      prompt: "Scanee el DNI", // Android
+      resultDisplayDuration: 500, // Android, display scanned text for X ms. 0 suppresses it entirely, default 1500
+      formats: "PDF_417", // default: all but PDF_417 and RSS_EXPANDED
+      orientation: "landscape", // Android only (portrait|landscape), default unset so it rotates with the device
+      disableAnimations: true, // iOS
+      disableSuccessBeep: false // iOS and Android
     }
-    
+
     this.barcodeScanner.scan(opciones).then(barcodeData => {
       //console.log('Barcode data', barcodeData);
 
@@ -150,18 +157,11 @@ export class PagesRegistroUsuarioPage {
       this.registroForm.controls['nombre'].setValue(split[2]);
       this.registroForm.controls['apellido'].setValue(split[1]);
       this.registroForm.controls['dni'].setValue(parseInt(split[4]));
-      
 
-      }).catch(err => {
-         console.log('Error', err);
+    }).catch(err => {
+      console.log('Error', err);
     });
 
-  }
-
-
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad PagesRegistroUsuarioPage');
   }
 
 }

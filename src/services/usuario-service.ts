@@ -3,6 +3,7 @@ import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/fires
 import { ModalController, AlertController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { Usuario } from '../clases/usuario';
+import { showAlert } from '../environments/environment';
 
 @Injectable()
 export class UsuarioService {
@@ -14,6 +15,7 @@ export class UsuarioService {
   private listaEsperaObservable: Observable<string[]>;
   
 	constructor(
+      public alertController: AlertController,
       public alertCtrl: AlertController,
       private objFirebase: AngularFirestore,
       public modalCtrl: ModalController
@@ -34,8 +36,9 @@ export class UsuarioService {
   validarUsuarioExiste(usuarios: Usuario[], nombre: string){
     if(usuarios.filter(function(user){
       return user.nombre === nombre
-    }).length === 1){
-      return true
+    }).length >= 1){
+      showAlert(this.alertController, "Error", "Ya existe un usuario con ese nombre registrado");
+      return true;
     }
     return false;
   }
