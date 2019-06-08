@@ -88,6 +88,8 @@ import { Firebase } from '@ionic-native/firebase';
 import { FcmProvider } from '../providers/fcm/fcm';
 import { PagesJuegosMenuPage } from '../pages/pages-juegos/pages-juegos-menu/pages-juegos-menu';
 import { PagesJuegosMenuPageModule } from '../pages/pages-juegos/pages-juegos-menu/pages-juegos-menu.module';
+import { PagesRegistrosPendientesPageModule } from '../pages/pages-registros-pendientes/pages-registros-pendientes.module';
+import { PagesRegistrosPendientesPage } from '../pages/pages-registros-pendientes/pages-registros-pendientes';
 
 
 export function provideSettings(storage: Storage) {
@@ -143,7 +145,8 @@ export function provideSettings(storage: Storage) {
     PagesEncuestasUsuariosPageModule,
     PagesReservasPageModule,
     PagesEncuestaUsuarioPageModule,
-    PagesJuegosMenuPageModule
+    PagesJuegosMenuPageModule,
+    PagesRegistrosPendientesPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -163,6 +166,7 @@ export function provideSettings(storage: Storage) {
     PagesReservasPage,
     PagesEncuestaUsuarioPage,
     PagesJuegosMenuPage,
+    PagesRegistrosPendientesPage,
     AltaMesaComponent,
     AltaDuenoComponent,
     AltaEmpleadoComponent

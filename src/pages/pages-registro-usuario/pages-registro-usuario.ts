@@ -82,6 +82,7 @@ export class PagesRegistroUsuarioPage {
       usuario.email = this.registroForm.get('email').value;
       usuario.clave = this.registroForm.get('clave').value;
       usuario.perfil = "Cliente";
+      usuario.estado = "Pendiente";
       usuario.cuil = null;
 
       this.objFirebase
@@ -93,6 +94,7 @@ export class PagesRegistroUsuarioPage {
           'clave': usuario.clave,
           'dni': usuario.dni,
           'cuil': usuario.cuil,
+          'estado': usuario.estado,
           'foto': 'clientes/' + usuario.dni
         })
         .then(res => {
