@@ -19,9 +19,10 @@
   
     <ion-list>
         <ion-item *ngFor="let reserva of lista_de_reservas" padding style="background-color: rgba(77, 76, 76, 0.589); color: white">
-         Cliente: {{ reserva.cliente.apellido }}
+        <!-- Cliente: {{ reserva.cliente.apellido }}-->
               <br>
-           Fecha: {{ reserva.fecha_hora }}
+           Fecha: {{ reserva.fecha }}
+           Hora: {{ reserva.hora }}
               <br>
              Mesa: {{ reserva.mesas }}
               <br>
