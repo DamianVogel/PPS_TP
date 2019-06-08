@@ -29,13 +29,14 @@ export class PagesReservasPage {
 
   async AutorizarReserva(reserva)
   {
-    this.reservasProv.AutorizarReseva(reserva);
+     this.reservasProv.AutorizarReseva(reserva);
+
     console.log(this.lista_de_reservas);
   }
 
   async CancelarReserva(reserva)
   {
-    this.reservasProv.CancelarReserva(reserva);
+     this.reservasProv.CancelarReserva(reserva);
     console.log(this.lista_de_reservas);
   }
 

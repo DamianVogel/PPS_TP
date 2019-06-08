@@ -22,22 +22,24 @@ export class ReservasProvider {
     public http: HttpClient,  
     private objFirebase: AngularFirestore,
     public toastCtrl: ToastController) {
-   
+      this.reservas = new Array<any>();
     //this.TraerReservas();
   }
 
-   TraerReservas()
+   async TraerReservas()
   {
-    this.reservas = new Array<any>();
-    this.listaReservasFirebase = this.objFirebase.collection<Reserva>("SP_reservas", ref => ref.orderBy('fecha_hora', 'desc') );
-    this.listaReservasObservable = this.listaReservasFirebase.valueChanges();
-    this.listaReservasObservable.subscribe(arr => {
+    
+    this.listaReservasFirebase = this.objFirebase.collection<any>("SP_reservas", ref => ref.orderBy('fecha', 'desc') );
 
-      arr.forEach((x: Reserva) => {
-        this.reservas.push(x);
-       
-      });
-    });
+    this.listaReservasFirebase.snapshotChanges().subscribe( (arr)=>{
+      
+      arr.forEach((res: any) => {
+        this.reservas.push(res.payload.doc.data());
+      })
+      console.log(this.reservas);
+      
+    })
+
 
   }
 
@@ -76,28 +78,39 @@ export class ReservasProvider {
  AutorizarReseva(reserva: Reserva)
   {
     reserva.estado="Autorizada";
-
+    this.reservas = [];
     this.objFirebase.collection("SP_reservas").doc(reserva.id).set(reserva).then(() => {
             
+      
+
+    this.TraerReservas();
     
       console.log('Documento editado exitósamente');
 
     }, (error) => {
       console.log(error);
     });
+
   }
 
 
   CancelarReserva(reserva: Reserva)
   {
     reserva.estado="Cancelada";
-
+    this.reservas = [];
     this.objFirebase.collection("SP_reservas").doc(reserva.id).set(reserva).then(() => {
      
+      
       console.log('Documento editado exitósamente');
+      
+   
+    this.TraerReservas();
 
     }, (error) => {
       console.log(error);
     });
+
   }
+
+  
 }
