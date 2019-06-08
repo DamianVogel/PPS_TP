@@ -7,8 +7,10 @@ export class Reserva {
     id: string;              // id - key de FireBase
     mesas: number    // lista de las mesas reservadas	
     cliente: Usuario;      // cliente 
-    fecha_hora: string;   // fecha y hora de la reserva ingresada por el usuario
+    fecha: string;   // fecha y hora de la reserva ingresada por el usuario
+    hora: string;
     estado: string;      // Valores = ["reservada","pendiente"]
+
 
     
     

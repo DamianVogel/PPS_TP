@@ -79,19 +79,20 @@ Registrar()
 
   let reserva= new Reserva();
 
-  reserva.fecha_hora= this.registroForm.get('fecha').value + this.registroForm.get('hora').value;
+  reserva.fecha= this.registroForm.get('fecha').value;
+  reserva.hora= this.registroForm.get('hora').value;
   reserva.cliente= this.usuario;
   let cant_comensales= this.registroForm.get('cant_comensales').value;
   let tipo;
   this.registroForm.get('vip').value ? tipo ="discapacitados" : tipo = "vip";
 
 
-  this.BuscarMesaReserva(reserva.fecha_hora, cant_comensales,tipo);
+  this.BuscarMesaReserva(reserva.fecha,reserva.hora , cant_comensales,tipo);
 
 }
 
 
-BuscarMesaReserva(fecha_hora, cant_comensales, tipo)
+BuscarMesaReserva(fecha,hora, cant_comensales, tipo)
 {
   let laReserva: Reserva;
   let disponible: boolean= true;
@@ -104,7 +105,7 @@ BuscarMesaReserva(fecha_hora, cant_comensales, tipo)
       if(mesa.cantidadComensales >= cant_comensales && mesa.tipo == tipo )
       { 
         this.reservas.forEach(reserva =>{
-          if( reserva.mesas == mesa.numero && reserva.fecha_hora == fecha_hora)
+          if( reserva.mesas == mesa.numero && reserva.fecha == fecha && reserva.hora == hora)
           {
 
             disponible= false;
@@ -116,7 +117,8 @@ BuscarMesaReserva(fecha_hora, cant_comensales, tipo)
       {
         laReserva = new Reserva();
         laReserva.mesas=mesa.numero;
-        laReserva.fecha_hora=fecha_hora;
+        laReserva.fecha=fecha;
+        laReserva.hora=hora;
         laReserva.cliente=this.usuario;
         laReserva.estado="pendiente";
         ok=false;
@@ -127,11 +129,15 @@ BuscarMesaReserva(fecha_hora, cant_comensales, tipo)
 
 
     }
-
+this.registroForm.reset();
     
   });
  
+
+
 }
+
+
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad PagesReservaPage');

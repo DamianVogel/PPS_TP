@@ -44,28 +44,33 @@ export class ReservasProvider {
   GuardarReserva(reserva:Reserva)
   {
     let usuario= JSON.parse(sessionStorage.getItem("usuario"));
-    this.objFirebase
-   .collection("SP_reservas")
-   .add({
-    'id': reserva.fecha_hora + usuario.apellido,
-     'fecha_hora': reserva.fecha_hora,
-     'cliente': usuario, 
-     'mesas': reserva.mesas,
-     'estado': reserva.estado
-   })
-   .then(res => {
 
-     console.log(res);
-     let toast = this.toastCtrl.create({
-       message: "Reservaste la mesa: " + reserva.mesas + " para el dia " + reserva.fecha_hora ,
-       duration: 3000,
-       position: 'middle' //middle || top
-     });
-     toast.present();
-   
+       //nuevaMesa.codigoQr = encodedData;
+       var idReserva = this.objFirebase.createId();
+          
 
+       this.objFirebase.collection("SP_reservas").doc(idReserva)
+       .set({
+        'id': idReserva,
+        'fecha': reserva.fecha,
+        'hora': reserva.hora,
+        'cliente': usuario, 
+        'mesas': reserva.mesas,
+        'estado': reserva.estado
+               
+       }).then(res => {
 
-   }, err => console.log(err));
+               console.log(res);
+               let toast = this.toastCtrl.create({
+                 message: "Reservaste la mesa: " + reserva.mesas + " para el dia " + reserva.fecha + "a las "+ reserva.hora ,
+                 duration: 3000,
+                 position: 'middle' //middle || top
+               });
+               toast.present();
+
+              // this.altaReservaForm.reset();
+
+             }, err => console.log(err));
   }
 
  AutorizarReseva(reserva: Reserva)
