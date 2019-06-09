@@ -3,6 +3,8 @@ import * as functions from 'firebase-functions';
 //import * as admin from 'firebase-admin';
 const admin = require('firebase-admin');
 
+const cors = require('cors')({origin: true});
+
 
 admin.initializeApp();
 
@@ -100,9 +102,6 @@ exports.AltaPedido = functions.firestore
 
 exports.SolicitudMesa = functions.https.onRequest(async (req, res) => {
     
-    //var usuario = JSON.parse(req.params());
-  //req.params
-
     const payload = {
         notification: {
             title: 'Aviso!',
@@ -134,9 +133,11 @@ exports.SolicitudMesa = functions.https.onRequest(async (req, res) => {
         }
       
       })
+      
+      cors(req, res, () => {
+        res.status(200).send(); 
+      });
     
-    res.status(200).send();
-  
     return admin.messaging().sendToDevice(tokens, payload)  
     
   });
