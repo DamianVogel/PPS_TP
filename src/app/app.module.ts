@@ -12,6 +12,7 @@ import { NativeAudio } from '@ionic-native/native-audio';
 //Movimiento
 import { Shake } from '@ionic-native/shake';
 import { DeviceMotion } from '@ionic-native/device-motion';
+import { EmailComposer } from '@ionic-native/email-composer';
 
 import { IonicStorageModule, Storage } from '@ionic/storage';
 
@@ -91,6 +92,9 @@ import { Firebase } from '@ionic-native/firebase';
 import { FcmProvider } from '../providers/fcm/fcm';
 import { PagesJuegosMenuPage } from '../pages/pages-juegos/pages-juegos-menu/pages-juegos-menu';
 import { PagesJuegosMenuPageModule } from '../pages/pages-juegos/pages-juegos-menu/pages-juegos-menu.module';
+import { PagesRegistrosPendientesPageModule } from '../pages/pages-registros-pendientes/pages-registros-pendientes.module';
+import { PagesRegistrosPendientesPage } from '../pages/pages-registros-pendientes/pages-registros-pendientes';
+import { HttpMailProvider } from '../providers/http-mail/http-mail';
 
 export function provideSettings(storage: Storage) {
   /**
@@ -146,8 +150,13 @@ export function provideSettings(storage: Storage) {
     PagesEncuestasUsuariosPageModule,
     PagesReservasPageModule,
     PagesEncuestaUsuarioPageModule,
+
+    
+    PagesRegistrosPendientesPageModule,
+
     PagesJuegosMenuPageModule
     
+
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -167,6 +176,7 @@ export function provideSettings(storage: Storage) {
     PagesReservasPage,
     PagesEncuestaUsuarioPage,
     PagesJuegosMenuPage,
+    PagesRegistrosPendientesPage,
     AltaMesaComponent,
     AltaDuenoComponent,
     AltaEmpleadoComponent,
@@ -184,6 +194,7 @@ export function provideSettings(storage: Storage) {
     DeviceMotion,
     StatusBar,
     BarcodeScanner,
+    EmailComposer,
     { provide: Settings, useFactory: provideSettings, deps: [Storage] },
     // Keep this to enable Ionic's runtime error handling during development
     { provide: ErrorHandler, useClass: IonicErrorHandler },
@@ -197,7 +208,11 @@ export function provideSettings(storage: Storage) {
     Firebase,
     FcmProvider,
     EncuestaService,
+
+    HttpMailProvider,
+
     PedidoService
+
 
   ]
 })

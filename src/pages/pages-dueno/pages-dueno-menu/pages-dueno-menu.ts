@@ -5,6 +5,7 @@ import { AltaDuenoComponent } from '../../../components/alta-dueno/alta-dueno';
 import { AltaEmpleadoComponent } from '../../../components/alta-empleado/alta-empleado';
 import { MesasProvider } from '../../../providers/mesas/mesas';
 import { PagesReservasPage } from '../../pages-reservas/pages-reservas';
+import { PagesRegistrosPendientesPage } from '../../pages-registros-pendientes/pages-registros-pendientes';
 
 
 @IonicPage()
@@ -27,6 +28,7 @@ export class PagesDuenoMenuPage {
   }
 
   reservasPage= PagesReservasPage;
+  registrosPendiente= PagesRegistrosPendientesPage;
 
   constructor(
     public alertCtrl: AlertController,
@@ -85,6 +87,11 @@ export class PagesDuenoMenuPage {
   Reservas()
   {
     this.navCtrl.push(this.reservasPage);
+  }
+
+  RegistrosUsuarios()
+  {
+    this.navCtrl.push(this.registrosPendiente);
   }
 
 

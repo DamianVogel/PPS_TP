@@ -53,4 +53,9 @@ export class UsuarioService {
     return this.objFirebase.collection<any>("SP_listaEspera").add(registroAGuardarJSON);
   }
 
+  EliminarUsuario(id)
+  {
+    return this.objFirebase.collection("SP_usuarios").doc(id).delete();
+  }
+
 }
