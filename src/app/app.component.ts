@@ -62,24 +62,7 @@ export class MyApp {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
-      if(platform.is('cordova')){
-          
-        // Get a FCM token
-        fcm.getToken()
-
-        // Listen to incoming messages
-        fcm.listenToNotifications().pipe(
-          tap(msg => {
-            // show a toast
-            const toast = toastCtrl.create({
-              message: msg.body,
-              duration: 3000
-            });
-            toast.present();
-          })
-        )
-        .subscribe()
-      }    
+      
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });

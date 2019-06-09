@@ -18,7 +18,6 @@ export class PagesEncuestaUsuarioPage {
 
   encuestaACargar: Encuesta_supervisor;
 
-  encuestaCargadaUsuarioSupervisor: boolean = false;
   encuestasCargadasUsuario: boolean = false;
   encuestaMostrada: boolean = false;
 
@@ -67,13 +66,6 @@ export class PagesEncuestaUsuarioPage {
         this.encuestasCargadasUsuario = true;
       };
 
-      //Valido que haya una encuesta cargada con el nombre del supervisor actual, y el nombre del usuario/empleado actual, para activar o no el boton de la encuesta
-      if (encuestasFiltradaEmpleado.filter(encuesta => {
-        return encuesta.supervisor === JSON.parse(sessionStorage.getItem("usuario")).nombre;
-      }).length === 1) {
-        this.encuestaCargadaUsuarioSupervisor = true;
-      };
-
     } else if (this.usuario.perfil === "cliente") {
 
       //Filtro las encuestas, y solo me quedo con las del cliente actual
@@ -84,13 +76,6 @@ export class PagesEncuestaUsuarioPage {
       //Valido si hay al menos una encuesta cargada con el usuario actual, para activar o no el boton del grafico
       if (encuestasFiltradaCliente.length > 0) {
         this.encuestasCargadasUsuario = true;
-      };
-
-      //Valido que haya una encuesta cargada con el nombre del supervisor actual, y el nombre del usuario/empleado actual, para activar o no el boton de la encuesta
-      if (encuestasFiltradaCliente.filter(encuesta => {
-        return encuesta.supervisor === JSON.parse(sessionStorage.getItem("usuario")).nombre;
-      }).length === 1) {
-        this.encuestaCargadaUsuarioSupervisor = true;
       };
 
     }
@@ -113,20 +98,25 @@ export class PagesEncuestaUsuarioPage {
 
     //encuestasAGraficar = this.cargarMockData(encuestasAGraficar); //Comentar para testear
 
-    var graphLabels = ["coordialidad", "puntualidad", "responsabilidad", "conversacion", "limpieza"];
+    var graphLabels = ["coordialidad", "puntualidad", "responsabilidad", "conversacion", "basuraPiso", "usaBienBano", "limpiaMesa"];
     var data = [];
     var colors = [];
 
-    //Por cada atributo, saco los numeros de todas las encuestas, y de la suma de todos esos numeros, saco el promedio
+    //Por cada atributo, saco los numeros de todas las encuestas, y de la suma de todos esos numeros, saco el promedio.
+    //Si el atributo es basuraPiso/usaBienBaño/limpiaMesa, que son checkbox, solamente los sumo, no saco el promedio
     if (encuestasAGraficar.length !== 0) {
       graphLabels.forEach(function (label) {
-        data.push(
-          round((encuestasAGraficar.map(encuesta => { return encuesta[label] }).reduce(function (total, sum) { return total + sum })) / encuestasAGraficar.length, 2)
-        )
+        if (label === "basuraPiso" || label === "usaBienBano" || label === "limpiaMesa") {
+          data.push(round((encuestasAGraficar.map(encuesta => { return encuesta[label] }).reduce(function (total, sum) { return total + sum })), 2))
+        } else {
+          data.push(round((encuestasAGraficar.map(encuesta => { return encuesta[label] }).reduce(function (total, sum) { return total + sum })) / encuestasAGraficar.length, 2))
+        }
         colors.push(getRandomColor());
       });
     }
-
+    graphLabels[graphLabels.indexOf("basuraPiso")] = "Limpia basura del piso";
+    graphLabels[graphLabels.indexOf("usaBienBano")] = "Usa limpiamente el baño";
+    graphLabels[graphLabels.indexOf("limpiaMesa")] = "Limpia la mesa";
     this.doughnutChart = new Chart(this.doughnutCanvas.nativeElement, {
       type: 'doughnut',
       data: {
@@ -139,12 +129,11 @@ export class PagesEncuestaUsuarioPage {
       },
       options: {
         legend: {
-          display: false
+          display: true
         }
       }
 
     });
-
   }
 
   mostrarEncuesta() {
@@ -203,32 +192,17 @@ export class PagesEncuestaUsuarioPage {
       showAlert(this.alertController, "Error", "El campo conversacion es obligatorio");
       return false;
     }
-    if (this.encuestaACargar.limpieza === undefined) {
-      showAlert(this.alertController, "Error", "El campo limpieza es obligatorio");
-      return false;
-    }
 
     return true;
   }
 
   parsearCampos() {
     this.encuestaACargar.conversacion = parseInt(this.encuestaACargar.conversacion.toString());
-    this.encuestaACargar.limpieza = parseInt(this.encuestaACargar.limpieza.toString());
     this.encuestaACargar.puntualidad = parseInt(this.encuestaACargar.puntualidad.toString());
     this.encuestaACargar.responsabilidad = parseInt(this.encuestaACargar.responsabilidad.toString());
-  }
-
-  validarCheckboxes(e) {
-    e = e || event;
-    var cb = e.srcElement || e.target;
-    if (cb.type !== 'checkbox') { return true; }
-    var cbxs = document.getElementById('radiocb').getElementsByTagName('input'), i = cbxs.length;
-    this.encuestaACargar.limpieza = cb.value; //Borrar esto en caso de querer reutilizar la funcion
-    while (i--) {
-      if (cbxs[i].type && cbxs[i].type == 'checkbox' && cbxs[i].id !== cb.id) {
-        cbxs[i].checked = false;
-      }
-    }
+    if (this.encuestaACargar.basuraPiso === true) { this.encuestaACargar.basuraPiso = 1 } else { this.encuestaACargar.basuraPiso = 0 }
+    if (this.encuestaACargar.usaBienBano === true) { this.encuestaACargar.usaBienBano = 1 } else { this.encuestaACargar.usaBienBano = 0 }
+    if (this.encuestaACargar.limpiaMesa === true) { this.encuestaACargar.limpiaMesa = 1 } else { this.encuestaACargar.limpiaMesa = 0 }
   }
 
   cargarMockData(encuestasAGraficar: Array<Encuesta_supervisor>) {
@@ -240,7 +214,9 @@ export class PagesEncuestaUsuarioPage {
     a.puntualidad = 5;
     a.responsabilidad = 2;
     a.conversacion = 5;
-    a.limpieza = 4;
+    a.basuraPiso = 1;
+    a.usaBienBano = 0;
+    a.limpiaMesa = 1;
 
     let b: any = new Object();
     b.supervisor = "nombreSupervisor";
@@ -250,7 +226,9 @@ export class PagesEncuestaUsuarioPage {
     b.puntualidad = 4;
     b.responsabilidad = 3;
     b.conversacion = 3;
-    b.limpieza = 2;
+    b.basuraPiso = 1;
+    b.usaBienBano = 0;
+    b.limpiaMesa = 0;
 
     encuestasAGraficar.push(a, b);
     return encuestasAGraficar;

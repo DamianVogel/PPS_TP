@@ -63,12 +63,14 @@ import { PagesEncuestasUsuariosPage } from '../pages/pages-encuestas/pages-encue
 import { PagesEncuestasUsuariosPageModule } from '../pages/pages-encuestas/pages-encuestas-usuarios/pages-encuestas-usuarios.module';
 import { PagesEncuestaUsuarioPageModule } from '../pages/pages-encuestas/pages-encuestas-usuarios/pages-encuesta-usuario/pages-encuesta-usuario.module';
 
+
 //COMPONENT
 import { AltaMesaComponent } from '../components/alta-mesa/alta-mesa';
 import { AltaDuenoComponent } from '../components/alta-dueno/alta-dueno';
 import { AltaEmpleadoComponent } from '../components/alta-empleado/alta-empleado';
 import { MesasProvider } from '../providers/mesas/mesas';
 import { ReservasProvider } from '../providers/reservas/reservas';
+import { SolicitudMesaComponent } from '../components/solicitud-mesa/solicitud-mesa';
 
 //SERVICES
 import { ProductoService } from '../services/producto-service';
@@ -78,6 +80,7 @@ import { UsuarioService } from '../services/usuario-service';
 import { PagesReservasPageModule } from '../pages/pages-reservas/pages-reservas.module';
 import { PagesReservasPage } from '../pages/pages-reservas/pages-reservas';
 import { EncuestaService } from '../services/encuesta-service';
+import { PedidoService } from '../services/pedidos-service';
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
@@ -92,7 +95,6 @@ import { PagesJuegosMenuPageModule } from '../pages/pages-juegos/pages-juegos-me
 import { PagesRegistrosPendientesPageModule } from '../pages/pages-registros-pendientes/pages-registros-pendientes.module';
 import { PagesRegistrosPendientesPage } from '../pages/pages-registros-pendientes/pages-registros-pendientes';
 import { HttpMailProvider } from '../providers/http-mail/http-mail';
-
 
 export function provideSettings(storage: Storage) {
   /**
@@ -116,7 +118,8 @@ export function provideSettings(storage: Storage) {
     SpinnerPage,
     AltaMesaComponent,
     AltaDuenoComponent,
-    AltaEmpleadoComponent
+    AltaEmpleadoComponent,
+    //SolicitudMesaComponent
   ],
   imports: [
     BrowserModule,
@@ -147,8 +150,13 @@ export function provideSettings(storage: Storage) {
     PagesEncuestasUsuariosPageModule,
     PagesReservasPageModule,
     PagesEncuestaUsuarioPageModule,
-    PagesJuegosMenuPageModule,
-    PagesRegistrosPendientesPageModule
+
+    
+    PagesRegistrosPendientesPageModule,
+
+    PagesJuegosMenuPageModule
+    
+
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -171,7 +179,8 @@ export function provideSettings(storage: Storage) {
     PagesRegistrosPendientesPage,
     AltaMesaComponent,
     AltaDuenoComponent,
-    AltaEmpleadoComponent
+    AltaEmpleadoComponent,
+    SolicitudMesaComponent
   ],
   providers: [
     Api,
@@ -199,7 +208,11 @@ export function provideSettings(storage: Storage) {
     Firebase,
     FcmProvider,
     EncuestaService,
-    HttpMailProvider
+
+    HttpMailProvider,
+
+    PedidoService
+
 
   ]
 })
