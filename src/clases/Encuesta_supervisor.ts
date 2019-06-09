@@ -8,7 +8,9 @@ export class Encuesta_supervisor {
     puntualidad: number;
     responsabilidad: number;
     conversacion: number;
-    limpieza: number;
+    limpiaMesa: any;
+    basuraPiso: any;
+    usaBienBano: any;
 
     constructor(
         supervisor?:string,
@@ -19,7 +21,9 @@ export class Encuesta_supervisor {
         puntualidad?:number,
         responsabilidad?:number,
         conversacion?:number,
-        limpieza?:number){
+        limpiaMesa?:any,
+        basuraPiso?:any,
+        usaBienBano?:any){
             this.supervisor = supervisor;
             this.cliente = cliente;
             this.empleado = empleado;
@@ -28,7 +32,9 @@ export class Encuesta_supervisor {
             this.puntualidad = puntualidad;
             this.responsabilidad = responsabilidad;
             this.conversacion = conversacion;
-            this.limpieza = limpieza;
+                this.limpiaMesa = limpiaMesa;
+                this.basuraPiso = basuraPiso;
+                this.usaBienBano = usaBienBano;
     }
 
     dameJSON() {
