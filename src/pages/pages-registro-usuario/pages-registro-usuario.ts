@@ -71,7 +71,7 @@ export class PagesRegistroUsuarioPage {
 
   });
 
-  Registrar() {
+ async Registrar() {
 
     if (!this.usuarioService.validarUsuarioExiste(this.usuarios, this.registroForm.get('nombre').value)) {
       let usuario = new Usuario();
@@ -83,9 +83,39 @@ export class PagesRegistroUsuarioPage {
       usuario.clave = this.registroForm.get('clave').value;
       usuario.perfil = "Cliente";
       usuario.estado = "Pendiente";
+     // usuario.codigoRegistro= Math.random() * (9999 - 1000) + 1000;
       usuario.cuil = null;
 
-      this.objFirebase
+      var idUsuario = this.objFirebase.createId();
+
+      
+      this.objFirebase.collection("SP_usuarios").doc(idUsuario)
+      .set({
+       'id': idUsuario,
+       'apellido': usuario.apellido,
+       'nombre': usuario.nombre,
+       'email': usuario.email,
+       'clave': usuario.clave,
+       'dni': usuario.dni,
+       'cuil': usuario.cuil,
+       'estado': usuario.estado,
+       'foto': 'clientes/' + usuario.dni
+              
+      }).then(res => {
+
+              console.log(res);
+              let toast = this.toastCtrl.create({
+                message: "Por favor, verifica tu correo para completar el registro.",
+                duration: 3000,
+                position: 'middle' //middle || top
+              });
+              toast.present();
+
+             // this.altaReservaForm.reset();
+
+            }, err => console.log(err));
+
+     /* this.objFirebase
         .collection("SP_usuarios")
         .add({
           'apellido': usuario.apellido,
@@ -95,19 +125,20 @@ export class PagesRegistroUsuarioPage {
           'dni': usuario.dni,
           'cuil': usuario.cuil,
           'estado': usuario.estado,
+          'codigoRegistro': usuario.codigoRegistro,
           'foto': 'clientes/' + usuario.dni
         })
         .then(res => {
 
           console.log(res);
           let toast = this.toastCtrl.create({
-            message: "Registracion Exitosa!",
+            message: "Registracion exitosa.",
             duration: 3000,
             position: 'middle' //middle || top
           });
           toast.present();
 
-        }, err => console.log(err));
+        }, err => console.log(err));*/
 
     }
   }
