@@ -79,6 +79,7 @@ import { UsuarioService } from '../services/usuario-service';
 import { PagesReservasPageModule } from '../pages/pages-reservas/pages-reservas.module';
 import { PagesReservasPage } from '../pages/pages-reservas/pages-reservas';
 import { EncuestaService } from '../services/encuesta-service';
+import { PedidoService } from '../services/pedidos-service';
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
@@ -90,7 +91,6 @@ import { Firebase } from '@ionic-native/firebase';
 import { FcmProvider } from '../providers/fcm/fcm';
 import { PagesJuegosMenuPage } from '../pages/pages-juegos/pages-juegos-menu/pages-juegos-menu';
 import { PagesJuegosMenuPageModule } from '../pages/pages-juegos/pages-juegos-menu/pages-juegos-menu.module';
-
 
 export function provideSettings(storage: Storage) {
   /**
@@ -196,7 +196,8 @@ export function provideSettings(storage: Storage) {
     UsuarioService,
     Firebase,
     FcmProvider,
-    EncuestaService
+    EncuestaService,
+    PedidoService
 
   ]
 })

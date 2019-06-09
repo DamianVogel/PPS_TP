@@ -8,7 +8,7 @@ export class Producto {
     foto2: string;
     foto3: string;
 
-    constructor(nombre?: string, descripcion?: string, tipo?: string, tiempo?: number, precio?: number, foto1?: string, foto2?: string, foto3?: string) {
+    constructor(nombre?: string, descripcion?: string, tipo?: string, tiempo?: number, precio?: number) {
 
         this.nombre = nombre;
         this.descripcion = descripcion;
