@@ -57,7 +57,7 @@ export const wait = function (ms){
 }
 
 export const uploadImage = function(image: string, path: string): any {
-  let data = this.getBlob(image);
+  let data = getBlob(image);
   let storageRef =  firebase.storage().ref();
   let imageRef = storageRef.child(path);
   imageRef.put(data).then((snapshot) => {
