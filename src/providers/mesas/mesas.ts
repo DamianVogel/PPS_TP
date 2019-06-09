@@ -105,7 +105,7 @@ export class MesasProvider {
     
     this.listaMesasFirebase.snapshotChanges().subscribe( (mesas)=>{
       //var mesasArray = [];
-      console.log(mesas);
+      //console.log(mesas);
       
       mesas.forEach((mesaObservable: any) => {
         this.mesasId.push({
@@ -113,7 +113,7 @@ export class MesasProvider {
           data: mesaObservable.payload.doc.data()
         });
       })
-      console.log("Las mesas con id son: "+this.mesasId);
+      
     })
   }
 

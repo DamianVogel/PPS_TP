@@ -65,15 +65,20 @@ export class MyApp {
       if(platform.is('cordova')){
           
         // Get a FCM token
-        fcm.getToken()
+        //fcm.getToken()
 
         // Listen to incoming messages
         fcm.listenToNotifications().pipe(
           tap(msg => {
             // show a toast
+            
             const toast = toastCtrl.create({
               message: msg.body,
-              duration: 3000
+              //duration: 5000,
+              closeButtonText: 'OK',
+              showCloseButton: true,
+              position: 'middle',
+              cssClass: 'toastPedido'
             });
             toast.present();
           })
