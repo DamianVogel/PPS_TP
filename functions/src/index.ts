@@ -3,7 +3,11 @@ import * as functions from 'firebase-functions';
 //import * as admin from 'firebase-admin';
 const admin = require('firebase-admin');
 
+const cors = require('cors')({origin: true});
+
+
 admin.initializeApp();
+
 
 exports.createUser = functions.firestore
     .document('SP_usuarios/{userId}')
@@ -95,6 +99,50 @@ exports.AltaPedido = functions.firestore
         return admin.messaging().sendToDevice(tokens, payload)
       // perform desired operations ...
   });
+
+exports.SolicitudMesa = functions.https.onRequest(async (req, res) => {
+    
+    const payload = {
+        notification: {
+            title: 'Aviso!',
+            //body: `${data} is following your content!`,
+            body: `El cliente: ${req.param('nombre')}  esta solicitando una mesa! `
+          
+            //icon: 'https://goo.gl/Fz9nrQ'
+        }
+      }
+  
+      // ref to the device collection for the user
+      const db = admin.firestore()
+      const devicesRef = db.collection("devices")
+      //.where('userId', '==', userId)
+  
+  
+      // get the user's tokens and send notifications
+      const devices = await devicesRef.get();
+  
+      const tokens = new Array();
+  
+      // send a notification to each device token
+      devices.forEach( (result: { data: () => { token: any, perfil: string }; }) => {
+        
+        if(result.data().perfil === 'empleado' || result.data().perfil === 'supervisor' ){
+          const token = result.data().token;
+  
+          tokens.push( token )
+        }
+      
+      })
+      
+      cors(req, res, () => {
+        res.status(200).send(); 
+      });
+    
+    return admin.messaging().sendToDevice(tokens, payload)  
+    
+  });
+
+
 
 
 

@@ -62,12 +62,14 @@ import { PagesEncuestasUsuariosPage } from '../pages/pages-encuestas/pages-encue
 import { PagesEncuestasUsuariosPageModule } from '../pages/pages-encuestas/pages-encuestas-usuarios/pages-encuestas-usuarios.module';
 import { PagesEncuestaUsuarioPageModule } from '../pages/pages-encuestas/pages-encuestas-usuarios/pages-encuesta-usuario/pages-encuesta-usuario.module';
 
+
 //COMPONENT
 import { AltaMesaComponent } from '../components/alta-mesa/alta-mesa';
 import { AltaDuenoComponent } from '../components/alta-dueno/alta-dueno';
 import { AltaEmpleadoComponent } from '../components/alta-empleado/alta-empleado';
 import { MesasProvider } from '../providers/mesas/mesas';
 import { ReservasProvider } from '../providers/reservas/reservas';
+import { SolicitudMesaComponent } from '../components/solicitud-mesa/solicitud-mesa';
 
 //SERVICES
 import { ProductoService } from '../services/producto-service';
@@ -112,7 +114,8 @@ export function provideSettings(storage: Storage) {
     SpinnerPage,
     AltaMesaComponent,
     AltaDuenoComponent,
-    AltaEmpleadoComponent
+    AltaEmpleadoComponent,
+    //SolicitudMesaComponent
   ],
   imports: [
     BrowserModule,
@@ -144,6 +147,7 @@ export function provideSettings(storage: Storage) {
     PagesReservasPageModule,
     PagesEncuestaUsuarioPageModule,
     PagesJuegosMenuPageModule
+    
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -165,7 +169,8 @@ export function provideSettings(storage: Storage) {
     PagesJuegosMenuPage,
     AltaMesaComponent,
     AltaDuenoComponent,
-    AltaEmpleadoComponent
+    AltaEmpleadoComponent,
+    SolicitudMesaComponent
   ],
   providers: [
     Api,

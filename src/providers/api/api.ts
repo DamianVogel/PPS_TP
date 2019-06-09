@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
  */
 @Injectable()
 export class Api {
-  url: string = 'https://example.com/api/v1';
+  url: string = 'https://us-central1-practicaprofesional-dbd4e.cloudfunctions.net';
 
   constructor(public http: HttpClient) {
   }
@@ -14,7 +14,8 @@ export class Api {
   get(endpoint: string, params?: any, reqOpts?: any) {
     if (!reqOpts) {
       reqOpts = {
-        params: new HttpParams()
+        params: new HttpParams(),
+        responseType: 'text'
       };
     }
 
@@ -25,7 +26,7 @@ export class Api {
         reqOpts.params = reqOpts.params.set(k, params[k]);
       }
     }
-
+    //console.log(this.url + '/' + endpoint, reqOpts);
     return this.http.get(this.url + '/' + endpoint, reqOpts);
   }
 
