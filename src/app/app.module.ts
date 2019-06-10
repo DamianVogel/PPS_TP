@@ -62,6 +62,8 @@ import { PagesEncuestaUsuarioPage } from '../pages/pages-encuestas/pages-encuest
 import { PagesEncuestasUsuariosPage } from '../pages/pages-encuestas/pages-encuestas-usuarios/pages-encuestas-usuarios';
 import { PagesEncuestasUsuariosPageModule } from '../pages/pages-encuestas/pages-encuestas-usuarios/pages-encuestas-usuarios.module';
 import { PagesEncuestaUsuarioPageModule } from '../pages/pages-encuestas/pages-encuestas-usuarios/pages-encuesta-usuario/pages-encuesta-usuario.module';
+import { PagesPedidosAltaPage } from '../pages/pages-pedidos/pages-pedidos-alta/pages-pedidos-alta';
+import { PagesPedidosAltaPageModule} from '../pages/pages-pedidos/pages-pedidos-alta/pages-pedidos-alta.module';
 
 
 //COMPONENT
@@ -149,12 +151,10 @@ export function provideSettings(storage: Storage) {
     ListaDeEsperaMenuPageModule,
     PagesEncuestasUsuariosPageModule,
     PagesReservasPageModule,
-    PagesEncuestaUsuarioPageModule,
-
-    
+    PagesEncuestaUsuarioPageModule, 
     PagesRegistrosPendientesPageModule,
-
-    PagesJuegosMenuPageModule
+    PagesJuegosMenuPageModule,
+    PagesPedidosAltaPageModule
     
 
   ],
@@ -180,7 +180,8 @@ export function provideSettings(storage: Storage) {
     AltaMesaComponent,
     AltaDuenoComponent,
     AltaEmpleadoComponent,
-    SolicitudMesaComponent
+    SolicitudMesaComponent,
+    PagesPedidosAltaPage
   ],
   providers: [
     Api,
