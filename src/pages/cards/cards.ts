@@ -23,7 +23,7 @@ import { DeviceMotion } from '@ionic-native/device-motion';
   templateUrl: 'cards.html'
 })
 export class CardsPage {
-
+/*
   cardItems: Array<any>;
   cardItemsGraph: Array<any>;
   public cameraImage : String
@@ -43,8 +43,8 @@ export class CardsPage {
   private x = 0;
   contador: number = 0;
   tArray: number = 0;
-
-  constructor (
+*/
+  constructor (/*
     private alertCtrl: AlertController,
     public storage: Storage,
     public navCtrl: NavController,
@@ -54,8 +54,8 @@ export class CardsPage {
     private objFirebase: AngularFirestore,
     public navParams: NavParams,
     private deviceMotion: DeviceMotion,
-    private shake: Shake ) {
-      this.usuario = JSON.parse(sessionStorage.getItem('usuario'));
+  private shake: Shake */) {
+     /* this.usuario = JSON.parse(sessionStorage.getItem('usuario'));
       this.cardItems = new Array<any>();
       this.cardItemsGraph = new Array<any>();
       this.opcion = navParams.get('opcion');
@@ -70,9 +70,9 @@ export class CardsPage {
         this.shake.startWatch().subscribe(() => {
           this.traerArchivoPost();
         })
-      })
+      })*/
   }
-
+/*
   cargarUsuarios() {
     let coleccionTipadaFirebase = this.objFirebase.collection<Usuario>('users_recursada', ref => ref.orderBy('id','asc'));
     let ListadoUsuariosObservable = coleccionTipadaFirebase.valueChanges();
@@ -117,7 +117,7 @@ export class CardsPage {
       this.cardItems[indexNumber].image = data.toString();
     }).catch(er => { console.log('Error:'+ JSON.stringify(er));});
   }
-
+/*
   guardarArchivoPost(): string {
     this.spin(true);
     let ruta: string = this.nombreSala[this.opcion-1]; // environment.firebase.storageBucket
@@ -338,6 +338,7 @@ export class CardsPage {
           );
 
           //Validacion de si existe ya un voto con el id del usuario
+          
           if( nuevo.addVote(this.usuario.id) == -1){
 
             throw new Error('Su voto ya fue registrado para esta foto!');
@@ -404,6 +405,6 @@ export class CardsPage {
       });
     }
   }
-
+*/
 }
 
