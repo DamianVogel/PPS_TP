@@ -92,6 +92,8 @@ import { Firebase } from '@ionic-native/firebase';
 import { FcmProvider } from '../providers/fcm/fcm';
 import { PagesJuegosMenuPage } from '../pages/pages-juegos/pages-juegos-menu/pages-juegos-menu';
 import { PagesJuegosMenuPageModule } from '../pages/pages-juegos/pages-juegos-menu/pages-juegos-menu.module';
+import { PagesPedidosAltaPage } from '../pages/pages-pedidos/pages-pedidos-alta/pages-pedidos-alta';
+import { PagesPedidosAltaPageModule } from '../pages/pages-pedidos/pages-pedidos-alta/pages-pedidos-alta.module';
 import { PagesRegistrosPendientesPageModule } from '../pages/pages-registros-pendientes/pages-registros-pendientes.module';
 import { PagesRegistrosPendientesPage } from '../pages/pages-registros-pendientes/pages-registros-pendientes';
 import { HttpMailProvider } from '../providers/http-mail/http-mail';
@@ -150,13 +152,10 @@ export function provideSettings(storage: Storage) {
     PagesEncuestasUsuariosPageModule,
     PagesReservasPageModule,
     PagesEncuestaUsuarioPageModule,
-
-    
+    PagesJuegosMenuPageModule,
+    PagesPedidosAltaPageModule,
     PagesRegistrosPendientesPageModule,
-
     PagesJuegosMenuPageModule
-    
-
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -176,6 +175,7 @@ export function provideSettings(storage: Storage) {
     PagesReservasPage,
     PagesEncuestaUsuarioPage,
     PagesJuegosMenuPage,
+    PagesPedidosAltaPage, 
     PagesRegistrosPendientesPage,
     AltaMesaComponent,
     AltaDuenoComponent,
@@ -208,12 +208,8 @@ export function provideSettings(storage: Storage) {
     Firebase,
     FcmProvider,
     EncuestaService,
-
     HttpMailProvider,
-
     PedidoService
-
-
   ]
 })
 export class AppModule {}

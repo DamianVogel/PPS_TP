@@ -4,6 +4,7 @@ import { ActionSheetController } from 'ionic-angular';
 import { PagesReservaPage } from '../../pages-reserva/pages-reserva';
 import { ListaDeEsperaMenuPage } from '../../pages-lista-de-espera/pages-lista-de-espera-menu/pages-lista-de-espera-menu';
 import { PagesJuegosMenuPage } from '../../pages-juegos/pages-juegos-menu/pages-juegos-menu';
+import { PagesPedidosAltaPage } from '../../pages-pedidos/pages-pedidos-alta/pages-pedidos-alta';
 
 @IonicPage()
 @Component({
@@ -27,6 +28,10 @@ export class PagesClienteMenuPage {
 
   juegos(){
     this.navCtrl.push(PagesJuegosMenuPage, {"pedido": "asñdlkwdowiw"}); //TODO Aca deberia enviarsele el id del pedido al cual se le aplicara el descuento
+  }
+
+  hacerPedido(){
+    this.navCtrl.push(PagesPedidosAltaPage, {"mesa": "idMesaTest", "cliente": "idClienteTest"}); //TODO Aca se le deberia pasar el id del cliente, y el id de la mesa para generar el pedido
   }
 
 }
