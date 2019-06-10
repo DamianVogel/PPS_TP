@@ -19,7 +19,7 @@ export class ProductoService {
 	}
 
   traerProductos() {
-    this.listaProductosFirebase = this.objFirebase.collection<Producto>("SP_productos", ref => ref.orderBy('nombre', 'desc') );
+    this.listaProductosFirebase = this.objFirebase.collection<Producto>("SP_productos", ref => ref.orderBy('nombre', 'asc') );
     this.listaProductosObservable = this.listaProductosFirebase.valueChanges();
     return this.listaProductosObservable;
   }
