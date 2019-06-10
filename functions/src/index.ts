@@ -7,7 +7,7 @@ const cors = require('cors')({origin: true});
 
 
 const nodemailer = require('nodemailer');
-const cors = require('cors')({origin: true});
+
 
 admin.initializeApp();
 
@@ -24,9 +24,9 @@ let transporter = nodemailer.createTransport({
 exports.validarMail= functions.https.onRequest((req, res)=>{
 
    const db = admin.firestore()
-    db.collection("SP_usuarios").doc(req.query.id).update("estado","Registrado").then((data)=>{
+    db.collection("SP_usuarios").doc(req.query.id).update("estado","Registrado").then((data:any)=>{
         return res.send('Registro completo!');
-   }).catch((data)=>{
+   }).catch((data:any)=>{
     return res.send(' Error!');
    });
 
