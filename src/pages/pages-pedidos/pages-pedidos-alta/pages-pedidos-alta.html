@@ -3,7 +3,11 @@
     <ion-title>Alta de pedido</ion-title>
   </ion-navbar>
 </ion-header>
+
 <ion-content padding class="cocineroMenu">
+  
+  <button ion-button [disabled]="!botonHabilitado" expand="block" class="ios button button-block button-solid ion-activatable ion-focusable hydrated" (click)="AltaPedido()">ALTA PEDIDO TEST</button>
+  
   <ion-card class="backgroundCard" padding *ngFor="let producto of productos">
     <ion-item style="text-align: center; border-radius: 20px; background-color: rgba(255,255,255,0.8);">
       <ion-title class="asd">{{producto.nombre}}</ion-title><br>
