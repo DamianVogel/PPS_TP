@@ -1,5 +1,5 @@
 export class Mesa {
-  docId: string;
+  id: string;
   numero: number;         
   cantidadComensales: number;     
   tipoMesa: string;       

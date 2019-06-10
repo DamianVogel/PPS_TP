@@ -56,10 +56,12 @@ export class AltaMesaComponent {
   
           //console.log(encodedData);
           //nuevaMesa.codigoQr = encodedData;
-  
-          this.objFirebase.collection("SP_mesas")
-          .add({
-                  
+          var keyMesa = this.objFirebase.createId();
+          
+
+          this.objFirebase.collection("SP_mesas").doc(keyMesa)
+          .set({
+              'id':keyMesa,   
               'numero': nuevaMesa.numero,
               'cantidadComensales':nuevaMesa.cantidadComensales,
               'tipoMesa': nuevaMesa.tipoMesa,
