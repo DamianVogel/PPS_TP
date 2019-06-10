@@ -152,10 +152,10 @@ export function provideSettings(storage: Storage) {
     PagesEncuestasUsuariosPageModule,
     PagesReservasPageModule,
     PagesEncuestaUsuarioPageModule,
-    PagesJuegosMenuPageModule,
-    PagesPedidosAltaPageModule,
     PagesRegistrosPendientesPageModule,
-    PagesJuegosMenuPageModule
+    PagesJuegosMenuPageModule,
+    PagesPedidosAltaPageModule
+
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -180,7 +180,8 @@ export function provideSettings(storage: Storage) {
     AltaMesaComponent,
     AltaDuenoComponent,
     AltaEmpleadoComponent,
-    SolicitudMesaComponent
+    SolicitudMesaComponent,
+    PagesPedidosAltaPage
   ],
   providers: [
     Api,

@@ -25,7 +25,12 @@ export class PedidoService {
     }
   
     cargarPedido(pedidoAGuardarJSON: any){
-      return this.objFirebase.collection<Pedido>("SP_pedidos").add(pedidoAGuardarJSON);
+      
+      let id = this.objFirebase.createId();  
+      pedidoAGuardarJSON.id = id;
+    //  return this.objFirebase.collection<Pedido>("SP_pedidos").add(pedidoAGuardarJSON);
+      return this.objFirebase.collection<Pedido>("SP_pedidos").doc(id).set(pedidoAGuardarJSON);
+    
     }
 
 }
