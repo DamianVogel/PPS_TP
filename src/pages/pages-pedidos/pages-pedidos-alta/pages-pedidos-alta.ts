@@ -25,6 +25,7 @@ export class PagesPedidosAltaPage {
     this.pedido.mesa = navParams.get("mesa");
     this.pedido.cliente = navParams.get("cliente");
     this.inicializarProductos();
+    //TODO Seguir logica
   }
 
   inicializarProductos() {
@@ -33,6 +34,7 @@ export class PagesPedidosAltaPage {
         this.productos.push(new Producto(producto.nombre, producto.descripcion, producto.tipo, producto.tiempo, producto.precio));
         this.propiedadesFotos.forEach(propString => {
           if (producto[propString] !== "") {
+            this.productos[index][propString] = "assets/img/spinner.gif";
             getImageURL(producto[propString]).then(data => {
               this.productos[index][propString] = data;
             })
