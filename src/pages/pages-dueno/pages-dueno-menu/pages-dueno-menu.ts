@@ -4,10 +4,9 @@ import { AltaMesaComponent } from '../../../components/alta-mesa/alta-mesa';
 import { AltaDuenoComponent } from '../../../components/alta-dueno/alta-dueno';
 import { AltaEmpleadoComponent } from '../../../components/alta-empleado/alta-empleado';
 import { MesasProvider } from '../../../providers/mesas/mesas';
-import { QRService } from '../../../services/QR-service';
-import { showAlert } from '../../../environments/environment';
-import { PagesEncuestasUsuariosPage } from '../../pages-encuestas/pages-encuestas-usuarios/pages-encuestas-usuarios';
 import { PagesReservasPage } from '../../pages-reservas/pages-reservas';
+import { PagesRegistrosPendientesPage } from '../../pages-registros-pendientes/pages-registros-pendientes';
+
 
 @IonicPage()
 @Component({
@@ -29,6 +28,7 @@ export class PagesDuenoMenuPage {
   }
 
   reservasPage= PagesReservasPage;
+  registrosPendiente= PagesRegistrosPendientesPage;
 
   constructor(
     public alertCtrl: AlertController,
@@ -87,6 +87,11 @@ export class PagesDuenoMenuPage {
   Reservas()
   {
     this.navCtrl.push(this.reservasPage);
+  }
+
+  RegistrosUsuarios()
+  {
+    this.navCtrl.push(this.registrosPendiente);
   }
 
 

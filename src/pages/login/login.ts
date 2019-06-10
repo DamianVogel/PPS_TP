@@ -26,6 +26,9 @@ import { PagesClienteAnonimoPage } from "../pages-cliente-anonimo/pages-cliente-
 import { PagesRegistroUsuarioPage } from "../pages-registro-usuario/pages-registro-usuario";
 import { BartenderMenuPage } from "../pages-bartender/pages-bartender-menu/pages-bartender-menu";
 import { CocineroMenuPage } from "../pages-cocinero/pages-cocinero-menu/pages-cocinero-menu";
+import { Platform } from 'ionic-angular';
+import { FcmProvider } from '../../providers/fcm/fcm';
+
 
 @IonicPage()
 @Component({
@@ -55,7 +58,9 @@ export class LoginPage {
     public actionSheetCtrl: ActionSheetController,
     public toastCtrl: ToastController,
     public translateService: TranslateService,
-    public objFirebase: AngularFirestore
+    public objFirebase: AngularFirestore,
+    public platform: Platform,
+    public fcm: FcmProvider
   ) {
     this.translateService.get("LOGIN_ERROR").subscribe(value => {
       this.loginErrorString = value;
@@ -81,6 +86,10 @@ export class LoginPage {
         if (user !== undefined) {
           sessionStorage.setItem("usuario", JSON.stringify(user));
 
+          //Si estoy en el dispositivo guardo el token para push
+          if(this.platform.is('cordova')){
+            this.fcm.getToken()
+          }
           /* SWITCH CON DIFERENTES PERFILES */
 
           switch (user.perfil) {

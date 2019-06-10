@@ -12,6 +12,7 @@ import { NativeAudio } from '@ionic-native/native-audio';
 //Movimiento
 import { Shake } from '@ionic-native/shake';
 import { DeviceMotion } from '@ionic-native/device-motion';
+import { EmailComposer } from '@ionic-native/email-composer';
 
 import { IonicStorageModule, Storage } from '@ionic/storage';
 
@@ -62,12 +63,14 @@ import { PagesEncuestasUsuariosPage } from '../pages/pages-encuestas/pages-encue
 import { PagesEncuestasUsuariosPageModule } from '../pages/pages-encuestas/pages-encuestas-usuarios/pages-encuestas-usuarios.module';
 import { PagesEncuestaUsuarioPageModule } from '../pages/pages-encuestas/pages-encuestas-usuarios/pages-encuesta-usuario/pages-encuesta-usuario.module';
 
+
 //COMPONENT
 import { AltaMesaComponent } from '../components/alta-mesa/alta-mesa';
 import { AltaDuenoComponent } from '../components/alta-dueno/alta-dueno';
 import { AltaEmpleadoComponent } from '../components/alta-empleado/alta-empleado';
 import { MesasProvider } from '../providers/mesas/mesas';
 import { ReservasProvider } from '../providers/reservas/reservas';
+import { SolicitudMesaComponent } from '../components/solicitud-mesa/solicitud-mesa';
 
 //SERVICES
 import { ProductoService } from '../services/producto-service';
@@ -77,6 +80,7 @@ import { UsuarioService } from '../services/usuario-service';
 import { PagesReservasPageModule } from '../pages/pages-reservas/pages-reservas.module';
 import { PagesReservasPage } from '../pages/pages-reservas/pages-reservas';
 import { EncuestaService } from '../services/encuesta-service';
+import { PedidoService } from '../services/pedidos-service';
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
@@ -86,7 +90,11 @@ export function createTranslateLoader(http: HttpClient) {
 
 import { Firebase } from '@ionic-native/firebase';
 import { FcmProvider } from '../providers/fcm/fcm';
-
+import { PagesJuegosMenuPage } from '../pages/pages-juegos/pages-juegos-menu/pages-juegos-menu';
+import { PagesJuegosMenuPageModule } from '../pages/pages-juegos/pages-juegos-menu/pages-juegos-menu.module';
+import { PagesRegistrosPendientesPageModule } from '../pages/pages-registros-pendientes/pages-registros-pendientes.module';
+import { PagesRegistrosPendientesPage } from '../pages/pages-registros-pendientes/pages-registros-pendientes';
+import { HttpMailProvider } from '../providers/http-mail/http-mail';
 
 export function provideSettings(storage: Storage) {
   /**
@@ -110,7 +118,8 @@ export function provideSettings(storage: Storage) {
     SpinnerPage,
     AltaMesaComponent,
     AltaDuenoComponent,
-    AltaEmpleadoComponent
+    AltaEmpleadoComponent,
+    //SolicitudMesaComponent
   ],
   imports: [
     BrowserModule,
@@ -140,7 +149,14 @@ export function provideSettings(storage: Storage) {
     ListaDeEsperaMenuPageModule,
     PagesEncuestasUsuariosPageModule,
     PagesReservasPageModule,
-    PagesEncuestaUsuarioPageModule
+    PagesEncuestaUsuarioPageModule,
+
+    
+    PagesRegistrosPendientesPageModule,
+
+    PagesJuegosMenuPageModule
+    
+
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -159,9 +175,12 @@ export function provideSettings(storage: Storage) {
     PagesEncuestasUsuariosPage,
     PagesReservasPage,
     PagesEncuestaUsuarioPage,
+    PagesJuegosMenuPage,
+    PagesRegistrosPendientesPage,
     AltaMesaComponent,
     AltaDuenoComponent,
-    AltaEmpleadoComponent
+    AltaEmpleadoComponent,
+    SolicitudMesaComponent
   ],
   providers: [
     Api,
@@ -175,6 +194,7 @@ export function provideSettings(storage: Storage) {
     DeviceMotion,
     StatusBar,
     BarcodeScanner,
+    EmailComposer,
     { provide: Settings, useFactory: provideSettings, deps: [Storage] },
     // Keep this to enable Ionic's runtime error handling during development
     { provide: ErrorHandler, useClass: IonicErrorHandler },
@@ -187,7 +207,12 @@ export function provideSettings(storage: Storage) {
     UsuarioService,
     Firebase,
     FcmProvider,
-    EncuestaService
+    EncuestaService,
+
+    HttpMailProvider,
+
+    PedidoService
+
 
   ]
 })

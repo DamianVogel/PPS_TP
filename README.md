@@ -27,6 +27,9 @@
   35) Con mínimo un tipo de cada uno de estos controles (range, input, radio, check, select).
   36) Mostrar los gráficos de las estadísticas obtenidas de cada uno de los ítems de ese empleado / cliente según corresponda.
   
+  #### Juegos - Juego 10% de descuento (05/06/2019 - TBD)
+  57) En caso de ganar se le descontará de la cuenta final el porcentaje correspondiente.
+  
 ## ==========================================
 
 ### **Damian Vogel (DamianVogelBranch)**

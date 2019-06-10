@@ -53,9 +53,9 @@ export class ProductoAltaPage {
       productoAGuardar.tiempo = round(this.producto.tiempo,0);
       productoAGuardar.precio = round(this.producto.precio,2);
       productoAGuardar.tipo = this.producto.tipo;
-      if(this.producto.foto1 !== "") productoAGuardar.setFoto1();
-      if(this.producto.foto2 !== "") productoAGuardar.setFoto2();
-      if(this.producto.foto3 !== "") productoAGuardar.setFoto3();
+      if(this.producto.foto1 === "Cargada") productoAGuardar.setFoto1();
+      if(this.producto.foto2 === "Cargada") productoAGuardar.setFoto2();
+      if(this.producto.foto3 === "Cargada") productoAGuardar.setFoto3();
 
       spin(this.modalCtrl, true);
 

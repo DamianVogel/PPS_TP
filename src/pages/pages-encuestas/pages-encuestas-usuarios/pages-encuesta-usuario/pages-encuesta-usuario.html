@@ -6,7 +6,7 @@
 <ion-content padding class="bartenderMenu">
   <button ion-button expand="block"
     class="menuButtonPPT ios button button-block button-solid ion-activatable ion-focusable hydrated"
-    [disabled]="encuestaCargadaUsuarioSupervisor" (click)="mostrarEncuesta()">Cargar encuesta</button>
+    (click)="mostrarEncuesta()">Cargar encuesta</button>
   <button ion-button expand="block"
     class="menuButtonPPT ios button button-block button-solid ion-activatable ion-focusable hydrated"
     [disabled]="!encuestasCargadasUsuario" (click)="mostrarGrafico()">Mostrar grafico</button>
@@ -42,14 +42,21 @@
     </ion-item>
     <ion-item padding class="formItem">
       <div>Limpieza</div>
-      <br>
-      <div id="radiocb" (click)="validarCheckboxes(event)">
-        <label><input type="checkbox" value="1" id="limpieza1" /> 1</label>
-        <label><input type="checkbox" value="2" id="limpieza2" /> 2</label>
-        <label><input type="checkbox" value="3" id="limpieza3" /> 3</label>
-        <label><input type="checkbox" value="4" id="limpieza4" /> 4</label>
-        <label><input type="checkbox" value="5" id="limpieza5" /> 5</label>
-      </div>
+    </ion-item>
+    <ion-item padding class="formItem">
+      <ion-label>Limpia la mesa</ion-label>
+      <ion-checkbox color="secondary" id="limpiaMesa" name="limpiaMesa" [(ngModel)]="encuestaACargar.limpiaMesa">
+      </ion-checkbox>
+    </ion-item>
+    <ion-item padding class="formItem">
+      <ion-label>Limpia basura del piso</ion-label>
+      <ion-checkbox color="secondary" id="basuraPiso" name="basuraPiso" [(ngModel)]="encuestaACargar.basuraPiso">
+      </ion-checkbox>
+    </ion-item>
+    <ion-item padding class="formItem">
+      <ion-label>Usa limpiamente el baño</ion-label>
+      <ion-checkbox color="secondary" id="usaBienBano" name="usaBienBano" [(ngModel)]="encuestaACargar.usaBienBano">
+      </ion-checkbox>
     </ion-item>
     <button ion-button type="submit" block large (click)="cargar()">Cargar encuesta</button>
   </form>
@@ -59,7 +66,7 @@
       Promedio de calificaciones
     </ion-card-header>
     <ion-card-content>
-      <canvas #doughnutCanvas></canvas>
+      <canvas height="500" #doughnutCanvas></canvas>
     </ion-card-content>
   </ion-card>
 </ion-content>

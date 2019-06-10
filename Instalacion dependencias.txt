@@ -16,14 +16,22 @@ FUNCIONES DE FIREBASE.
 
 FIREBASE FUNCTIONS
 5)	npm install -g firebase-tools
+6)  npm install firebase-functions@latest 
+7)  npm install firebase-admin@latest --save
+
+
+8)  Dentro del directorio functions ejecutar: 
+    -   npm install cors --save
 
 
 //NO SE SI ES NECESARIO, PUEDE SER QUE SI NO REALIZAN ESTO NO LES DEJE SUBIR/ACTUALIZAR LAS FUNCIONES.
--firebase login
+8)  firebase login
+9)  firebase init functions
+
 
 
 //EN CASO QUE AGREGUEN NUEVAS FUNCIONES A FIREBASE Y DEBAN SUBIRLAS.
--firebase deploy --only functions
+10) firebase deploy --only functions
 
 
 

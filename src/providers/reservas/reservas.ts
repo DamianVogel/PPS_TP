@@ -22,77 +22,95 @@ export class ReservasProvider {
     public http: HttpClient,  
     private objFirebase: AngularFirestore,
     public toastCtrl: ToastController) {
-   
+      this.reservas = new Array<any>();
     //this.TraerReservas();
   }
 
-   TraerReservas()
+   async TraerReservas()
   {
-    this.reservas = new Array<any>();
-    this.listaReservasFirebase = this.objFirebase.collection<Reserva>("SP_reservas", ref => ref.orderBy('fecha_hora', 'desc') );
-    this.listaReservasObservable = this.listaReservasFirebase.valueChanges();
-    this.listaReservasObservable.subscribe(arr => {
+    
+    this.listaReservasFirebase = this.objFirebase.collection<any>("SP_reservas", ref => ref.orderBy('fecha', 'desc') );
 
-      arr.forEach((x: Reserva) => {
-        this.reservas.push(x);
-       
-      });
-    });
+    this.listaReservasFirebase.snapshotChanges().subscribe( (arr)=>{
+      
+      arr.forEach((res: any) => {
+        this.reservas.push(res.payload.doc.data());
+      })
+      console.log(this.reservas);
+      
+    })
+
 
   }
 
   GuardarReserva(reserva:Reserva)
   {
     let usuario= JSON.parse(sessionStorage.getItem("usuario"));
-    this.objFirebase
-   .collection("SP_reservas")
-   .add({
-    'id': reserva.fecha_hora + usuario.apellido,
-     'fecha_hora': reserva.fecha_hora,
-     'cliente': usuario, 
-     'mesas': reserva.mesas,
-     'estado': reserva.estado
-   })
-   .then(res => {
 
-     console.log(res);
-     let toast = this.toastCtrl.create({
-       message: "Reservaste la mesa: " + reserva.mesas + " para el dia " + reserva.fecha_hora ,
-       duration: 3000,
-       position: 'middle' //middle || top
-     });
-     toast.present();
-   
+       //nuevaMesa.codigoQr = encodedData;
+       var idReserva = this.objFirebase.createId();
+          
 
+       this.objFirebase.collection("SP_reservas").doc(idReserva)
+       .set({
+        'id': idReserva,
+        'fecha': reserva.fecha,
+        'hora': reserva.hora,
+        'cliente': usuario, 
+        'mesas': reserva.mesas,
+        'estado': reserva.estado
+               
+       }).then(res => {
 
-   }, err => console.log(err));
+               console.log(res);
+               let toast = this.toastCtrl.create({
+                 message: "Reservaste la mesa: " + reserva.mesas + " para el dia " + reserva.fecha + "a las "+ reserva.hora ,
+                 duration: 3000,
+                 position: 'middle' //middle || top
+               });
+               toast.present();
+
+              // this.altaReservaForm.reset();
+
+             }, err => console.log(err));
   }
 
  AutorizarReseva(reserva: Reserva)
   {
     reserva.estado="Autorizada";
-
+    this.reservas = [];
     this.objFirebase.collection("SP_reservas").doc(reserva.id).set(reserva).then(() => {
             
+      
+
+    this.TraerReservas();
     
       console.log('Documento editado exitósamente');
 
     }, (error) => {
       console.log(error);
     });
+
   }
 
 
   CancelarReserva(reserva: Reserva)
   {
     reserva.estado="Cancelada";
-
+    this.reservas = [];
     this.objFirebase.collection("SP_reservas").doc(reserva.id).set(reserva).then(() => {
      
+      
       console.log('Documento editado exitósamente');
+      
+   
+    this.TraerReservas();
 
     }, (error) => {
       console.log(error);
     });
+
   }
+
+  
 }
