@@ -30,8 +30,8 @@ export class PagesClienteMenuPage {
     this.navCtrl.push(PagesJuegosMenuPage, {"pedido": "asñdlkwdowiw"}); //TODO Aca deberia enviarsele el id del pedido al cual se le aplicara el descuento
   }
 
-  pedido(){
-    this.navCtrl.push(PagesPedidosAltaPage);
+  hacerPedido(){
+    this.navCtrl.push(PagesPedidosAltaPage, {"mesa": "idMesaTest", "cliente": "idClienteTest"}); //TODO Aca se le deberia pasar el id del cliente, y el id de la mesa para generar el pedido
   }
 
 }

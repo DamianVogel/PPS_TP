@@ -117,3 +117,9 @@ export const getRandomColor = function() {
   }
   return color;
 }
+
+export const getImageURL = function(path: string): any {
+  let storageRef = firebase.storage().ref();
+  let imageRef = storageRef.child(path);
+  return imageRef.getDownloadURL();
+}

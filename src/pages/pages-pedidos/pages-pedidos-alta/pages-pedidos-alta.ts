@@ -5,6 +5,7 @@ import { ProductoService } from '../../../services/producto-service';
 import { Producto } from '../../../clases/Producto';
 import { PedidoService } from '../../../services/pedidos-service';
 import { showAlert, spin} from '../../../environments/environment';
+import { getImageURL } from '../../../environments/environment';
 
 @IonicPage()
 @Component({
@@ -18,7 +19,9 @@ export class PagesPedidosAltaPage {
   pedido: Pedido;
   productos: Array<Producto>;
 
-  constructor(public navCtrl: NavController, 
+  propiedadesFotos: Array<string> = ["foto1", "foto2", "foto3"];
+
+  constructor(public navCtrl: NavController,
     public navParams: NavParams,
     public productoService: ProductoService,
     public pedidoService: PedidoService,
@@ -30,8 +33,24 @@ export class PagesPedidosAltaPage {
       this.productoService.traerProductos().subscribe(productos => {
         this.productos = productos;
       })
+      this.inicializarProductos();
 
-     
+    }
+
+  inicializarProductos() {
+    this.productoService.traerProductos().subscribe(productos => {
+      productos.forEach((producto, index) => {
+        this.productos.push(new Producto(producto.id,producto.nombre, producto.descripcion, producto.tipo, producto.tiempo, producto.precio));
+        this.propiedadesFotos.forEach(propString => {
+          if (producto[propString] !== "") {
+            this.productos[index][propString] = "assets/img/spinner.gif";
+            getImageURL(producto[propString]).then(data => {
+              this.productos[index][propString] = data;
+            })
+          }
+        })
+      });
+    })
   }
 
 

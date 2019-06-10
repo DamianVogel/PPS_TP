@@ -1,15 +1,50 @@
 <ion-header>
-
-  <ion-navbar>
-    <ion-title>pages-pedidos-alta</ion-title>
+  <ion-navbar class="cocineroNavBar">
+    <ion-title>Alta de pedido</ion-title>
   </ion-navbar>
-
 </ion-header>
-
-
-<ion-content padding>
-  Existe dentro del ts la funcion de prueba que da de alta un nuevo pedido con este boton.
-  Chequear en consola el resultado.
-  <button ion-button [disabled]="!botonHabilitado" expand="block" class="ios button button-block button-solid ion-activatable ion-focusable hydrated" (click)="AltaPedido()">Alta Pedido - TEST</button>
-
+<ion-content padding class="cocineroMenu">
+  <ion-card class="backgroundCard" padding *ngFor="let producto of productos">
+    <ion-item style="text-align: center; border-radius: 20px; background-color: rgba(255,255,255,0.8);">
+      <ion-title class="asd">{{producto.nombre}}</ion-title><br>
+      <p style="color: black;">{{producto.descripcion}}</p>
+    </ion-item>
+    <ion-slides pager="true" effect="cube" zoom="true">
+      <ion-slide *ngIf="producto.foto1 !== ''">
+        <div class="swiper-zoom-container">
+          <img class="imagen" [src]="producto.foto1">
+        </div>
+      </ion-slide>
+      <ion-slide *ngIf="producto.foto2 !== ''">
+        <div class="swiper-zoom-container">
+          <img class="imagen" [src]="producto.foto2">
+        </div>
+      </ion-slide>
+      <ion-slide *ngIf="producto.foto3 !== ''">
+        <div class="swiper-zoom-container">
+          <img class="imagen" [src]="producto.foto3">
+        </div>
+      </ion-slide>
+    </ion-slides>
+    <br>
+    <!--<ion-row>
+              <ion-row style="margin:auto;">
+                <button class="loginButton" ion-button color="primary" (click)='traerUsuario(item.id)' small icon-start>
+                  Ver posts de {{item.user.name}}
+                </button>
+              </ion-row>
+              <ion-row style="margin:auto;">
+                <button class="loginProfileButton" ion-button color="primary" (click)='votar(item)' small icon-start>
+                  Votar!
+                </button>
+              </ion-row>
+              <br>
+              <ion-row center text-center style="margin:auto;">
+                <ion-note>
+                  <br>
+                  {{item.date | date:'medium'}}
+                </ion-note>
+              </ion-row>
+            </ion-row>-->
+  </ion-card>
 </ion-content>
