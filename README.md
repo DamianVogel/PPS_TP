@@ -50,9 +50,33 @@
   1) Lectura de estado de mesa via QR.
   2) Para relacionar al cliente con una mesa.
   3) Para ver el estado del pedido.
-  4) Para acceder a la encuesta de satisfacción.
   
+  #### Firebase Function #### (01/06 al 08/06) 
 
+  1) Investigacion y aplicacion de Firebase Functions
+  2) Instalacion de dependencias.
+  3) Desarrollo de obtencion de token de dispositivos en diferentes puntos de la aplicacion.
+  4) Test de Push Notifications al dar de alta de usuarios.
+  
+  #### PUSH NOTIFICATIONS-LOG IN-SERVICIOS MESA-PERSISTENCIA PEDIDOS ###(09/06 al 15/06)
+  
+  1) Desarrollo de funciones en Firebase para Push Notification:
+      # HTTPS - Solicitud de mesa: 
+          Aviso a Mozo y Supervisores.
+      # onCreate - Alta de pedido: 
+          Aviso a empleados del evento.
+  
+  2) Adecuacion de acceso al sistema como cliente anonimo.
+      # Persistencia del usuario anonimo con id en coleccion de documentos.
+      # Agregado de spinner y deshabilitacion de botones en request.
+
+  3) En formulario de registro validacion de que email no exista para un usuario registrado.
+
+  3) Servicio Mesa:
+      # Servicio de obtencion de usuario en mesa para consumir en alta de pedido.
+      # Numero de mesa autoincremental de acuerdo a ultimo registro en base para nuevas altas.
+      # Validacion de estado de mesa al asignar via QR. 
+    
   
 ## ==========================================
 

@@ -1,3 +1,5 @@
+import { Usuario } from "./usuario";
+
 export class Mesa {
   id: string;
   numero: number;         
@@ -5,6 +7,7 @@ export class Mesa {
   tipoMesa: string;       
   codigoQr: string;  
   estado: string;   //Estados: {"disponible", "ocupada", "reservada" } 
+  usuario: Usuario;
          
   constructor(){
     

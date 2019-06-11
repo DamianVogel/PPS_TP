@@ -7,6 +7,7 @@ import { Mesa } from '../../clases/mesa';
 
 //servicios
 import { QRService } from '../../services/QR-service';
+import { Usuario } from '../../clases/usuario';
 
 /*
   Generated class for the MesasProvider provider.
@@ -22,6 +23,7 @@ export class MesasProvider {
   public mesas:Array<Mesa>;
   public mesasId:Array<any>;
   //public mesasDisponibles: Array<Mesa>;
+  public usuarioEnMesa:Usuario;
   
   constructor(
     public http: HttpClient,  
@@ -31,12 +33,12 @@ export class MesasProvider {
     ) {  
     this.TraerMesas();
     //this.MesasDisponibles();
-    this.TraerMesasConId();
+    //this.TraerMesasConId();
 
   }
 
-  TraerMesas()
-  {this.mesas = new Array<any>();
+  TraerMesas(){ 
+    this.mesas = new Array<any>();
     this.listaMesasFirebase = this.objFirebase.collection<Mesa>("SP_mesas", ref => ref.orderBy('numero', 'desc') );
     this.listaMesasObservable = this.listaMesasFirebase.valueChanges();
     this.listaMesasObservable.subscribe(arr => {
@@ -52,6 +54,8 @@ export class MesasProvider {
     });
 
   }
+
+  
 
   EstadoMesa(){
     this.TraerMesas();
@@ -98,6 +102,9 @@ export class MesasProvider {
     return mesasFiltradas;
   }
 
+
+
+  /*
   TraerMesasConId(){
     this.mesasId = new Array<any>();
     
@@ -116,18 +123,19 @@ export class MesasProvider {
       
     })
   }
-
-  RelacionMesaUsuario(numeroMesa){
-    this.mesasId.forEach( mesa => {      
-      if(mesa.data.numero == numeroMesa){      
-        let mesaAbuscar = this.objFirebase.collection("SP_mesas").doc(mesa.id).collection("ocupadaPor");
-        mesaAbuscar.snapshotChanges().subscribe( usuario => {
-          usuario.forEach(usuario =>{
-            console.log("El usuario que esta usando la mesa es: "+ usuario.payload.doc.data())
-          })          
-        })
-      } 
-    });
+  */
+  
+  RelacionMesaUsuario(numeroMesa){   
+    this.usuarioEnMesa = null;    
+      this.mesas.forEach( mesa => {      
+        if(mesa.numero == numeroMesa){              
+          if(mesa.usuario){                        
+            this.usuarioEnMesa = mesa.usuario;
+            console.log("La mesa esta siendo ocupada por: "+mesa.usuario.nombre);                  
+          }          
+        }        
+      });          
+    return this.usuarioEnMesa;
   }
 
   CambiarEstadoMesaOcupada(){
@@ -136,32 +144,42 @@ export class MesasProvider {
     this.qrService.readQR().then(QRdata => {
       
       let flag = false;
-      this.mesasId.forEach((mesa) =>{  
+      this.mesas.forEach((mesa) =>{  
 
-        if(mesa.data.numero == parseInt(QRdata.text)){          
+        if(mesa.numero == parseInt(QRdata.text)){          
           flag = true;
-          let mesaUpdate =  new Mesa();
-          mesaUpdate = mesa.data;
-          mesaUpdate.estado = 'ocupada';
-                   
-          this.objFirebase.collection("SP_mesas").doc(mesa.id).set(mesaUpdate).then(() => {
+          
+          if(mesa.estado == 'disponible'){
             
-            const usuarioOcupaMesa = this.objFirebase.collection("SP_mesas").doc(mesa.id).collection("ocupadaPor");            
-            usuarioOcupaMesa.add({ usuario: usuario, timestamp: Date() });
-
+            let mesaUpdate =  new Mesa();
+            mesaUpdate = mesa;
+            mesaUpdate.estado = 'ocupada';
+            mesaUpdate.usuario = usuario;
+                    
+            this.objFirebase.collection("SP_mesas").doc(mesa.id).set(mesaUpdate).then(() => {
+              
+            
             console.log('Documento editado exitósamente');
 
-          }, (error) => {
-            console.log(error);
-          });
-                   
-          let toast = this.toastCtrl.create({            
-            message: "La mesa nro: "+mesa.data.numero +" fue ocupada por "+ usuario.nombre,
-            duration: 3000,
-            position: 'middle' //middle || top
-          });
-          toast.present();
-          
+            }, (error) => {
+              console.log(error);
+            });
+                    
+            let toast = this.toastCtrl.create({            
+              message: "La mesa nro: "+mesa.numero +" fue ocupada por "+ usuario.nombre,
+              duration: 3000,
+              position: 'middle' //middle || top
+            });
+            toast.present();
+            
+          }else{
+            let toast = this.toastCtrl.create({            
+              message: "No se puede asignar la mesa nro: "+mesa.numero +" porque se encuentra ocupada",
+              duration: 3000,
+              position: 'middle' //middle || top
+            });
+            toast.present();
+          }
         }
 
       });

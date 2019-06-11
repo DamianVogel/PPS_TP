@@ -68,9 +68,18 @@ export class LoginPage {
     });
   }
 
+  ingresoAnonimo(){
+    this.navCtrl.push(PagesClienteAnonimoPage);
+  }  
+
   doLogin() {
     if (this.loginFields.email == "" || this.loginFields.clave == "") {
-      this.navCtrl.push(PagesClienteAnonimoPage);
+      let toast = this.toastCtrl.create({
+        message: "Debe indicar usuario y contraseña",
+        duration: 4000,
+        position: "middle" //middle || top
+      });
+      toast.present();
     } else {
       let modal = this.modalVotacion.create(SpinnerPage);
       modal.present();
@@ -168,7 +177,7 @@ export class LoginPage {
           icon: "people",
           cssClass: "loginProfileButton",
           handler: () => {
-            this.loadLoginFields("dueño@comanda.com", "1234");
+            this.loadLoginFields("dueno@comanda.com", "1234");
           }
         },
         {
