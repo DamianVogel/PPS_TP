@@ -8,6 +8,6 @@
     <ion-item padding class="formItem">
       <ion-input type="text" [(ngModel)]="usuario.nombre" name="nombre" placeholder="Nombre"></ion-input>
     </ion-item>
-    <button class="menuButtonPPT" ion-button type="submit" block large (click)="acceder()">Acceder</button>
+    <button [disabled]="!botonHabilitado" class="menuButtonPPT" ion-button type="submit" block large (click)="acceder()">Acceder</button>
   </form>
 </ion-content>
