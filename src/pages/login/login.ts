@@ -172,7 +172,7 @@ export class LoginPage {
           icon: "people",
           cssClass: "loginProfileButton",
           handler: () => {
-            this.loadLoginFields("dueño@comanda.com", "1234");
+            this.loadLoginFields("dueno@comanda.com", "1234");
           }
         },
         {
