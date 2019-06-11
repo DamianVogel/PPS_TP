@@ -115,7 +115,20 @@ export class LoginPage {
               break;
 
             case "cliente":
+            if(user.estado=="Registrado")
+            {
               this.navCtrl.push(PagesClienteMenuPage);
+
+            }
+            else{
+              let toast = this.toastCtrl.create({
+                message: "Verificacion pendiente.",
+                duration: 4000,
+                position: "bottom" //middle || top
+              });
+              toast.present();
+            }
+              
               break;
 
             case "dueno":
