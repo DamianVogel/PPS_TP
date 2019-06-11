@@ -197,6 +197,41 @@ exports.SolicitudMesa = functions.https.onRequest(async (req, res) => {
 
 
 
+  
+exports.pushListaEspera = functions.firestore
+.document('SP_listaEspera/{clienteId}')
+.onCreate(async (snap, context) => {
+
+      const payload = {
+          notification: {
+              title: 'Cliente en espera.',
+           
+              body: `Se agrego un nuevo cliente a la lista de espera.`
+ 
+          }
+        }
+
+        const db = admin.firestore()
+        const devicesRef = db.collection("devices")
+    
+        const devices = await devicesRef.get();
+    
+        const tokens = new Array();
+  
+        devices.forEach( (result: { data: () => { token: any, perfil: string, tipo:string }; }) => {
+          
+          if(result.data().tipo === 'mozo'){
+            const token = result.data().token;
+    
+            tokens.push( token )
+          }
+        
+        })
+      
+      return admin.messaging().sendToDevice(tokens, payload)
+    
+});
+
 
 
 

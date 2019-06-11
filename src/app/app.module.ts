@@ -97,6 +97,8 @@ import { PagesPedidosAltaPageModule } from '../pages/pages-pedidos/pages-pedidos
 import { PagesRegistrosPendientesPageModule } from '../pages/pages-registros-pendientes/pages-registros-pendientes.module';
 import { PagesRegistrosPendientesPage } from '../pages/pages-registros-pendientes/pages-registros-pendientes';
 import { HttpMailProvider } from '../providers/http-mail/http-mail';
+import { PagesMozoPage } from '../pages/pages-mozo/pages-mozo';
+import { PagesMozoPageModule } from '../pages/pages-mozo/pages-mozo.module';
 
 export function provideSettings(storage: Storage) {
   /**
@@ -142,6 +144,7 @@ export function provideSettings(storage: Storage) {
     PagesClienteAnonimoMenuPageModule,
     PagesDuenoMenuPageModule,
     PagesEmpleadoPageModule,
+    PagesMozoPageModule,
     PagesSupervisorPageModule,
     PagesRegistroUsuarioPageModule,
     CocineroMenuPageModule,
@@ -165,6 +168,7 @@ export function provideSettings(storage: Storage) {
     PagesDuenoMenuPage,
     PagesSupervisorPage,
     PagesEmpleadoPage,
+    PagesMozoPage,
     PagesClienteMenuPage,
     PagesClienteAnonimoPage,
     PagesClienteAnonimoMenuPage,
