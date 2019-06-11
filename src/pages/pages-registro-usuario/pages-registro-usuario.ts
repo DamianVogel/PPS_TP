@@ -81,8 +81,9 @@ export class PagesRegistroUsuarioPage {
       usuario.dni = this.registroForm.get('dni').value;
       usuario.email = this.registroForm.get('email').value;
       usuario.clave = this.registroForm.get('clave').value;
-      usuario.perfil = "Cliente";
+      usuario.perfil = "cliente";
       usuario.estado = "Pendiente";
+      usuario.tipo = "cliente";
      // usuario.codigoRegistro= Math.random() * (9999 - 1000) + 1000;
       usuario.cuil = null;
 
@@ -99,6 +100,7 @@ export class PagesRegistroUsuarioPage {
        'dni': usuario.dni,
        'cuil': usuario.cuil,
        'estado': usuario.estado,
+       'tipo': usuario.tipo,
        'foto': 'clientes/' + usuario.dni
               
       }).then(res => {
