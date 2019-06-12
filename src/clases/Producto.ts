@@ -8,8 +8,15 @@ export class Producto {
     foto1: string;
     foto2: string;
     foto3: string;
+    estado: string; 
+    /*
+     estado corresponde para poder diferenciar si esta realizado o no cuando forma parte de un pedido.
+        {'pendiente','preparacion','terminado'}
+     */
 
-    constructor(id?:string, nombre?: string, descripcion?: string, tipo?: string, tiempo?: number, precio?: number) {
+
+    constructor(
+        id?:string, nombre?: string, descripcion?: string,  tiempo?: number, precio?: number, tipo?: string, estado?: string) {
 
         this.nombre = nombre;
         this.descripcion = descripcion;

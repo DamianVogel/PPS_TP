@@ -35,6 +35,13 @@ FIREBASE FUNCTIONS
 
 
 
+ANOMALIA TYPESCRIPT: "Exclude"
+https://github.com/DefinitelyTyped/DefinitelyTyped/issues/33778
+
+12/06:
+    npm i -D @types/lodash@ts2.5 <- Correccion.
+    
+
 
 
 
