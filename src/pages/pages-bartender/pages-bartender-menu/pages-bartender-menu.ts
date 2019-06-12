@@ -60,6 +60,13 @@ export class BartenderMenuPage {
     
       this.pedidos = array;
       this.pedidos = this.pedidos.filter( pedido => pedido.estado == 'pendiente' );
+      
+      /* Aca se puede agregar un filtro para los productos de this.pedidos.productos 
+      Por tipo de producto / responsable.
+      
+      */
+
+      
       console.log(this.pedidos);
     })
 

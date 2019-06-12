@@ -58,7 +58,12 @@
   3) Desarrollo de obtencion de token de dispositivos en diferentes puntos de la aplicacion.
   4) Test de Push Notifications al dar de alta de usuarios.
   
-  #### PUSH NOTIFICATIONS-LOG IN-SERVICIOS MESA-PERSISTENCIA PEDIDOS ###(09/06 al 15/06)
+  #### PUSH NOTIFICATIONS
+  #### LOG IN
+  #### SERVICIOS MESA
+  #### PERSISTENCIA PEDIDOS TEST
+  #### COMPONENTES LISTA PEDIDOS \ PRODUCTOS
+  ###(09/06 al 15/06)
   
   1) Desarrollo de funciones en Firebase para Push Notification:
       # HTTPS - Solicitud de mesa: 
@@ -76,6 +81,11 @@
       # Servicio de obtencion de usuario en mesa para consumir en alta de pedido.
       # Numero de mesa autoincremental de acuerdo a ultimo registro en base para nuevas altas.
       # Validacion de estado de mesa al asignar via QR. 
+  
+  4) Componentes Lista Pedido \ Producto:
+      # Generacion de servicios para la obtencion de pedidos filtrados por estado y perfil
+      # Generacion Component Lista y Pedido para mostrar los productos de un pedido.
+        Cada uno de estos cuenta con un boton de accion que cambia el estado del mismo para cumplimentar el flujo del sistema.
     
   
 ## ==========================================

@@ -33,4 +33,17 @@ export class PedidoService {
     
     }
 
+    traerUnPedido(idPedido: string){      
+      let pedido = this.objFirebase.collection<Pedido>("SP_pedidos").doc(idPedido);
+      let pedidoObservable = pedido.valueChanges();
+      return pedidoObservable;
+      
+    }
+
+    actualizarUnPedido(idPedido: string){
+      let pedidoActualizar = this.objFirebase.collection<Pedido>("SP_pedidos").doc(idPedido);
+      //let pedidoObservable = pedido.valueChanges();
+      return pedidoActualizar;
+    }
+
 }

@@ -40,7 +40,7 @@ export class PagesPedidosAltaPage {
   inicializarProductos() {
     this.productoService.traerProductos().subscribe(productos => {
       productos.forEach((producto, index) => {
-        this.productos.push(new Producto(producto.id,producto.nombre, producto.descripcion, producto.tipo, producto.tiempo, producto.precio));
+        this.productos.push(new Producto(producto.id,producto.nombre, producto.descripcion,  producto.tiempo, producto.precio, producto.tipo));
         this.propiedadesFotos.forEach(propString => {
           if (producto[propString] !== "") {
             this.productos[index][propString] = "assets/img/spinner.gif";
@@ -61,11 +61,33 @@ export class PagesPedidosAltaPage {
     this.botonHabilitado = false;
     let pedido = new Pedido();
     
-    pedido.cliente = 'prueba';
+    pedido.cliente = 'TEST 20190612';
     pedido.estado = 'pendiente';
     pedido.productos = Array<Producto>();
-    pedido.mesa = '1';
-    pedido.tiempo_espera = 10;
+    
+    let producto1 = new Producto();
+    let producto2 = new Producto();
+    let producto3 = new Producto();
+    
+    producto1.nombre = 'nombretest1';
+    producto1.estado = 'pendiente';
+    producto1.tipo = 'bebida';
+
+    producto2.nombre = 'nombretest2';
+    producto2.estado = 'pendiente';
+    producto2.tipo = 'bebida';
+    
+    producto3.nombre = 'nombretest3';
+    producto3.estado = 'pendiente';
+    producto3.tipo = 'comida';
+
+    pedido.productos.push(producto1);
+    pedido.productos.push(producto2);
+    pedido.productos.push(producto3);
+
+
+    pedido.mesa = '2';
+    pedido.tiempo_espera = 30;
 
     
 

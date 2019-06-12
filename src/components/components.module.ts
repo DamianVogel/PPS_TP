@@ -7,9 +7,11 @@ import { AltaEmpleadoComponent } from './alta-empleado/alta-empleado';
 import { SolicitudMesaComponent } from './solicitud-mesa/solicitud-mesa';
 import { IonicModule } from 'ionic-angular'
 import { ListapedidosComponent } from './listapedidos/listapedidos';
+import { ProductosEnPedidoComponent } from './productos-en-pedido/productos-en-pedido';
 @NgModule({
 	declarations: [SolicitudMesaComponent,
-    ListapedidosComponent
+    ListapedidosComponent,
+    ProductosEnPedidoComponent
 	//AltaEmpleadoComponent
 	//AltaDuenoComponent
 	//AltaDueñoComponent
@@ -17,7 +19,8 @@ import { ListapedidosComponent } from './listapedidos/listapedidos';
 ],
 	imports: [IonicModule],
 	exports: [SolicitudMesaComponent,
-    ListapedidosComponent
+    ListapedidosComponent,
+    ProductosEnPedidoComponent
 	//AltaEmpleadoComponent
 	//AltaDuenoComponent
 	//AltaDueñoComponent
