@@ -16,8 +16,9 @@ import { Pedido  } from '../../clases/Pedido';
 export class ProductosEnPedidoComponent {
 
   
-  @Input() idPedido: string;
-  @Input() arrayProductos: Array<Producto>;
+  // @Input() idPedido: string;
+  // @Input() arrayProductos: Array<Producto>;
+  @Input() pedido: Pedido;
   //text: string;
 
   constructor(
@@ -26,14 +27,25 @@ export class ProductosEnPedidoComponent {
     
   }
 
-  CambiarEstado(producto: Producto, index: number, estado: string){
-    this.pedidoService.traerUnPedido(this.idPedido).subscribe( (pedido:Pedido) =>{      
-      pedido.productos[index].estado = estado;       
+  // CambiarEstado(producto: Producto, index: number, estado: string){
+  //   this.pedidoService.traerUnPedido(this.idPedido).subscribe( (pedido:Pedido) =>{      
+  //     pedido.productos[index].estado = estado;       
       
-      /*Actualizacion de pedido */                    
-      this.pedidoService.actualizarUnPedido(this.idPedido).set(pedido).then (() => {                        
+  //     /*Actualizacion de pedido */                    
+  //     this.pedidoService.actualizarUnPedido(this.idPedido).update(pedido).then (() => {                        
+  //           console.log('Documento editado exitósamente');
+  //     })
+  //   })    
+  // }
+
+  CambiarEstado(index: number, estado: string){
+
+    this.pedido.productos[index].estado = estado;
+
+      this.pedidoService.actualizarUnPedido(this.pedido.id).update(this.pedido).then (() => {                        
             console.log('Documento editado exitósamente');
       })
-    })    
+       
   }
+
 }
