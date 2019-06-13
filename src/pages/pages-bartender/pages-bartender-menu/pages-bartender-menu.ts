@@ -51,15 +51,27 @@ export class BartenderMenuPage {
 
 
   CargarPedidosPendientes(filtro: string){
-    
+    //SE TRAEN TODOS LOS PEDIDOS.
     this.pedidosService.traerPedidos().subscribe( pedidos => {
       var array = new Array<Pedido>();
       pedidos.forEach(pedido => {
         array.push(pedido);      
       });
     
+
+      //SE FILTRAN LOS PEDIDOS PENDIENTES
       this.pedidos = array.filter( pedido => pedido.estado == filtro );
       
+      //POR CADA PEDIDO UN ARRAY DE PRODUCTOS. SE LE ASIGNA EL ID DE ACUERDO AL INDICE
+      //PARA PODER FILTRAR Y SABER EXACTAMENTE QUE SE DEBE MODIFICAR.
+      this.pedidos.forEach(pedido => {  
+        pedido.productos.forEach((producto,index) => {
+          producto.id = index;
+        });
+        //console.log(pedido);
+      });
+
+
       /* Aca se puede agregar un filtro para los productos de this.pedidos.productos 
       Por tipo de producto / responsable.
       

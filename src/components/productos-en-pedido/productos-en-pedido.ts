@@ -20,7 +20,7 @@ export class ProductosEnPedidoComponent {
   // @Input() idPedido: string;
   // @Input() arrayProductos: Array<Producto>;
   @Input() pedido: Pedido;
-  //text: string;
+  
 
   constructor(
     private pedidoService: PedidoService,
