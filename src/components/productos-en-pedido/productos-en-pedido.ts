@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Producto } from '../../clases/Producto';
 import { PedidoService  } from '../../services/pedidos-service';
 import { Pedido  } from '../../clases/Pedido';
+import { LoadingController } from 'ionic-angular'
 
 /**
  * Generated class for the ProductosEnPedidoComponent component.
@@ -22,28 +23,37 @@ export class ProductosEnPedidoComponent {
   //text: string;
 
   constructor(
-    private pedidoService: PedidoService
+    private pedidoService: PedidoService,
+    public loadingController: LoadingController
+
   ) {
     
   }
 
-  // CambiarEstado(producto: Producto, index: number, estado: string){
-  //   this.pedidoService.traerUnPedido(this.idPedido).subscribe( (pedido:Pedido) =>{      
-  //     pedido.productos[index].estado = estado;       
-      
-  //     /*Actualizacion de pedido */                    
-  //     this.pedidoService.actualizarUnPedido(this.idPedido).update(pedido).then (() => {                        
-  //           console.log('Documento editado exitósamente');
-  //     })
-  //   })    
-  // }
-
   CambiarEstado(index: number, estado: string){
+
+    
+      let loading = this.loadingController.create({
+        spinner: 'hide',
+        content: `
+        <ion-content padding>
+          <img id="spinner" src="assets/img/spinner.gif"> 
+        </ion-content>`,
+        duration: 5000
+      });
+    
+      loading.onDidDismiss(() => {
+        console.log('Dismissed loading');
+      });
+    
+      loading.present();
+    
 
     this.pedido.productos[index].estado = estado;
 
       this.pedidoService.actualizarUnPedido(this.pedido.id).update(this.pedido).then (() => {                        
-            console.log('Documento editado exitósamente');
+          loading.dismiss();  
+          console.log('Documento editado exitósamente');
       })
        
   }

@@ -50,7 +50,7 @@ export class BartenderMenuPage {
   }
 
 
-  CargarPedidosPendientes(){
+  CargarPedidosPendientes(filtro: string){
     
     this.pedidosService.traerPedidos().subscribe( pedidos => {
       var array = new Array<Pedido>();
@@ -58,16 +58,13 @@ export class BartenderMenuPage {
         array.push(pedido);      
       });
     
-      this.pedidos = array;
-      this.pedidos = this.pedidos.filter( pedido => pedido.estado == 'pendiente' );
+      this.pedidos = array.filter( pedido => pedido.estado == filtro );
       
       /* Aca se puede agregar un filtro para los productos de this.pedidos.productos 
       Por tipo de producto / responsable.
       
       */
-
-      
-      console.log(this.pedidos);
+     
     })
 
     
