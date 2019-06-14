@@ -2,12 +2,20 @@
 <div>
   <!-- Id de pedido en productos-en-pedido: {{idPedido}} -->
   <ion-list>
-    <ion-card *ngFor="let producto of arrayProductos; let i = index" padding style="background-color: rgba(77, 76, 76, 0.589); color: white">
+    <ion-card *ngFor="let producto of pedido.productos; let i = index;" padding style="background-color: rgba(77, 76, 76, 0.589); color: white">         
+      <!-- <ng-container *ngIf="producto.tipo == 'bebida'"> -->
           Producto: {{producto.nombre}}
+          Producto id: {{producto.id}}
           <br>
-          Estado: {{producto.estado}}
-          <button  *ngIf="producto.estado == 'pendiente' && producto.estado !== 'terminado'" ion-button style="background-color:rgb(233, 53, 33)" (click)="CambiarEstado(producto, i, 'preparacion')">Comenzar</button>
-          <button  *ngIf="producto.estado == 'preparacion' && producto.estado !== 'terminado'" ion-button style="background-color:rgb(33, 233, 66)" (click)="CambiarEstado(producto, i, 'terminado')">Terminado</button>
+          <br>
+          <ion-badge *ngIf="producto.estado == 'pendiente'" class="pendiente">Estado: {{producto.estado}}</ion-badge>
+          <ion-badge *ngIf="producto.estado == 'preparacion'" class="preparacion">Estado: {{producto.estado}}</ion-badge>
+          <ion-badge *ngIf="producto.estado == 'terminado'" class="terminado">Estado: {{producto.estado}}</ion-badge>
+          <br>
+          <br>
+          <button  *ngIf="producto.estado == 'pendiente' && producto.estado !== 'terminado'" ion-button style="background-color:rgb(233, 53, 33)" (click)="CambiarEstado(i, 'preparacion')">Comenzar</button>
+          <button  *ngIf="producto.estado == 'preparacion' && producto.estado !== 'terminado'" ion-button style="background-color:rgb(33, 233, 66)" (click)="CambiarEstado(i, 'terminado')">Terminado</button>
+      <!-- </ng-container> -->
     </ion-card>
   </ion-list>
 

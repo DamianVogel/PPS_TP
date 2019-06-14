@@ -11,9 +11,8 @@
         <!-- El estado del pedido es: {{pedido.estado}}
         <br> -->
         <productos-en-pedido 
-          [idPedido]='pedido.id'
-          [arrayProductos]='pedido.productos'
-          ></productos-en-pedido>
+          [pedido]='pedido'
+        ></productos-en-pedido>
 <!--         
         <button  ion-button style="background-color: green" (click)="VerProductos()" >Ver Productos</button>
         <button  ion-button style="background-color:rgb(233, 53, 33)" (click)="ComenzarPedido()">Comenzar</button> -->
