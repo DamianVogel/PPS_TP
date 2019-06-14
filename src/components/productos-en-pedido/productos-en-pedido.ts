@@ -50,15 +50,18 @@ export class ProductosEnPedidoComponent {
       loading.present();
     
 
-      //this.pedido.productos[index].estado = estado;
+      this.pedido.productos[index].estado = estado;
 
-      this.pedidoService.actualizarUnPedido(this.pedido.id).update({
-        productos:{
-            [index]:{
-                      'estado':estado
-                    }
-        }      
-      }).then (() => {                        
+      this.pedidoService.actualizarUnPedido(this.pedido.id).update(this.pedido
+      
+      // {
+      //   productos:[{
+      //       index:{
+      //                 'estado':estado
+      //               }
+      //   }]      
+      // }
+      ).then (() => {                        
           
           
           loading.dismiss();  
