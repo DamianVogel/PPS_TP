@@ -99,6 +99,11 @@ import { PagesRegistrosPendientesPage } from '../pages/pages-registros-pendiente
 import { HttpMailProvider } from '../providers/http-mail/http-mail';
 import { PagesMozoPage } from '../pages/pages-mozo/pages-mozo';
 import { PagesMozoPageModule } from '../pages/pages-mozo/pages-mozo.module';
+import { MesaDirective } from '../directives/mesa/mesa';
+import { DirectivesModule } from '../directives/directives.module';
+import { PagesMesaPageModule } from '../pages/pages-mesa/pages-mesa.module';
+import { PagesMesaPage } from '../pages/pages-mesa/pages-mesa';
+import { PedidosProvider } from '../providers/pedidos/pedidos';
 
 export function provideSettings(storage: Storage) {
   /**
@@ -123,6 +128,7 @@ export function provideSettings(storage: Storage) {
     AltaMesaComponent,
     AltaDuenoComponent,
     AltaEmpleadoComponent,
+    
     //SolicitudMesaComponent
   ],
   imports: [
@@ -157,7 +163,9 @@ export function provideSettings(storage: Storage) {
     PagesEncuestaUsuarioPageModule,
     PagesRegistrosPendientesPageModule,
     PagesJuegosMenuPageModule,
-    PagesPedidosAltaPageModule
+    PagesPedidosAltaPageModule,
+    PagesMesaPageModule,
+    DirectivesModule
 
   ],
   bootstrap: [IonicApp],
@@ -181,11 +189,14 @@ export function provideSettings(storage: Storage) {
     PagesJuegosMenuPage,
     PagesPedidosAltaPage, 
     PagesRegistrosPendientesPage,
+    PagesMesaPage,
     AltaMesaComponent,
     AltaDuenoComponent,
     AltaEmpleadoComponent,
     SolicitudMesaComponent,
     PagesPedidosAltaPage
+   
+    
   ],
   providers: [
     Api,
@@ -214,7 +225,8 @@ export function provideSettings(storage: Storage) {
     FcmProvider,
     EncuestaService,
     HttpMailProvider,
-    PedidoService
+    PedidoService,
+    PedidosProvider
   ]
 })
 export class AppModule {}
