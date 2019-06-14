@@ -56,12 +56,25 @@ export class CocineroMenuPage {
         array.push(pedido);      
       });
     
+      
+      
       this.pedidos = array.filter( pedido => pedido.estado == filtro );
       
+      this.pedidos.forEach( pedido => {
+        pedido.productos.forEach( (producto,index) => {
+          producto.id = index;
+        })
+      })
+
+      console.log(this.pedidos);
+
+      
+
+      /*
       this.pedidos.forEach( pedido =>{
         pedido.productos = pedido.productos.filter( producto => producto.tipo == 'comida');
       })
-    
+      */
      
     })
    

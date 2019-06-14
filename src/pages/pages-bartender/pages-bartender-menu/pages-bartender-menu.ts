@@ -64,12 +64,11 @@ export class BartenderMenuPage {
       
       //POR CADA PEDIDO UN ARRAY DE PRODUCTOS. SE LE ASIGNA EL ID DE ACUERDO AL INDICE
       //PARA PODER FILTRAR Y SABER EXACTAMENTE QUE SE DEBE MODIFICAR.
-      this.pedidos.forEach(pedido => {  
-        pedido.productos.forEach((producto,index) => {
+      this.pedidos.forEach( pedido => {
+        pedido.productos.forEach( (producto,index) => {
           producto.id = index;
-        });
-        //console.log(pedido);
-      });
+        })
+      })
 
 
       /* Aca se puede agregar un filtro para los productos de this.pedidos.productos 
