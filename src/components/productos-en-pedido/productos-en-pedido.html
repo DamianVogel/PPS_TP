@@ -3,7 +3,7 @@
   <!-- Id de pedido en productos-en-pedido: {{idPedido}} -->
   <ion-list>
     <ion-card *ngFor="let producto of pedido.productos" padding style="background-color: rgba(77, 76, 76, 0.589); color: white">         
-      <ng-container *ngIf="producto.tipo == 'bebida'">
+      <!-- <ng-container *ngIf="producto.tipo == 'bebida'"> -->
           Producto: {{producto.nombre}}
           <br>
           <br>
@@ -14,7 +14,7 @@
           <br>
           <button  *ngIf="producto.estado == 'pendiente' && producto.estado !== 'terminado'" ion-button style="background-color:rgb(233, 53, 33)" (click)="CambiarEstado(producto.id, 'preparacion')">Comenzar</button>
           <button  *ngIf="producto.estado == 'preparacion' && producto.estado !== 'terminado'" ion-button style="background-color:rgb(33, 233, 66)" (click)="CambiarEstado(producto.id, 'terminado')">Terminado</button>
-      </ng-container>
+      <!-- </ng-container> -->
     </ion-card>
   </ion-list>
 

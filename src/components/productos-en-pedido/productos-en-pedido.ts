@@ -3,6 +3,7 @@ import { Producto } from '../../clases/Producto';
 import { PedidoService  } from '../../services/pedidos-service';
 import { Pedido  } from '../../clases/Pedido';
 import { LoadingController } from 'ionic-angular'
+import { hostViewClassName } from '@angular/compiler';
 
 /**
  * Generated class for the ProductosEnPedidoComponent component.
@@ -49,9 +50,17 @@ export class ProductosEnPedidoComponent {
       loading.present();
     
 
-    this.pedido.productos[index].estado = estado;
+      //this.pedido.productos[index].estado = estado;
 
-      this.pedidoService.actualizarUnPedido(this.pedido.id).update(this.pedido).then (() => {                        
+      this.pedidoService.actualizarUnPedido(this.pedido.id).update({
+        productos:{
+            [index]:{
+                      'estado':estado
+                    }
+        }      
+      }).then (() => {                        
+          
+          
           loading.dismiss();  
           console.log('Documento editado exitósamente');
       })
