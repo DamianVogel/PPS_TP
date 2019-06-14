@@ -31,13 +31,17 @@ export class PagesReservasPage {
   {
      this.reservasProv.AutorizarReseva(reserva);
 
-    console.log(this.lista_de_reservas);
+    this.reservasProv.EnviarNotificacion(reserva.cliente.id, reserva.estado).then((data)=>{
+      console.log(data);
+    });
   }
 
   async CancelarReserva(reserva)
   {
      this.reservasProv.CancelarReserva(reserva);
-    console.log(this.lista_de_reservas);
+     this.reservasProv.EnviarNotificacion(reserva.cliente.id, reserva.estado).then((data)=>{
+      console.log(data);
+    });
   }
 
 

@@ -17,6 +17,7 @@ export class ReservasProvider {
   private listaReservasFirebase: AngularFirestoreCollection<Reserva>;
   private listaReservasObservable: Observable<Reserva[]>;
   public reservas:Array<Reserva>
+  url="https://us-central1-practicaprofesional-dbd4e.cloudfunctions.net/EstadoReserva";
   
   constructor(
     public http: HttpClient,  
@@ -91,6 +92,12 @@ export class ReservasProvider {
       console.log(error);
     });
 
+  }
+
+  EnviarNotificacion(idUsuario, estado)
+  {
+    let direccion= this.url+"?id="+idUsuario+"&estado="+estado;
+    return this.http.get(direccion).toPromise();
   }
 
 

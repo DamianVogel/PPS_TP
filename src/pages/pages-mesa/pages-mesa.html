@@ -6,14 +6,14 @@
 -->
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar  class="cocineroNavBar">
     <ion-title>mesa</ion-title>
   </ion-navbar>
-
+ 
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding class="cocineroMenu">
   <ion-title style="color: black">Mesa {{mesa.numero}}</ion-title>
 <p> Estado: {{mesa.estado}} Por: {{mesa.usuario.nombre}}</p>
   
@@ -21,9 +21,13 @@
     <button ion-button full (click)="TomarPedido()" > Tomar pedido </button>
   <button ion-button full> Cobrar </button>
 
+  <ion-title>Lista de pedidos</ion-title>
   <ion-list>
     <ion-card *ngFor="let pedido of listaPedidos">
       Estado: {{pedido.estado}}
+
+      <button *ngIf="pedido.estado=='terminado'" ion-button style="background-color: rgb(18, 228, 18)" (click)="ServirProducto(pedido.id)">Servir</button>
+
     </ion-card>
   </ion-list>
 

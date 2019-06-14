@@ -105,6 +105,7 @@ export class PagesRegistroUsuarioPage {
        'dni': usuario.dni,
        'cuil': usuario.cuil,
        'estado': usuario.estado,
+       'perfil': usuario.perfil,
        'tipo': usuario.tipo,
        'foto': 'clientes/' + usuario.dni
               

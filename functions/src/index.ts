@@ -236,4 +236,42 @@ exports.pushListaEspera = functions.firestore
 
 
 
+exports.EstadoReserva = functions.https.onRequest(async (req, res) => {
+    var idUsuario= req.query.id;
+  var respuesta=req.query.estado;
+
+  const payload = {
+      notification: {
+          title: 'Estado de Reserva',
+          body: `Te informamos que tu reserva fue ${respuesta}.`
+      }
+    }
+    const db = admin.firestore()
+    const devicesRef = db.collection("devices")
+    const devices = await devicesRef.get();
+
+    const tokens = new Array();
+
+    devices.forEach( (result: { data: () => { token: any, perfil: string, id:string }; }) => {
+      
+      if(result.data().id === idUsuario ){
+        const token = result.data().token;
+
+        tokens.push( token )
+      }
+    
+    })
+    
+    cors(req, res, () => {
+      res.status(200).send(); 
+    });
+  
+  return admin.messaging().sendToDevice(tokens, payload)  
+  
+});
+
+
+
+
+
 
