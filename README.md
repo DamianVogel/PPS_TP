@@ -83,11 +83,18 @@
       # Validacion de estado de mesa al asignar via QR. 
   
   4) Componentes Lista Pedido \ Producto:
-      # Generacion de servicios para la obtencion de pedidos filtrados por estado y perfil
+      # Generacion de servicios para la obtencion de pedidos filtrados por estado.
       # Generacion Component Lista y Pedido para mostrar los productos de un pedido.
         Cada uno de estos cuenta con un boton de accion que cambia el estado del mismo para cumplimentar el flujo del sistema.
-    
-  
+
+ 
+#### COMPONENTES LISTA PEDIDOS \ PRODUCTOS #### (15/06 al 22/06) 
+
+  1) Componentes Lista Pedido \ Producto:
+      # Filtro de acuerdo a tipo de producto para que sea tomado por cada responsable.
+
+  2)    
+
 ## ==========================================
 
 ### **Augusto Morelli (AugustoMorelli / AugustoBranch)**
