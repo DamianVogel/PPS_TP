@@ -6,13 +6,17 @@ import { Mesa } from '../../clases/mesa';
 import { CameraOptions, Camera } from '@ionic-native/camera';
 import { storage } from 'firebase';
 
+import { MesasProvider } from '../../providers/mesas/mesas'
+
 @Component({
   selector: 'alta-mesa',
   templateUrl: 'alta-mesa.html'
 })
 export class AltaMesaComponent {
 
-  numero = new FormControl(null, [
+  proxNumero = this.mesaProvider.mesas.length+1;
+
+  numero = new FormControl(this.proxNumero, [
     Validators.required
   ]);
 
@@ -39,14 +43,20 @@ export class AltaMesaComponent {
     private objFirebase: AngularFirestore,
     public modalVotacion: ModalController,
     private builder: FormBuilder,
-    private camera: Camera
+    private camera: Camera,
+    private mesaProvider: MesasProvider
   ) {
 
   }
 
-  AltaMesa(){
-    var nuevaMesa= new Mesa();  
+  ionViewWillEnter(){
+   
+  }
 
+  AltaMesa(){
+        
+    var nuevaMesa= new Mesa();  
+    
     nuevaMesa.numero= parseInt(this.altaMesaForm.get('numero').value);
     nuevaMesa.cantidadComensales= parseInt(this.altaMesaForm.get('cantidadComensales').value);
     nuevaMesa.tipoMesa= this.altaMesaForm.get('tipoMesa').value;
@@ -56,15 +66,17 @@ export class AltaMesaComponent {
   
           //console.log(encodedData);
           //nuevaMesa.codigoQr = encodedData;
-  
-          this.objFirebase.collection("SP_mesas")
-          .add({
-                  
+          var keyMesa = this.objFirebase.createId();
+          
+
+          this.objFirebase.collection("SP_mesas").doc(keyMesa)
+          .set({
+              'id':keyMesa,   
               'numero': nuevaMesa.numero,
               'cantidadComensales':nuevaMesa.cantidadComensales,
               'tipoMesa': nuevaMesa.tipoMesa,
               'estado':'disponible',
-              'timestamp': Date()
+              
                   
           }).then(res => {
 
@@ -77,6 +89,16 @@ export class AltaMesaComponent {
                   toast.present();
 
                   this.altaMesaForm.reset();
+                  
+                  
+                  this.numero = new FormControl(this.proxNumero+1, [
+                    Validators.required
+                  ]);
+
+                  this.mesaProvider.mesas.length = this.proxNumero;
+                  
+                  
+                  
 
                 }, err => console.log(err));
 

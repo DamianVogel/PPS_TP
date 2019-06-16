@@ -81,7 +81,8 @@ export class PagesDuenoMenuPage {
   }
 
   RelacionMesaUsuario(){
-    this.mesasProvider.RelacionMesaUsuario(4);
+     let usuario = this.mesasProvider.RelacionMesaUsuario(3);
+     console.log("Usuario obtenido: ",usuario);
   }
 
   Reservas()

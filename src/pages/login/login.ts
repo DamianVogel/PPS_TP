@@ -28,6 +28,7 @@ import { BartenderMenuPage } from "../pages-bartender/pages-bartender-menu/pages
 import { CocineroMenuPage } from "../pages-cocinero/pages-cocinero-menu/pages-cocinero-menu";
 import { Platform } from 'ionic-angular';
 import { FcmProvider } from '../../providers/fcm/fcm';
+import { PagesMozoPage } from "../pages-mozo/pages-mozo";
 
 
 @IonicPage()
@@ -67,9 +68,18 @@ export class LoginPage {
     });
   }
 
+  ingresoAnonimo(){
+    this.navCtrl.push(PagesClienteAnonimoPage);
+  }  
+
   doLogin() {
     if (this.loginFields.email == "" || this.loginFields.clave == "") {
-      this.navCtrl.push(PagesClienteAnonimoPage);
+      let toast = this.toastCtrl.create({
+        message: "Debe indicar usuario y contraseña",
+        duration: 4000,
+        position: "middle" //middle || top
+      });
+      toast.present();
     } else {
       let modal = this.modalVotacion.create(SpinnerPage);
       modal.present();
@@ -108,6 +118,10 @@ export class LoginPage {
                   this.navCtrl.push(BartenderMenuPage);
                   break;
 
+                  case "mozo":
+                  this.navCtrl.push(PagesMozoPage);
+                  break;
+
                 default:
                   this.navCtrl.push(PagesEmpleadoPage);
                   break;
@@ -115,7 +129,20 @@ export class LoginPage {
               break;
 
             case "cliente":
+            if(user.estado=="Registrado")
+            {
               this.navCtrl.push(PagesClienteMenuPage);
+
+            }
+            else{
+              let toast = this.toastCtrl.create({
+                message: "Verificacion pendiente.",
+                duration: 4000,
+                position: "bottom" //middle || top
+              });
+              toast.present();
+            }
+              
               break;
 
             case "dueno":
@@ -150,7 +177,7 @@ export class LoginPage {
           icon: "people",
           cssClass: "loginProfileButton",
           handler: () => {
-            this.loadLoginFields("dueño@comanda.com", "1234");
+            this.loadLoginFields("dueno@comanda.com", "1234");
           }
         },
         {

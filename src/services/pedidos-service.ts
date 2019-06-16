@@ -25,7 +25,25 @@ export class PedidoService {
     }
   
     cargarPedido(pedidoAGuardarJSON: any){
-      return this.objFirebase.collection<Pedido>("SP_pedidos").add(pedidoAGuardarJSON);
+      
+      let id = this.objFirebase.createId();  
+      pedidoAGuardarJSON.id = id;
+    //  return this.objFirebase.collection<Pedido>("SP_pedidos").add(pedidoAGuardarJSON);
+      return this.objFirebase.collection<Pedido>("SP_pedidos").doc(id).set(pedidoAGuardarJSON);
+    
+    }
+
+    traerUnPedido(idPedido: string){      
+      let pedido = this.objFirebase.collection<Pedido>("SP_pedidos").doc(idPedido);
+      let pedidoObservable = pedido.valueChanges();
+      return pedidoObservable;
+      
+    }
+
+    actualizarUnPedido(idPedido: string){
+      let pedidoActualizar = this.objFirebase.collection<Pedido>("SP_pedidos").doc(idPedido);
+      //let pedidoObservable = pedido.valueChanges();
+      return pedidoActualizar;
     }
 
 }

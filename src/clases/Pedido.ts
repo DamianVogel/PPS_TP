@@ -1,10 +1,10 @@
 export class Pedido {
 
-    id: number;
+    id: string; //<-- Damian: id debe ser string.
     productos: Array<any>;
     mesa: string;
     cliente: string;
-    estado: string;
+    estado: string; //<-- Damian: Estado debe ser string{"solicitado","en proceso","terminado","entregado","recibido","pagado"}
     costo: number;
     descuento_10: boolean;
     descuento_bebida: boolean;
@@ -13,7 +13,7 @@ export class Pedido {
     tiempo_espera: number;
 
     constructor(
-        id?:number,
+        id?:string,
         productos?:Array<any>,
         mesa?: string,
         cliente?: string,

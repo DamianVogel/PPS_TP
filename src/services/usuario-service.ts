@@ -29,15 +29,21 @@ export class UsuarioService {
     return this.listaUsuariosObservable;
   }
 
-  cargarUsuario(productoAGuardarJSON: any){
-    return this.objFirebase.collection<Usuario>("SP_usuarios").add(productoAGuardarJSON);
+  cargarUsuario(usuarioAGuardarJSON: any){
+    
+    let id = this.objFirebase.createId();
+    
+    usuarioAGuardarJSON.id = id;
+
+    return this.objFirebase.collection<Usuario>("SP_usuarios").doc(id).set(usuarioAGuardarJSON);
   }
 
-  validarUsuarioExiste(usuarios: Usuario[], nombre: string){
+  validarUsuarioExiste(usuarios: Usuario[], email: string){
     if(usuarios.filter(function(user){
-      return user.nombre === nombre
+      return user.email === email
     }).length >= 1){
-      showAlert(this.alertController, "Error", "Ya existe un usuario con ese nombre registrado");
+      //
+      showAlert(this.alertController, "Error", "Ya existe un usuario con ese email en el sistema");
       return true;
     }
     return false;

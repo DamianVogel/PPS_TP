@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, PopoverController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, PopoverController, ModalController } from 'ionic-angular';
 import { Pedido } from '../../../clases/Pedido';
 import { ProductoService } from '../../../services/producto-service';
 import { Producto } from '../../../clases/Producto';
 import { getImageURL, SPINNER_IMG, showAlert } from '../../../environments/environment';
-import { isTrueProperty } from 'ionic-angular/umd/util/util';
 import { PagesPedidosListaPage } from '../pages-pedidos-lista/pages-pedidos-lista';
+import { PedidoService } from '../../../services/pedidos-service';
 
 @IonicPage()
 @Component({
@@ -15,6 +15,7 @@ import { PagesPedidosListaPage } from '../pages-pedidos-lista/pages-pedidos-list
 export class PagesPedidosAltaPage {
 
   prodABuscar: string;
+  botonHabilitado:boolean = true;
 
   pedido: Pedido;
   productos: Array<Producto>;
@@ -23,7 +24,10 @@ export class PagesPedidosAltaPage {
   propiedadesFotos: Array<string> = ["foto1", "foto2", "foto3"];
   detallesProductos: Array<any>;
 
-  constructor(public popoverCtrl: PopoverController,
+  pedidoService: PedidoService;
+
+  constructor(public modalController: ModalController,
+    public popoverCtrl: PopoverController,
     public alertController: AlertController,
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -46,8 +50,8 @@ export class PagesPedidosAltaPage {
   inicializarProductos() {
     this.productoService.traerProductos().subscribe(productos => {
       productos.forEach((producto, index) => {
-        this.productosFiltrados.push(new Producto(producto.nombre, producto.descripcion, producto.tipo, producto.tiempo, producto.precio));
-        this.productos.push(new Producto(producto.nombre, producto.descripcion, producto.tipo, producto.tiempo, producto.precio));
+        this.productosFiltrados.push(new Producto(producto.id, producto.nombre, producto.descripcion, producto.tiempo, producto.precio, producto.tipo));
+        this.productos.push(new Producto(producto.id, producto.nombre, producto.descripcion, producto.tiempo, producto.precio, producto.tipo));
         this.detallesProductos[producto.nombre] = false;
         this.propiedadesFotos.forEach(propString => {
           if (producto[propString] !== "") {

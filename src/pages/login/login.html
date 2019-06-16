@@ -8,12 +8,12 @@
 
       <ion-item padding style="background-color: rgba(0,0,0,0.7) !important; color: white; border-radius: 10px;">
         <ion-label class="titulo" style="color: white;" fixed>Correo</ion-label>
-        <ion-input disabled class="titulo" type="email" style="color: white;" [(ngModel)]="loginFields.email" name="email"></ion-input>
+        <ion-input class="titulo" type="email" style="color: white;" [(ngModel)]="loginFields.email" name="email"></ion-input>
       </ion-item>
 
       <ion-item padding style="background-color: rgba(0,0,0,0.7) !important; color: white; border-radius: 10px;">
         <ion-label class="titulo" style="color: white;" fixed>Contraseña</ion-label>
-        <ion-input disabled class="titulo" style="color: white;" type="password" [(ngModel)]="loginFields.clave" name="clave"></ion-input>
+        <ion-input class="titulo" style="color: white;" type="password" [(ngModel)]="loginFields.clave" name="clave"></ion-input>
       </ion-item>
 
       <div padding>
@@ -24,8 +24,12 @@
   </form>
 
   <div padding>
+    <button class="loginButton" large ion-button color="primary" block (click)="ingresoAnonimo()" >Ingreso Invitado</button>
+  </div>
+
+  <div padding>
       <button class="loginButton" large ion-button color="primary" block (click)="irARegistro()" >Registrarme</button>
-    </div>
+  </div>
 
 </ion-content>
 <ion-footer>

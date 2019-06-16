@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, AlertController, ModalController } from 'ionic-angular';
 import { Validators, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Usuario } from '../../clases/usuario';
 import { CameraOptions, Camera } from '@ionic-native/camera';
@@ -7,7 +7,7 @@ import { storage } from 'firebase';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { BarcodeScanner, BarcodeScannerOptions } from '@ionic-native/barcode-scanner';
 import { UsuarioService } from '../../services/usuario-service';
-import { showAlert } from '../../environments/environment';
+import { showAlert, spin } from '../../environments/environment';
 
 /**
  * Generated class for the PagesRegistroUsuarioPage page.
@@ -23,6 +23,7 @@ import { showAlert } from '../../environments/environment';
 })
 export class PagesRegistroUsuarioPage {
 
+  botonHabilitado:boolean = true;
   usuarios: Array<Usuario>;
 
   constructor(public alertController: AlertController,
@@ -33,7 +34,8 @@ export class PagesRegistroUsuarioPage {
     private camera: Camera,
     private objFirebase: AngularFirestore,
     private barcodeScanner: BarcodeScanner,
-    private usuarioService: UsuarioService
+    private usuarioService: UsuarioService,
+    private modalCtrl: ModalController
   ) {
     this.usuarioService.traerUsuarios().subscribe(usuarios => {
       this.usuarios = usuarios;
@@ -73,7 +75,11 @@ export class PagesRegistroUsuarioPage {
 
  async Registrar() {
 
-    if (!this.usuarioService.validarUsuarioExiste(this.usuarios, this.registroForm.get('nombre').value)) {
+    //spin(this.modalCtrl, true);
+    if (!this.usuarioService.validarUsuarioExiste(this.usuarios, this.registroForm.get('email').value)) {
+      this.botonHabilitado = false;
+      spin(this.modalCtrl, true);
+      
       let usuario = new Usuario();
 
       usuario.nombre = this.registroForm.get('nombre').value;
@@ -81,14 +87,14 @@ export class PagesRegistroUsuarioPage {
       usuario.dni = this.registroForm.get('dni').value;
       usuario.email = this.registroForm.get('email').value;
       usuario.clave = this.registroForm.get('clave').value;
-      usuario.perfil = "Cliente";
+      usuario.perfil = "cliente";
       usuario.estado = "Pendiente";
+      usuario.tipo = "cliente";
      // usuario.codigoRegistro= Math.random() * (9999 - 1000) + 1000;
       usuario.cuil = null;
 
       var idUsuario = this.objFirebase.createId();
 
-      
       this.objFirebase.collection("SP_usuarios").doc(idUsuario)
       .set({
        'id': idUsuario,
@@ -99,21 +105,31 @@ export class PagesRegistroUsuarioPage {
        'dni': usuario.dni,
        'cuil': usuario.cuil,
        'estado': usuario.estado,
+       'perfil': usuario.perfil,
+       'tipo': usuario.tipo,
        'foto': 'clientes/' + usuario.dni
               
       }).then(res => {
-
+              this.registroForm.reset();
+              this.botonHabilitado = true;
+              spin(this.modalCtrl, false);
+              
               console.log(res);
               let toast = this.toastCtrl.create({
                 message: "Por favor, verifica tu correo para completar el registro.",
                 duration: 3000,
                 position: 'middle' //middle || top
               });
+              
               toast.present();
 
              // this.altaReservaForm.reset();
 
-            }, err => console.log(err));
+            }, err => {
+              console.log(err)
+              spin(this.modalCtrl, false);
+              this.botonHabilitado = true;
+            });
 
      /* this.objFirebase
         .collection("SP_usuarios")

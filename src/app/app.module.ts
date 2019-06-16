@@ -97,6 +97,13 @@ import { PagesPedidosAltaPageModule } from '../pages/pages-pedidos/pages-pedidos
 import { PagesRegistrosPendientesPageModule } from '../pages/pages-registros-pendientes/pages-registros-pendientes.module';
 import { PagesRegistrosPendientesPage } from '../pages/pages-registros-pendientes/pages-registros-pendientes';
 import { HttpMailProvider } from '../providers/http-mail/http-mail';
+import { PagesMozoPage } from '../pages/pages-mozo/pages-mozo';
+import { PagesMozoPageModule } from '../pages/pages-mozo/pages-mozo.module';
+import { MesaDirective } from '../directives/mesa/mesa';
+import { DirectivesModule } from '../directives/directives.module';
+import { PagesMesaPageModule } from '../pages/pages-mesa/pages-mesa.module';
+import { PagesMesaPage } from '../pages/pages-mesa/pages-mesa';
+import { PedidosProvider } from '../providers/pedidos/pedidos';
 import { PagesPedidosListaPage } from '../pages/pages-pedidos/pages-pedidos-lista/pages-pedidos-lista';
 import { PagesPedidosListaPageModule } from '../pages/pages-pedidos/pages-pedidos-lista/pages-pedidos-lista.module';
 
@@ -123,6 +130,7 @@ export function provideSettings(storage: Storage) {
     AltaMesaComponent,
     AltaDuenoComponent,
     AltaEmpleadoComponent,
+    
     //SolicitudMesaComponent
   ],
   imports: [
@@ -144,6 +152,7 @@ export function provideSettings(storage: Storage) {
     PagesClienteAnonimoMenuPageModule,
     PagesDuenoMenuPageModule,
     PagesEmpleadoPageModule,
+    PagesMozoPageModule,
     PagesSupervisorPageModule,
     PagesRegistroUsuarioPageModule,
     CocineroMenuPageModule,
@@ -154,8 +163,11 @@ export function provideSettings(storage: Storage) {
     PagesEncuestasUsuariosPageModule,
     PagesReservasPageModule,
     PagesEncuestaUsuarioPageModule,
+    PagesRegistrosPendientesPageModule,
     PagesJuegosMenuPageModule,
     PagesPedidosAltaPageModule,
+    PagesMesaPageModule,
+    DirectivesModule,
     PagesRegistrosPendientesPageModule,
     PagesJuegosMenuPageModule,
     PagesPedidosListaPageModule
@@ -168,6 +180,7 @@ export function provideSettings(storage: Storage) {
     PagesDuenoMenuPage,
     PagesSupervisorPage,
     PagesEmpleadoPage,
+    PagesMozoPage,
     PagesClienteMenuPage,
     PagesClienteAnonimoPage,
     PagesClienteAnonimoMenuPage,
@@ -180,11 +193,15 @@ export function provideSettings(storage: Storage) {
     PagesJuegosMenuPage,
     PagesPedidosAltaPage, 
     PagesRegistrosPendientesPage,
+    PagesMesaPage,
     PagesPedidosListaPage,
     AltaMesaComponent,
     AltaDuenoComponent,
     AltaEmpleadoComponent,
-    SolicitudMesaComponent
+    SolicitudMesaComponent,
+    PagesPedidosAltaPage
+   
+    
   ],
   providers: [
     Api,
@@ -213,7 +230,8 @@ export function provideSettings(storage: Storage) {
     FcmProvider,
     EncuestaService,
     HttpMailProvider,
-    PedidoService
+    PedidoService,
+    PedidosProvider
   ]
 })
 export class AppModule {}

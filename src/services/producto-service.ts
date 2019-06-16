@@ -25,7 +25,13 @@ export class ProductoService {
   }
 
   cargarProducto(productoAGuardarJSON: any){
-    return this.objFirebase.collection<Producto>("SP_productos").add(productoAGuardarJSON);
+    let id = this.objFirebase.createId();
+
+    productoAGuardarJSON.id = id;
+    
+    //return this.objFirebase.collection<Producto>("SP_productos").add(productoAGuardarJSON);
+    return this.objFirebase.collection<Producto>("SP_productos").doc(id).set(productoAGuardarJSON);
+  
   }
 
 }

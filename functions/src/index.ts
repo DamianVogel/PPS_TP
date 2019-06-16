@@ -7,7 +7,7 @@ const cors = require('cors')({origin: true});
 
 
 const nodemailer = require('nodemailer');
-const cors = require('cors')({origin: true});
+
 
 admin.initializeApp();
 
@@ -24,9 +24,9 @@ let transporter = nodemailer.createTransport({
 exports.validarMail= functions.https.onRequest((req, res)=>{
 
    const db = admin.firestore()
-    db.collection("SP_usuarios").doc(req.query.id).update("estado","Registrado").then((data)=>{
+    db.collection("SP_usuarios").doc(req.query.id).update("estado","Registrado").then((data:any)=>{
         return res.send('Registro completo!');
-   }).catch((data)=>{
+   }).catch((data:any)=>{
     return res.send(' Error!');
    });
 
@@ -196,6 +196,79 @@ exports.SolicitudMesa = functions.https.onRequest(async (req, res) => {
 
 
 
+
+  
+exports.pushListaEspera = functions.firestore
+.document('SP_listaEspera/{clienteId}')
+.onCreate(async (snap, context) => {
+
+      const payload = {
+          notification: {
+              title: 'Cliente en espera.',
+           
+              body: `Se agrego un nuevo cliente a la lista de espera.`
+ 
+          }
+        }
+
+        const db = admin.firestore()
+        const devicesRef = db.collection("devices")
+    
+        const devices = await devicesRef.get();
+    
+        const tokens = new Array();
+  
+        devices.forEach( (result: { data: () => { token: any, perfil: string, tipo:string }; }) => {
+          
+          if(result.data().tipo === 'mozo'){
+            const token = result.data().token;
+    
+            tokens.push( token )
+          }
+        
+        })
+      
+      return admin.messaging().sendToDevice(tokens, payload)
+    
+});
+
+
+
+
+
+exports.EstadoReserva = functions.https.onRequest(async (req, res) => {
+    var idUsuario= req.query.id;
+  var respuesta=req.query.estado;
+
+  const payload = {
+      notification: {
+          title: 'Estado de Reserva',
+          body: `Te informamos que tu reserva fue ${respuesta}.`
+      }
+    }
+    const db = admin.firestore()
+    const devicesRef = db.collection("devices")
+    const devices = await devicesRef.get();
+
+    const tokens = new Array();
+
+    devices.forEach( (result: { data: () => { token: any, perfil: string, id:string }; }) => {
+      
+      if(result.data().id === idUsuario ){
+        const token = result.data().token;
+
+        tokens.push( token )
+      }
+    
+    })
+    
+    cors(req, res, () => {
+      res.status(200).send(); 
+    });
+  
+  return admin.messaging().sendToDevice(tokens, payload)  
+  
+});
 
 
 
