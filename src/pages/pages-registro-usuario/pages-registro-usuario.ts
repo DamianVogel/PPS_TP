@@ -7,14 +7,7 @@ import { storage } from 'firebase';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { BarcodeScanner, BarcodeScannerOptions } from '@ionic-native/barcode-scanner';
 import { UsuarioService } from '../../services/usuario-service';
-import { showAlert, spin } from '../../environments/environment';
-
-/**
- * Generated class for the PagesRegistroUsuarioPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { spin } from '../../environments/environment';
 
 @IonicPage()
 @Component({

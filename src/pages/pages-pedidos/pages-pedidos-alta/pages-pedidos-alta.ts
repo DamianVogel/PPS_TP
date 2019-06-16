@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, PopoverController, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, PopoverController, ModalController, ToastController } from 'ionic-angular';
 import { Pedido } from '../../../clases/Pedido';
 import { ProductoService } from '../../../services/producto-service';
 import { Producto } from '../../../clases/Producto';
@@ -15,7 +15,7 @@ import { PedidoService } from '../../../services/pedidos-service';
 export class PagesPedidosAltaPage {
 
   prodABuscar: string;
-  botonHabilitado:boolean = true;
+  botonHabilitado: boolean = true;
 
   pedido: Pedido;
   productos: Array<Producto>;
@@ -26,7 +26,8 @@ export class PagesPedidosAltaPage {
 
   pedidoService: PedidoService;
 
-  constructor(public modalController: ModalController,
+  constructor(public toastController: ToastController,
+    public modalController: ModalController,
     public popoverCtrl: PopoverController,
     public alertController: AlertController,
     public navCtrl: NavController,
@@ -38,10 +39,10 @@ export class PagesPedidosAltaPage {
     this.detallesProductos = new Array<any>();
     this.pedido.mesa = navParams.get("mesa");
     this.pedido.cliente = navParams.get("cliente");
-    let usuario = JSON.parse(sessionStorage.getItem('usuario')); 
-    if(usuario.tipo==="cliente"){
+    let usuario = JSON.parse(sessionStorage.getItem('usuario'));
+    if (usuario.tipo === "cliente") {
       this.pedido.estado = "Solicitado";
-    } else if(usuario.tipo==="mozo"){
+    } else if (usuario.tipo === "mozo") {
       this.pedido.estado = "Pendiente";
     }
     this.inicializarProductos();
@@ -64,15 +65,20 @@ export class PagesPedidosAltaPage {
           }
         })
       });
-      console.log(this.productos);
     })
   }
 
-  miPedido(myEvent) {
-    let popover = this.popoverCtrl.create(PagesPedidosListaPage, {"pedido": this.pedido});
-    popover.present({
-      ev: myEvent
-    });
+  miPedido() {
+    if (this.pedido.productos.length === 0) {
+      this.toastController.create({
+        message: "Debe cargar un producto al menos!",
+        duration: 3000,
+        position: 'bottom'
+      }).present();
+    } else {
+      let popover = this.popoverCtrl.create(PagesPedidosListaPage, { "pedido": this.pedido, "productos": this.productos });
+      popover.present();
+    }
   }
 
   search() {
@@ -119,9 +125,12 @@ export class PagesPedidosAltaPage {
                   "estado": "en proceso"
                 });
               }
-              showAlert(this.alertController, "Exito", "Producto agregado al pedido");
+              this.toastController.create({
+                message: "Producto agregado al pedido!",
+                duration: 3000,
+                position: 'bottom'
+              }).present();
             }
-            console.log(this.pedido);
           }
         }
       ]
