@@ -24,6 +24,7 @@ export class PagesPedidosAltaPage {
 
   propiedadesFotos: Array<string> = ["foto1", "foto2", "foto3"];
   detallesProductos: Array<any>;
+  productosCargados: Array<any>;
 
   pedidoService: PedidoService;
 
@@ -38,6 +39,7 @@ export class PagesPedidosAltaPage {
     this.productos = new Array<Producto>();
     this.productosFiltrados = new Array<Producto>();
     this.detallesProductos = new Array<any>();
+    this.productosCargados = new Array<any>();
     this.pedido.mesa = navParams.get("mesa");
     this.pedido.cliente = navParams.get("cliente");
     let usuario = JSON.parse(sessionStorage.getItem('usuario'));
@@ -126,6 +128,7 @@ export class PagesPedidosAltaPage {
                   "estado": "en proceso"
                 });
               }
+              this.productosCargados[nombre] = true;
               this.calcularCostoYTiempo();
               this.toastController.create({
                 message: "Producto agregado al pedido!",
@@ -139,6 +142,53 @@ export class PagesPedidosAltaPage {
     });
     alert.present();
   }
+
+  sacar(nombre: string) {
+    let alert = this.alertController.create({
+      title: 'Seleccione cantidad',
+      inputs: [
+        {
+          name: 'cantidad',
+          type: 'number',
+          placeholder: 'Cantidad'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel'
+        },
+        {
+          text: 'Sacar',
+          handler: data => {
+            if (Number(data.cantidad) <= 0) {
+              showAlert(this.alertController, "Error", "La cantidad debe ser mayor a 0");
+            } else {
+              this.pedido.productos.forEach((producto, index) => {
+                if (producto.nombre === nombre) {
+                  if((this.pedido.productos[index].cantidad - Number(data.cantidad)) <= 0){
+                    this.pedido.productos.splice(index, 1);
+                    this.productosCargados[nombre] = false;
+                  } else{
+                    this.pedido.productos[index].cantidad -= Number(data.cantidad);
+                  }
+                }
+              })
+              this.calcularCostoYTiempo();
+              this.toastController.create({
+                message: "Producto removido del pedido!",
+                duration: 3000,
+                position: 'bottom'
+              }).present();
+            }
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
+  //TODO Insertar pedido en base
 
   calcularCostoYTiempo() {
     this.pedido.costo = 0;
