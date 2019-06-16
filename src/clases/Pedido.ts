@@ -4,7 +4,6 @@ export class Pedido {
     productos: Array<any>;
     mesa: string;
     cliente: string;
-    //estado: number;
     estado: string; //<-- Damian: Estado debe ser string{"solicitado","en proceso","terminado","entregado","recibido","pagado"}
     costo: number;
     descuento_10: boolean;
@@ -26,7 +25,7 @@ export class Pedido {
         propina?: number,
         tiempo_espera?: number){
             this.id = id;
-            this.productos = productos;
+            if(productos == null || productos == undefined) this.productos = new Array<any>(); else this.productos = productos;
             this.mesa = mesa;
             this.cliente = cliente;
             this.estado = estado;

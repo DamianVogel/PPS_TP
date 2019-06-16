@@ -14,7 +14,6 @@ export class Producto {
         {'pendiente','preparacion','terminado'}
      */
 
-
     constructor(
         id?:number, nombre?: string, descripcion?: string,  tiempo?: number, precio?: number, tipo?: string, estado?: string) {
 

@@ -104,6 +104,8 @@ import { DirectivesModule } from '../directives/directives.module';
 import { PagesMesaPageModule } from '../pages/pages-mesa/pages-mesa.module';
 import { PagesMesaPage } from '../pages/pages-mesa/pages-mesa';
 import { PedidosProvider } from '../providers/pedidos/pedidos';
+import { PagesPedidosListaPage } from '../pages/pages-pedidos/pages-pedidos-lista/pages-pedidos-lista';
+import { PagesPedidosListaPageModule } from '../pages/pages-pedidos/pages-pedidos-lista/pages-pedidos-lista.module';
 
 export function provideSettings(storage: Storage) {
   /**
@@ -165,8 +167,10 @@ export function provideSettings(storage: Storage) {
     PagesJuegosMenuPageModule,
     PagesPedidosAltaPageModule,
     PagesMesaPageModule,
-    DirectivesModule
-
+    DirectivesModule,
+    PagesRegistrosPendientesPageModule,
+    PagesJuegosMenuPageModule,
+    PagesPedidosListaPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -190,6 +194,7 @@ export function provideSettings(storage: Storage) {
     PagesPedidosAltaPage, 
     PagesRegistrosPendientesPage,
     PagesMesaPage,
+    PagesPedidosListaPage,
     AltaMesaComponent,
     AltaDuenoComponent,
     AltaEmpleadoComponent,
