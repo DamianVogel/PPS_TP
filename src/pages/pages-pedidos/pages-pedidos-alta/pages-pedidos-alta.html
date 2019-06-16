@@ -44,9 +44,8 @@
           style="border-radius: 10px; background-color: darkgreen;">Agregar</button>
       </ion-col>
     </ion-row>
-    <ion-row class="pedidos-data">
-      <!-- Agregar funcionalidad para sacar producto de la lista en caso de haberse agregado antes -->
-      <button ion-button block small (click)="cargar(producto.nombre)"
+    <ion-row class="pedidos-data" *ngIf="productosCargados[producto.nombre]">
+      <button ion-button block small (click)="sacar(producto.nombre)"
         style="border-radius: 10px; background-color: darkred; margin: 2.5%;">Sacar</button>
     </ion-row>
     <ion-row class="pedidos-data" *ngIf="detallesProductos[producto.nombre]">
@@ -57,8 +56,7 @@
         <p style="color: black; font-size: 15px; margin: auto; padding: 5%;"><b>Precio:</b><br>{{producto.precio}}$</p>
       </ion-col>
       <ion-col>
-        <p style="color: black; font-size: 15px; margin: auto; padding: 5%;"><b>Tiempo:</b><br>{{producto.tiempo}}
-          minuto/s</p>
+        <p style="color: black; font-size: 15px; margin: auto; padding: 5%;"><b>Tiempo:</b><br>{{producto.tiempo}} minuto/s</p>
       </ion-col>
     </ion-row>
   </ion-card>
