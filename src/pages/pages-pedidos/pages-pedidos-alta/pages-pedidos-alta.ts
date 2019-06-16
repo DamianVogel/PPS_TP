@@ -3,9 +3,10 @@ import { IonicPage, NavController, NavParams, AlertController, PopoverController
 import { Pedido } from '../../../clases/Pedido';
 import { ProductoService } from '../../../services/producto-service';
 import { Producto } from '../../../clases/Producto';
-import { getImageURL, SPINNER_IMG, showAlert } from '../../../environments/environment';
+import { getImageURL, SPINNER_IMG, showAlert, round } from '../../../environments/environment';
 import { PagesPedidosListaPage } from '../pages-pedidos-lista/pages-pedidos-lista';
 import { PedidoService } from '../../../services/pedidos-service';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @IonicPage()
 @Component({
@@ -125,6 +126,7 @@ export class PagesPedidosAltaPage {
                   "estado": "en proceso"
                 });
               }
+              this.calcularCostoYTiempo();
               this.toastController.create({
                 message: "Producto agregado al pedido!",
                 duration: 3000,
@@ -136,6 +138,20 @@ export class PagesPedidosAltaPage {
       ]
     });
     alert.present();
+  }
+
+  calcularCostoYTiempo() {
+    this.pedido.costo = 0;
+    this.pedido.tiempo_espera = 0;
+    this.productos.forEach((producto) => {
+      this.pedido.productos.forEach((productoEnPedido) => {
+        if (producto.nombre === productoEnPedido.nombre) {
+          this.pedido.costo += producto.precio * productoEnPedido.cantidad;
+          this.pedido.tiempo_espera += producto.tiempo;
+        }
+      })
+    })
+    this.pedido.costo = round(this.pedido.costo, 2);
   }
 
 }
