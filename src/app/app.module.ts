@@ -97,6 +97,8 @@ import { PagesPedidosAltaPageModule } from '../pages/pages-pedidos/pages-pedidos
 import { PagesRegistrosPendientesPageModule } from '../pages/pages-registros-pendientes/pages-registros-pendientes.module';
 import { PagesRegistrosPendientesPage } from '../pages/pages-registros-pendientes/pages-registros-pendientes';
 import { HttpMailProvider } from '../providers/http-mail/http-mail';
+import { PagesPedidosListaPage } from '../pages/pages-pedidos/pages-pedidos-lista/pages-pedidos-lista';
+import { PagesPedidosListaPageModule } from '../pages/pages-pedidos/pages-pedidos-lista/pages-pedidos-lista.module';
 
 export function provideSettings(storage: Storage) {
   /**
@@ -155,7 +157,8 @@ export function provideSettings(storage: Storage) {
     PagesJuegosMenuPageModule,
     PagesPedidosAltaPageModule,
     PagesRegistrosPendientesPageModule,
-    PagesJuegosMenuPageModule
+    PagesJuegosMenuPageModule,
+    PagesPedidosListaPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -177,6 +180,7 @@ export function provideSettings(storage: Storage) {
     PagesJuegosMenuPage,
     PagesPedidosAltaPage, 
     PagesRegistrosPendientesPage,
+    PagesPedidosListaPage,
     AltaMesaComponent,
     AltaDuenoComponent,
     AltaEmpleadoComponent,

@@ -1,0 +1,7 @@
+<ion-list>
+  <ion-list-header>Mi pedido</ion-list-header>
+  <ion-item padding *ngFor="let producto of pedido.productos">
+    <ion-col>{{producto.nombre}}</ion-col>
+    <ion-col>{{producto.cantidad}}</ion-col>
+  </ion-item>
+</ion-list>
