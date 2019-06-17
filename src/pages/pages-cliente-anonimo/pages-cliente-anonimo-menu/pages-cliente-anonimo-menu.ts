@@ -39,14 +39,17 @@ export class PagesClienteAnonimoMenuPage {
       //this.ocupaMesa = this.usuarioService.RelacionUsuarioMesa();
   }
 
-  // ionViewWillEnter(){
-  //   this.ocupaMesa = this.usuarioService.RelacionUsuarioMesa();
-  // }
+  ionViewWillEnter(){
+    this.ocupaMesa = this.usuarioService.RelacionUsuarioMesa();
+    this.estadoPedido();
+  }
   
   ngOnChanges() {
     this.ocupaMesa = this.usuarioService.RelacionUsuarioMesa();
     
   }
+
+
 
   listaDeEspera(){
     this.navCtrl.push(ListaDeEsperaMenuPage);
@@ -63,7 +66,7 @@ export class PagesClienteAnonimoMenuPage {
     this.navCtrl.push(PagesPedidosAltaPage, {
       "mesa": mesa, 
       "cliente": usuario
-    }); //TODO Aca se le deberia pasar el id del cliente, y el id de la mesa para generar el pedido
+    },null, ); //TODO Aca se le deberia pasar el id del cliente, y el id de la mesa para generar el pedido
   
   }
 
@@ -79,6 +82,12 @@ export class PagesClienteAnonimoMenuPage {
 
         if(mesa.numero == parseInt(QRdata.text)){          
           flag = true;
+          
+          if(mesa.estado == 'ocupada' && mesa.usuario.id == JSON.parse(sessionStorage.getItem('usuario')).id){
+            this.estadoPedido();
+          } 
+          
+          
           
           if(mesa.estado == 'disponible'){
             
@@ -137,11 +146,15 @@ export class PagesClienteAnonimoMenuPage {
   }
 
   estadoPedido(){
-    this.pedidoService.traerUnPedido('2PNUQ0llKOirr1gR9h9N').subscribe( (pedido: Pedido) =>{
-        
-      this.pedido =  pedido;
-    })
+    this.pedidoService.traerPedidos().subscribe( pedidos=> {
+        pedidos.forEach(pedido => {
+          if(pedido.mesaId == JSON.parse(sessionStorage.getItem("mesaOcupada")).id && 
+             pedido.cliente.id == JSON.parse(sessionStorage.getItem("usuario")).id){
+             this.pedido = pedido; 
+          }
+        });
 
+    } )
   }
 
   // HabilitarBotones(){

@@ -1,10 +1,11 @@
 
 <ion-card padding style="background-color: rgba(77, 76, 76, 0.589); color: white">
-  
-  Mesa Nro.: {{ pedido.mesa }}
+  Muchas gracias por su pedido!
+  Usted se encuentra en la Mesa Nro.: {{ pedido.mesa }}   
    <br>
-   <!-- El estado del pedido es: {{pedido.estado}}
-   <br> -->
+   El estado de su pedido es: {{ pedido.estado }}   
+   <br>
+    
    <productos-en-pedido 
      [pedido]='pedido'
    ></productos-en-pedido>
