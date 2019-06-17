@@ -6,7 +6,7 @@
 <ion-content padding class="cocineroMenu">
     <button ion-button expand="block" class="menuButtonPPT ios button button-block button-solid ion-activatable ion-focusable hydrated" (click)="reserva()">Reservar mesa</button>
     <button ion-button expand="block" class="menuButtonPPT ios button button-block button-solid ion-activatable ion-focusable hydrated" (click)="listaDeEspera()">Lista de espera</button>
-    <button ion-button expand="block" class="menuButtonPPT ios button button-block button-solid ion-activatable ion-focusable hydrated" (click)="hacerPedido()">Hacer pedido</button>
+    <button [disabled]="!mesa" ion-button expand="block" class="menuButtonPPT ios button button-block button-solid ion-activatable ion-focusable hydrated" (click)="hacerPedido()">Hacer pedido</button>
     <button ion-button expand="block" class="menuButtonPPT ios button button-block button-solid ion-activatable ion-focusable hydrated">Pagar</button>
     <button ion-button expand="block" class="menuButtonPPT ios button button-block button-solid ion-activatable ion-focusable hydrated" (click)="juegos()">Juegos</button>
     <solicitud-mesa></solicitud-mesa>
