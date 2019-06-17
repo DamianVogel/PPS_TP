@@ -8,10 +8,12 @@ import { SolicitudMesaComponent } from './solicitud-mesa/solicitud-mesa';
 import { IonicModule } from 'ionic-angular'
 import { ListapedidosComponent } from './listapedidos/listapedidos';
 import { ProductosEnPedidoComponent } from './productos-en-pedido/productos-en-pedido';
+import { EstadoPedidoComponent } from './estado-pedido/estado-pedido';
 @NgModule({
 	declarations: [SolicitudMesaComponent,
     ListapedidosComponent,
-    ProductosEnPedidoComponent
+    ProductosEnPedidoComponent,
+    EstadoPedidoComponent
 	//AltaEmpleadoComponent
 	//AltaDuenoComponent
 	//AltaDueñoComponent
@@ -20,7 +22,8 @@ import { ProductosEnPedidoComponent } from './productos-en-pedido/productos-en-p
 	imports: [IonicModule],
 	exports: [SolicitudMesaComponent,
     ListapedidosComponent,
-    ProductosEnPedidoComponent
+    ProductosEnPedidoComponent,
+    EstadoPedidoComponent
 	//AltaEmpleadoComponent
 	//AltaDuenoComponent
 	//AltaDueñoComponent

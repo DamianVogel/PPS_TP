@@ -10,6 +10,9 @@ import { QRService } from '../../../services/QR-service';
 import { Mesa } from '../../../clases/mesa';
 import { AngularFirestoreCollection, AngularFirestore } from 'angularfire2/firestore';
 import { ToastController } from 'ionic-angular';
+import { PedidoService } from '../../../services/pedidos-service'
+import { Pedido } from '../../../clases/Pedido';
+
 
 
 @IonicPage()
@@ -21,6 +24,7 @@ export class PagesClienteAnonimoMenuPage {
 
   usuario: Usuario;
   ocupaMesa: boolean;
+  pedido : Pedido;
   
   constructor(
     public navCtrl: NavController, 
@@ -29,7 +33,8 @@ export class PagesClienteAnonimoMenuPage {
     private usuarioService: UsuarioService,
     private qrService: QRService,
     private objFirebase: AngularFirestore,
-    public toastCtrl: ToastController,  
+    public toastCtrl: ToastController,
+    private pedidoService: PedidoService
     ) {
       //this.ocupaMesa = this.usuarioService.RelacionUsuarioMesa();
   }
@@ -40,7 +45,7 @@ export class PagesClienteAnonimoMenuPage {
   
   ngOnChanges() {
     this.ocupaMesa = this.usuarioService.RelacionUsuarioMesa();
-    console.log("entro");
+    
   }
 
   listaDeEspera(){
@@ -52,7 +57,7 @@ export class PagesClienteAnonimoMenuPage {
   }
 
   hacerPedido(){
-    let mesa = JSON.parse(sessionStorage.getItem('mesa'));
+    let mesa = JSON.parse(sessionStorage.getItem('mesaOcupada'));
     let usuario = JSON.parse(sessionStorage.getItem('usuario'));
 
     this.navCtrl.push(PagesPedidosAltaPage, {
@@ -129,6 +134,14 @@ export class PagesClienteAnonimoMenuPage {
         console.log('Error', err);
     });
   
+  }
+
+  estadoPedido(){
+    this.pedidoService.traerUnPedido('2PNUQ0llKOirr1gR9h9N').subscribe( (pedido: Pedido) =>{
+        
+      this.pedido =  pedido;
+    })
+
   }
 
   // HabilitarBotones(){
