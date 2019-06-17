@@ -4,6 +4,7 @@ import { PedidoService } from '../../services/pedidos-service';
 import { Pedido } from '../../clases/Pedido';
 import { LoadingController } from 'ionic-angular'
 import { hostViewClassName } from '@angular/compiler';
+import { Usuario } from '../../clases/usuario';
 
 /**
  * Generated class for the ProductosEnPedidoComponent component.
@@ -23,6 +24,9 @@ export class ProductosEnPedidoComponent {
   @Input() pedido: Pedido;
   productosFiltrados: Array<Pedido>
   filtroTipo: string;
+  esCliente: boolean;  
+
+
   constructor(
     private pedidoService: PedidoService,
     public loadingController: LoadingController
@@ -30,21 +34,32 @@ export class ProductosEnPedidoComponent {
   ) {
     var usuario = JSON.parse(sessionStorage.getItem('usuario'));
 
-    switch (usuario.tipo) {
-      case 'bartender':
-        this.filtroTipo = 'bebida';
-        break;
+    if(usuario.perfil == 'anonimo' || usuario.perfil == 'cliente' ){
+      this.esCliente = true;
+    }else{
+      switch (usuario.tipo) {
+        case 'bartender':
+          this.filtroTipo = 'bebida';
+          break;
 
-      case 'cocinero':
-        this.filtroTipo = 'comida';
-        break;
-    }
-
-
+        case 'cocinero':
+          this.filtroTipo = 'comida';
+          break;    
+      }
+    }  
   }
 
   ngOnChanges() {
-    this.productosFiltrados = this.pedido.productos.filter(producto => producto.tipo == this.filtroTipo);
+    var usuario = JSON.parse(sessionStorage.getItem('usuario'));
+    
+    if(usuario.perfil == 'anonimo' ||  usuario.perfil == 'cliente'){
+      this.esCliente = true;
+      this.productosFiltrados = this.pedido.productos;
+      console.log(this.productosFiltrados);
+    }
+    else{
+      this.productosFiltrados = this.pedido.productos.filter(producto => producto.tipo == this.filtroTipo);
+    }
   }
 
   CambiarEstado(index: number, estado: string) {
