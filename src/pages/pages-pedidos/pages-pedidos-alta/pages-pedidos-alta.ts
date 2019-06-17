@@ -3,10 +3,9 @@ import { IonicPage, NavController, NavParams, AlertController, PopoverController
 import { Pedido } from '../../../clases/Pedido';
 import { ProductoService } from '../../../services/producto-service';
 import { Producto } from '../../../clases/Producto';
-import { getImageURL, SPINNER_IMG, showAlert, round } from '../../../environments/environment';
+import { getImageURL, SPINNER_IMG, showAlert, round, spin } from '../../../environments/environment';
 import { PagesPedidosListaPage } from '../pages-pedidos-lista/pages-pedidos-lista';
 import { PedidoService } from '../../../services/pedidos-service';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @IonicPage()
 @Component({
@@ -26,7 +25,7 @@ export class PagesPedidosAltaPage {
   detallesProductos: Array<any>;
   productosCargados: Array<any>;
 
-  pedidoService: PedidoService;
+  pedidoExistia: boolean = false;
 
   constructor(public toastController: ToastController,
     public modalController: ModalController,
@@ -34,7 +33,8 @@ export class PagesPedidosAltaPage {
     public alertController: AlertController,
     public navCtrl: NavController,
     public navParams: NavParams,
-    public productoService: ProductoService) {
+    public productoService: ProductoService,
+    public pedidoService: PedidoService) {
     this.pedido = new Pedido();
     this.productos = new Array<Producto>();
     this.productosFiltrados = new Array<Producto>();
@@ -44,11 +44,12 @@ export class PagesPedidosAltaPage {
     this.pedido.cliente = navParams.get("cliente");
     let usuario = JSON.parse(sessionStorage.getItem('usuario'));
     if (usuario.tipo === "cliente") {
-      this.pedido.estado = "Solicitado";
+      this.pedido.estado = "solicitado";
     } else if (usuario.tipo === "mozo") {
-      this.pedido.estado = "Pendiente";
+      this.pedido.estado = "pendiente";
     }
     this.inicializarProductos();
+    this.validarPedidoExistente();
   }
 
   inicializarProductos() {
@@ -68,6 +69,21 @@ export class PagesPedidosAltaPage {
           }
         })
       });
+    })
+  }
+
+  validarPedidoExistente() {
+    this.pedidoService.traerPedidos().subscribe(pedidos => {
+      let pedidoExistente: Array<Pedido> = pedidos.filter(pedido => {
+        return pedido.cliente === this.pedido.cliente && pedido.mesa === this.pedido.mesa && pedido.estado !== 'pagado'
+      });
+      if (pedidoExistente.length === 1) {
+        this.pedidoExistia = true;
+        this.pedido = pedidoExistente[0];
+        this.pedido.productos.forEach(producto => {
+          this.productosCargados[producto.nombre] = true;
+        });
+      }
     })
   }
 
@@ -94,7 +110,7 @@ export class PagesPedidosAltaPage {
     (this.detallesProductos[nombre]) ? this.detallesProductos[nombre] = false : this.detallesProductos[nombre] = true;
   }
 
-  cargar(nombre: string) {
+  cargar(nombre: string, tipo: string) {
     let alert = this.alertController.create({
       title: 'Seleccione cantidad',
       inputs: [
@@ -124,8 +140,9 @@ export class PagesPedidosAltaPage {
               } else {
                 this.pedido.productos.push({
                   "nombre": nombre,
+                  "tipo": tipo,
                   "cantidad": Number(data.cantidad),
-                  "estado": "en proceso"
+                  "estado": "pendiente"
                 });
               }
               this.productosCargados[nombre] = true;
@@ -166,10 +183,10 @@ export class PagesPedidosAltaPage {
             } else {
               this.pedido.productos.forEach((producto, index) => {
                 if (producto.nombre === nombre) {
-                  if((this.pedido.productos[index].cantidad - Number(data.cantidad)) <= 0){
+                  if ((this.pedido.productos[index].cantidad - Number(data.cantidad)) <= 0) {
                     this.pedido.productos.splice(index, 1);
                     this.productosCargados[nombre] = false;
-                  } else{
+                  } else {
                     this.pedido.productos[index].cantidad -= Number(data.cantidad);
                   }
                 }
@@ -188,7 +205,30 @@ export class PagesPedidosAltaPage {
     alert.present();
   }
 
-  //TODO Insertar pedido en base
+  pedir() {
+    if (this.pedido.productos.length === 0) {
+      this.toastController.create({
+        message: "Debe cargar un producto al menos!",
+        duration: 3000,
+        position: 'bottom'
+      }).present();
+    } else {
+      spin(this.modalController, true);
+      if (this.pedidoExistia) {
+        this.pedidoService.actualizarUnPedido(this.pedido.id).update(this.pedido).then(() => {
+          spin(this.modalController, false);
+          showAlert(this.alertController, "Exito", "Pedido actualizado exitosamente");
+          this.navCtrl.pop();
+        })
+      } else {
+        this.pedidoService.cargarPedido(this.pedido.dameJSON()).then(() => {
+          spin(this.modalController, false);
+          showAlert(this.alertController, "Exito", "Pedido dado de alta exitosamente");
+          this.navCtrl.pop();
+        })
+      }
+    }
+  }
 
   calcularCostoYTiempo() {
     this.pedido.costo = 0;
