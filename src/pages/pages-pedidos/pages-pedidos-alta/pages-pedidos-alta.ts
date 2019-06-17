@@ -42,7 +42,8 @@ export class PagesPedidosAltaPage {
     this.productosFiltrados = new Array<Producto>();
     this.detallesProductos = new Array<any>();
     this.productosCargados = new Array<any>();
-    this.pedido.mesa = navParams.get("mesa");
+    this.pedido.mesaId = navParams.get("mesa").id;
+    this.pedido.mesa = navParams.get("mesa").numero;
     this.pedido.cliente = navParams.get("cliente");
     let usuario = JSON.parse(sessionStorage.getItem('usuario'));
     if (usuario.tipo === "cliente") {

@@ -2,7 +2,7 @@ export class Pedido {
 
     id: string; //<-- Damian: id debe ser string.
     productos: Array<any>;
-    mesa: string;
+    mesaId: string;
     cliente: string;
     estado: string; //<-- Damian: Estado debe ser string{"solicitado","en proceso","terminado","entregado","recibido","pagado"}
     costo: number;
@@ -11,11 +11,12 @@ export class Pedido {
     descuento_postre: boolean;
     propina: number;
     tiempo_espera: number;
+    mesa: number;
 
     constructor(
         id?:string,
         productos?:Array<any>,
-        mesa?: string,
+        mesaId?: string,
         cliente?: string,
         estado?: string,
         costo?: number,
@@ -23,10 +24,11 @@ export class Pedido {
         descuento_bebida?: boolean,
         descuento_postre?: boolean,
         propina?: number,
-        tiempo_espera?: number){
+        tiempo_espera?: number,
+        mesa?: number){
             if(id == null || id == undefined) this.id = ""; else this.id = id;
             if(productos == null || productos == undefined) this.productos = new Array<any>(); else this.productos = productos;
-            if(mesa == null || mesa == undefined) this.mesa = ""; else this.mesa = mesa;
+            if(mesaId == null || mesaId == undefined) this.mesaId = ""; else this.mesaId = mesaId;
             if(cliente == null || cliente == undefined) this.cliente = ""; else this.cliente = cliente;
             if(estado == null || estado == undefined) this.estado = ""; else this.estado = estado;
             if(costo == null || costo == undefined) this.costo = 0; else this.costo = costo;
@@ -35,6 +37,7 @@ export class Pedido {
             if(descuento_postre == null || descuento_postre == undefined) this.descuento_postre = false; else this.descuento_postre = descuento_postre;
             if(propina == null || propina == undefined) this.propina = 0; else this.propina = propina;
             if(tiempo_espera == null || tiempo_espera == undefined) this.tiempo_espera = 0; else this.tiempo_espera = tiempo_espera;
+            if(mesa == null || mesa == undefined) this.mesa = 0; else this.mesa = mesa;
     }
 
     dameJSON() {

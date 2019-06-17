@@ -31,7 +31,10 @@ export class PagesClienteMenuPage {
   }
 
   hacerPedido(){
-    this.navCtrl.push(PagesPedidosAltaPage, {"mesa": "idMesaTest", "cliente": JSON.parse(sessionStorage.getItem("usuario")).id}); //TODO Aca se le deberia pasar el id del cliente, y el id de la mesa para generar el pedido
+    this.navCtrl.push(PagesPedidosAltaPage, {
+      "mesa": JSON.parse(sessionStorage.getItem("mesa")),
+      "cliente": JSON.parse(sessionStorage.getItem("usuario")).id
+    });
   }
 
 }
