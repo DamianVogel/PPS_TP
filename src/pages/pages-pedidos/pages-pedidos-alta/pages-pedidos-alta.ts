@@ -6,6 +6,7 @@ import { Producto } from '../../../clases/Producto';
 import { getImageURL, SPINNER_IMG, showAlert, round, spin } from '../../../environments/environment';
 import { PagesPedidosListaPage } from '../pages-pedidos-lista/pages-pedidos-lista';
 import { PedidoService } from '../../../services/pedidos-service';
+import { QRService } from '../../../services/QR-service';
 
 @IonicPage()
 @Component({
@@ -34,7 +35,8 @@ export class PagesPedidosAltaPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public productoService: ProductoService,
-    public pedidoService: PedidoService) {
+    public pedidoService: PedidoService,
+    private qrService: QRService) {
     this.pedido = new Pedido();
     this.productos = new Array<Producto>();
     this.productosFiltrados = new Array<Producto>();
@@ -158,6 +160,30 @@ export class PagesPedidosAltaPage {
       ]
     });
     alert.present();
+  }
+
+  cargarConQR() {
+    this.qrService.readQR().then(barcodeData => {
+      try {
+        var data = JSON.parse(barcodeData.text);
+        if (
+          typeof (data.nombre) !== 'undefined' && data.nombre !== "" &&
+          typeof (data.tipo) !== 'undefined' && data.tipo !== ""
+        ) {
+          if (this.productos.filter(producto => { return producto.nombre === data.nombre && producto.tipo === data.tipo }).length === 1) {
+            this.cargar(data.nombre, data.tipo);
+          } else {
+            showAlert(this.alertController, "Error", "Producto en JSON invalido");
+          }
+        } else {
+          throw new Error();
+        }
+      } catch (err) {
+        showAlert(this.alertController, "Error", "QR invalido");
+      }
+    }).catch(err => {
+      console.log('Error', err);
+    });
   }
 
   sacar(nombre: string) {
