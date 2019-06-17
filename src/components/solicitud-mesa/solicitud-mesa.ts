@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Api } from '../../providers';
 import { Alert } from 'ionic-angular';
 import { ToastController } from 'ionic-angular';
@@ -13,6 +13,7 @@ import { LoadingController } from 'ionic-angular'
 })
 export class SolicitudMesaComponent {
 
+  @Input() ocupaMesa: boolean;
 
   constructor(
     public api: Api,

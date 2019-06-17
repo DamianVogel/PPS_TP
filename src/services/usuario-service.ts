@@ -4,6 +4,7 @@ import { ModalController, AlertController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { Usuario } from '../clases/usuario';
 import { showAlert } from '../environments/environment';
+import { MesasProvider } from '../providers/mesas/mesas';
 
 @Injectable()
 export class UsuarioService {
@@ -18,7 +19,8 @@ export class UsuarioService {
       public alertController: AlertController,
       public alertCtrl: AlertController,
       private objFirebase: AngularFirestore,
-      public modalCtrl: ModalController
+      public modalCtrl: ModalController,
+      private mesaProvider: MesasProvider
     ) {
 
 	}
@@ -62,6 +64,33 @@ export class UsuarioService {
   EliminarUsuario(id)
   {
     return this.objFirebase.collection("SP_usuarios").doc(id).delete();
+  }
+
+  cargarUsuarioAnonimo(usuarioAGuardarJSON: any, id: string){
+    
+    usuarioAGuardarJSON.id = id;
+
+    return this.objFirebase.collection<Usuario>("SP_usuarios").doc(id).set(usuarioAGuardarJSON);
+  }
+
+  RelacionUsuarioMesa(){
+    let usuario = JSON.parse(sessionStorage.getItem('usuario')); 
+    
+    console.log(usuario);
+
+    let ocupaMesa:boolean = false;
+      
+    this.mesaProvider.mesas.forEach( mesa => {      
+        
+        if(mesa.usuario !== undefined){
+          if(mesa.usuario.id == usuario.id){              
+            ocupaMesa = true;         
+          }
+        }          
+      });          
+
+    return ocupaMesa;
+
   }
 
 }

@@ -29,7 +29,7 @@ export class MesasProvider {
     public http: HttpClient,  
     private objFirebase: AngularFirestore,
     private qrService: QRService,
-    public toastCtrl: ToastController,   
+    public toastCtrl: ToastController,  
     ) {  
     this.TraerMesas();
     //this.MesasDisponibles();
@@ -164,7 +164,7 @@ export class MesasProvider {
             }, (error) => {
               console.log(error);
             });
-                    
+          
             let toast = this.toastCtrl.create({            
               message: "La mesa nro: "+mesa.numero +" fue ocupada por "+ usuario.nombre,
               duration: 3000,
