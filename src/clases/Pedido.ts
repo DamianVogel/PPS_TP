@@ -12,6 +12,7 @@ export class Pedido {
     propina: number;
     tiempo_espera: number;
     mesa: number;
+    tipo: string;
 
     constructor(
         id?:string,
@@ -25,7 +26,8 @@ export class Pedido {
         descuento_postre?: boolean,
         propina?: number,
         tiempo_espera?: number,
-        mesa?: number){
+        mesa?: number,
+        tipo?: string){
             if(id == null || id == undefined) this.id = ""; else this.id = id;
             if(productos == null || productos == undefined) this.productos = new Array<any>(); else this.productos = productos;
             if(mesaId == null || mesaId == undefined) this.mesaId = ""; else this.mesaId = mesaId;
@@ -38,6 +40,7 @@ export class Pedido {
             if(propina == null || propina == undefined) this.propina = 0; else this.propina = propina;
             if(tiempo_espera == null || tiempo_espera == undefined) this.tiempo_espera = 0; else this.tiempo_espera = tiempo_espera;
             if(mesa == null || mesa == undefined) this.mesa = 0; else this.mesa = mesa;
+            if(tipo == null || tipo == undefined) this.tipo = ""; else this.tipo = tipo;
     }
 
     dameJSON() {

@@ -40,7 +40,16 @@ export class PagesClienteMenuPage {
   hacerPedido(){
     this.navCtrl.push(PagesPedidosAltaPage, {
       "mesa": this.mesa,
-      "cliente": this.usuario.id
+      "cliente": this.usuario.id,
+      "tipo": "restaurant"
+    });
+  }
+
+  pedirDelivery(){
+    this.navCtrl.push(PagesPedidosAltaPage, {
+      "mesa": this.mesa,
+      "cliente": this.usuario.id,
+      "tipo": "delivery"
     });
   }
 
