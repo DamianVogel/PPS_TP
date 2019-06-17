@@ -27,6 +27,10 @@
   35) Con mínimo un tipo de cada uno de estos controles (range, input, radio, check, select).
   36) Mostrar los gráficos de las estadísticas obtenidas de cada uno de los ítems de ese empleado / cliente según corresponda.
   
+  #### Gestión - Pedir platos y bebidas (15/06/2019 - 16/06/2019)
+  38) Se selecciona el plato / bebida y su cantidad.
+  39) Se pueden seleccionar desde un código Qr e indicar la cantidad.
+  
   #### Juegos - Juego 10% de descuento (05/06/2019 - TBD)
   57) En caso de ganar se le descontará de la cuenta final el porcentaje correspondiente.
   
@@ -83,11 +87,18 @@
       # Validacion de estado de mesa al asignar via QR. 
   
   4) Componentes Lista Pedido \ Producto:
-      # Generacion de servicios para la obtencion de pedidos filtrados por estado y perfil
+      # Generacion de servicios para la obtencion de pedidos filtrados por estado.
       # Generacion Component Lista y Pedido para mostrar los productos de un pedido.
         Cada uno de estos cuenta con un boton de accion que cambia el estado del mismo para cumplimentar el flujo del sistema.
-    
-  
+
+ 
+#### COMPONENTES LISTA PEDIDOS \ PRODUCTOS #### (15/06 al 22/06) 
+
+  1) Componentes Lista Pedido \ Producto:
+      # Filtro de acuerdo a tipo de producto para que sea tomado por cada responsable.
+
+  2)    
+
 ## ==========================================
 
 ### **Augusto Morelli (AugustoMorelli / AugustoBranch)**

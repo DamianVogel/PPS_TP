@@ -9,6 +9,8 @@ import * as firebase from 'firebase';
 
 export let spinner = undefined;
 
+export let SPINNER_IMG = "assets/img/spinner.gif";
+
 export const environment = {
     production: false,
     firebase: {

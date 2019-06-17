@@ -13,9 +13,9 @@
         </ion-item>
         <ion-item padding class="formItem">
           <ion-select name="tipo" [(ngModel)]="producto.tipo" placeholder="Tipo">
-            <ion-option value="bebida">Bebida</ion-option>
-            <ion-option value="postre">Postre</ion-option>
-            <ion-option value="comida">Comida</ion-option>
+            <ion-option *ngIf="perfilActual === 'bartender'" value="bebida">Bebida</ion-option>
+            <ion-option *ngIf="perfilActual === 'cocinero'" value="postre">Postre</ion-option>
+            <ion-option *ngIf="perfilActual === 'cocinero'" value="comida">Comida</ion-option>
           </ion-select>
         </ion-item>
         <ion-item padding class="formItem">
