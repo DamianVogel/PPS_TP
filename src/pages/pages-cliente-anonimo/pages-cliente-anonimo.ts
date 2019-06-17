@@ -4,6 +4,7 @@ import { Usuario } from '../../clases/usuario';
 import { PagesClienteAnonimoMenuPage } from './pages-cliente-anonimo-menu/pages-cliente-anonimo-menu';
 import { showAlert, spin } from '../../environments/environment';
 import { UsuarioService } from '../../services/usuario-service';
+import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
 
 @IonicPage()
 @Component({
@@ -23,6 +24,7 @@ export class PagesClienteAnonimoPage {
     public alertController: AlertController, 
     public usuarioService: UsuarioService,
     public modalCtrl: ModalController,
+    private objFirebase: AngularFirestore
     
     
     ) {
@@ -48,11 +50,17 @@ export class PagesClienteAnonimoPage {
 
       usuarioAnonimo.nombre = this.usuario.nombre;
       usuarioAnonimo.perfil = 'anonimo';
-      this.usuarioService.cargarUsuario(usuarioAnonimo.dameJSON()).then( alta => {
+      let id = this.objFirebase.createId();
+
+      usuarioAnonimo.id = id;
+
+      this.usuarioService.cargarUsuarioAnonimo(usuarioAnonimo.dameJSON(), id).then( alta => {
         this.botonHabilitado = true;
         spin(this.modalCtrl, false);
         
-        sessionStorage.setItem("usuario", JSON.stringify(this.usuario));
+        console.log(alta);
+
+        sessionStorage.setItem("usuario", JSON.stringify(usuarioAnonimo));
         this.navCtrl.push(PagesClienteAnonimoMenuPage);
       }).catch( error =>{
         

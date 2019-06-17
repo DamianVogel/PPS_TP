@@ -27,6 +27,10 @@
   35) Con mínimo un tipo de cada uno de estos controles (range, input, radio, check, select).
   36) Mostrar los gráficos de las estadísticas obtenidas de cada uno de los ítems de ese empleado / cliente según corresponda.
   
+  #### Gestión - Pedir platos y bebidas (15/06/2019 - 16/06/2019)
+  38) Se selecciona el plato / bebida y su cantidad.
+  39) Se pueden seleccionar desde un código Qr e indicar la cantidad.
+  
   #### Juegos - Juego 10% de descuento (05/06/2019 - TBD)
   57) En caso de ganar se le descontará de la cuenta final el porcentaje correspondiente.
   
