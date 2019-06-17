@@ -4,8 +4,9 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding class="cocineroMenu">
-    <button ion-button expand="block" class="menuButtonPPT ios button button-block button-solid ion-activatable ion-focusable hydrated" (click)="listaDeEspera()">Lista de espera</button>
+    <button [disabled]="ocupaMesa" ion-button expand="block" class="menuButtonPPT ios button button-block button-solid ion-activatable ion-focusable hydrated" (click)="listaDeEspera()">Lista de espera</button>
     <button ion-button expand="block" class="menuButtonPPT ios button button-block button-solid ion-activatable ion-focusable hydrated" (click)="juegos()">Juegos</button>
-    <button ion-button expand="block" class="menuButtonPPT ios button button-block button-solid ion-activatable ion-focusable hydrated" (click)="hacerPedido()">Hacer pedido</button>
-    <solicitud-mesa></solicitud-mesa>
+    <button [disabled]="!ocupaMesa" ion-button expand="block" class="menuButtonPPT ios button button-block button-solid ion-activatable ion-focusable hydrated" (click)="hacerPedido()">Hacer pedido</button>
+    <solicitud-mesa [ocupaMesa]="ocupaMesa"></solicitud-mesa>
+    <button [disabled]="ocupaMesa" ion-button expand="block" class="menuButtonPPT ios button button-block button-solid ion-activatable ion-focusable hydrated" (click)="OcuparMesa()">Ocupar Mesa con QR</button>
 </ion-content>
