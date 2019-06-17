@@ -27,19 +27,12 @@ export class ReservasProvider {
     //this.TraerReservas();
   }
 
-   async TraerReservas()
+    TraerReservas()
   {
     
     this.listaReservasFirebase = this.objFirebase.collection<any>("SP_reservas", ref => ref.orderBy('fecha', 'desc') );
 
-    this.listaReservasFirebase.snapshotChanges().subscribe( (arr)=>{
-      
-      arr.forEach((res: any) => {
-        this.reservas.push(res.payload.doc.data());
-      })
-      console.log(this.reservas);
-      
-    })
+    return this.listaReservasFirebase.valueChanges();
 
 
   }

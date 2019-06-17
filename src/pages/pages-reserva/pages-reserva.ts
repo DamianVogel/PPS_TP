@@ -41,11 +41,8 @@ export class PagesReservaPage {
 
     this.usuario=JSON.parse(sessionStorage.getItem("usuario")); 
     this.mesas= this.mesasProv.mesas;
-    this.reservas= this.reservaProv.reservas;
-    console.log(this.mesas);
-    console.log(this.reservas);
+    this.TraerReservas();
     
-
   }
 
 
@@ -98,42 +95,70 @@ BuscarMesaReserva(fecha,hora, cant_comensales, tipo)
   let disponible: boolean= true;
   let ok:boolean= true;
 
-  this.mesas.forEach(mesa => {
-    if(ok)
-    {
+  let mesasAdecuadas= this.mesasProv.mesas.filter((mesa)=>{
+    return (mesa.cantidadComensales >= cant_comensales && mesa.tipoMesa== tipo);
+  } );
 
-      if(mesa.cantidadComensales >= cant_comensales && mesa.tipo == tipo )
-      { 
-        this.reservas.forEach(reserva =>{
-          if( reserva.mesas == mesa.numero && reserva.fecha == fecha && reserva.hora == hora)
-          {
-
-            disponible= false;
-            
-          }
-        })
-      }
-      if(disponible)
-      {
-        laReserva = new Reserva();
-        laReserva.mesas=mesa.numero;
-        laReserva.fecha=fecha;
-        laReserva.hora=hora;
-        laReserva.cliente=this.usuario;
-        laReserva.estado="pendiente";
-        ok=false;
-       
-        this.reservaProv.GuardarReserva(laReserva);
-        
-      }
+mesasAdecuadas.forEach((mesa)=>
+{
+  disponible=true;
+  
+  if(ok)
+  {
+  this.reservas.forEach((reserva)=>
+{
+  let minReserva= (Date.parse(reserva.hora) / 1000) / 60;
+  let minLaReserva= (Date.parse(hora) / 1000) / 60;
+  
 
 
-    }
-this.registroForm.reset();
+  if(mesa.numero == reserva.mesas && reserva.fecha == fecha && min)
+  {
     
-  });
- 
+    disponible=false;
+  }
 
+})
+  
+if(disponible)
+{
+  
+  laReserva = new Reserva();
+  laReserva.mesas=mesa.numero;
+  laReserva.fecha=fecha;
+  laReserva.hora=hora;
+  laReserva.cliente=this.usuario;
+  laReserva.estado="pendiente";
+  ok=false;
+
+  this.reservaProv.GuardarReserva(laReserva);
+  
+}
+
+}
+
+})
+ 
+  if(!disponible)
+  {
+    let toast = this.toastCtrl.create({
+      message: "Lo sientimos, no hay mesas disponibles para esa fecha/horario" ,
+      duration: 3000,
+      position: 'middle' //middle || top
+    });
+    toast.present();
+  }
+
+}
+
+async TraerReservas()
+{
+  this.reservaProv.TraerReservas().subscribe((reservas)=>{
+    
+    this.reservas = reservas;
+  
+
+  })
 
 }
 

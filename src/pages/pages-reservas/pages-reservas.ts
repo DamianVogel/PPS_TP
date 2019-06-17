@@ -21,10 +21,19 @@ export class PagesReservasPage {
   lista_de_reservas: Reserva[];
 
   constructor(public navCtrl: NavController, public navParams: NavParams,private reservasProv:ReservasProvider ) {
-    //this.lista_de_reservas= this.reservasProv.reservas;
-    this.reservasProv.TraerReservas();
-    this.lista_de_reservas= this.reservasProv.reservas;
-    console.log(this.lista_de_reservas);
+    
+   this.TraerReservas();
+  }
+
+  async TraerReservas()
+  {
+    this.reservasProv.TraerReservas().subscribe((reservas)=>{
+      
+      this. lista_de_reservas = reservas.filter(r=>{return r.estado=="pendiente"});
+      console.log(this.lista_de_reservas);
+
+    })
+
   }
 
   async AutorizarReserva(reserva)
