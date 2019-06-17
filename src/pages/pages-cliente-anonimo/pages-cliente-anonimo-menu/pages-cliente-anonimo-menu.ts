@@ -52,7 +52,14 @@ export class PagesClienteAnonimoMenuPage {
   }
 
   hacerPedido(){
-    this.navCtrl.push(PagesPedidosAltaPage, {"mesa": "idMesaTest", "cliente": "idClienteTest"}); //TODO Aca se le deberia pasar el id del cliente, y el id de la mesa para generar el pedido
+    let mesa = JSON.parse(sessionStorage.getItem('mesa'));
+    let usuario = JSON.parse(sessionStorage.getItem('usuario'));
+
+    this.navCtrl.push(PagesPedidosAltaPage, {
+      "mesa": mesa, 
+      "cliente": usuario
+    }); //TODO Aca se le deberia pasar el id del cliente, y el id de la mesa para generar el pedido
+  
   }
 
   OcuparMesa(){
@@ -82,7 +89,7 @@ export class PagesClienteAnonimoMenuPage {
             
             this.ocupaMesa = true;
 
-            sessionStorage.setItem("mesaId", JSON.stringify(mesa.id));  
+            sessionStorage.setItem("mesaOcupada", JSON.stringify(mesa));  
 
             }, (error) => {
               console.log(error);
