@@ -45,6 +45,7 @@ export class PagesPedidosAltaPage {
     this.pedido.mesaId = navParams.get("mesa").id;
     this.pedido.mesa = navParams.get("mesa").numero;
     this.pedido.cliente = navParams.get("cliente");
+    this.pedido.tipo = navParams.get("tipo");
     let usuario = JSON.parse(sessionStorage.getItem('usuario'));
     if (usuario.tipo === "cliente") {
       this.pedido.estado = "solicitado";
