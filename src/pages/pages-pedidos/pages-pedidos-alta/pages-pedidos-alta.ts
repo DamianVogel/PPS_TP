@@ -162,7 +162,7 @@ export class PagesPedidosAltaPage {
     alert.present();
   }
 
-  cargarConQR(){
+  cargarConQR() {
     this.qrService.readQR().then(barcodeData => {
       try {
         var data = JSON.parse(barcodeData.text);
@@ -170,10 +170,7 @@ export class PagesPedidosAltaPage {
           typeof (data.nombre) !== 'undefined' && data.nombre !== "" &&
           typeof (data.tipo) !== 'undefined' && data.tipo !== ""
         ) {
-          console.log(this.productos);
-          console.log(data.nombre);
-          console.log(data.tipo);
-          if(this.productos.filter(producto => { return producto.nombre === data.nombre && producto.tipo === data.tipo}).length === 1){
+          if (this.productos.filter(producto => { return producto.nombre === data.nombre && producto.tipo === data.tipo }).length === 1) {
             this.cargar(data.nombre, data.tipo);
           } else {
             showAlert(this.alertController, "Error", "Producto en JSON invalido");
