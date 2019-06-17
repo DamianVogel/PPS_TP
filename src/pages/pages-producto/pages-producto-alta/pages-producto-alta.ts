@@ -24,6 +24,8 @@ export class ProductoAltaPage {
 
   productos: Producto[];
 
+  perfilActual: string;
+
   constructor(
     public alertCtrl: AlertController,
     public navCtrl: NavController, 
@@ -34,6 +36,7 @@ export class ProductoAltaPage {
     private qrService: QRService) {
       this.producto = new Producto();
       this.photoData = new Array<any>();
+      this.perfilActual = JSON.parse(sessionStorage.getItem("usuario")).tipo;
   }
 
   ionViewWillEnter(){
