@@ -42,12 +42,18 @@ export class PagesPedidosAltaPage {
     this.productosFiltrados = new Array<Producto>();
     this.detallesProductos = new Array<any>();
     this.productosCargados = new Array<any>();
-    this.pedido.mesaId = navParams.get("mesa").id;
-    this.pedido.mesa = navParams.get("mesa").numero;
     this.pedido.cliente = navParams.get("cliente");
     this.pedido.tipo = navParams.get("tipo");
+    if(this.pedido.tipo==="restaurant"){
+      this.pedido.mesaId = navParams.get("mesa").id;
+      this.pedido.mesa = navParams.get("mesa").numero;
+    }
+    if(this.pedido.tipo==="delivery"){
+      this.pedido.mesaId = null;
+      this.pedido.mesa = null;
+    }
     let usuario = JSON.parse(sessionStorage.getItem('usuario'));
-    if (usuario.tipo === "cliente") {
+    if (usuario.tipo === "cliente" || usuario.perfil === "anonimo") {
       this.pedido.estado = "solicitado";
     } else if (usuario.tipo === "mozo") {
       this.pedido.estado = "pendiente";
@@ -79,7 +85,7 @@ export class PagesPedidosAltaPage {
   validarPedidoExistente() {
     this.pedidoService.traerPedidos().subscribe(pedidos => {
       let pedidoExistente: Array<Pedido> = pedidos.filter(pedido => {
-        return pedido.cliente === this.pedido.cliente && pedido.mesa === this.pedido.mesa && pedido.estado !== 'pagado'
+        return pedido.cliente === this.pedido.cliente && pedido.mesaId === this.pedido.mesaId && pedido.estado !== 'pagado'
       });
       if (pedidoExistente.length === 1) {
         this.pedidoExistia = true;
