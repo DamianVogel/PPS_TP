@@ -16,7 +16,6 @@ export class PagesPedidosListaPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController) {
     this.pedido = navParams.get("pedido");
     this.productos = navParams.get("productos");
-    console.log(this.pedido);
   }
 
   close() {

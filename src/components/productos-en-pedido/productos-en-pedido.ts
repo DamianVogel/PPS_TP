@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { Producto } from '../../clases/Producto';
-import { PedidoService  } from '../../services/pedidos-service';
-import { Pedido  } from '../../clases/Pedido';
+import { PedidoService } from '../../services/pedidos-service';
+import { Pedido } from '../../clases/Pedido';
 import { LoadingController } from 'ionic-angular'
 import { hostViewClassName } from '@angular/compiler';
 
@@ -17,7 +17,7 @@ import { hostViewClassName } from '@angular/compiler';
 })
 export class ProductosEnPedidoComponent {
 
-  
+
   // @Input() idPedido: string;
   // @Input() arrayProductos: Array<Producto>;
   @Input() pedido: Pedido;
@@ -29,48 +29,48 @@ export class ProductosEnPedidoComponent {
 
   ) {
     var usuario = JSON.parse(sessionStorage.getItem('usuario'));
-    
-    switch(usuario.tipo){
+
+    switch (usuario.tipo) {
       case 'bartender':
-          this.filtroTipo = 'bebida';
+        this.filtroTipo = 'bebida';
         break;
-    
+
       case 'cocinero':
-          this.filtroTipo = 'comida';
+        this.filtroTipo = 'comida';
         break;
     }
 
-    
-  }
-  
-  ngOnChanges(){   
-    this.productosFiltrados = this.pedido.productos.filter( producto => producto.tipo == this.filtroTipo); 
+
   }
 
-  CambiarEstado(index: number, estado: string){
-   
-      let loading = this.loadingController.create({
-        spinner: 'hide',
-        content: `
+  ngOnChanges() {
+    this.productosFiltrados = this.pedido.productos.filter(producto => producto.tipo == this.filtroTipo);
+  }
+
+  CambiarEstado(index: number, estado: string) {
+
+    let loading = this.loadingController.create({
+      spinner: 'hide',
+      content: `
         <ion-content padding>
           <img id="spinner" src="assets/img/spinner.gif"> 
         </ion-content>`,
-        duration: 5000
-      });
-    
-      loading.onDidDismiss(() => {
-        console.log('Dismissed loading');
-      });
-    
-      loading.present();
-    
-      this.pedido.productos[index].estado = estado;
+      duration: 5000
+    });
 
-      this.pedidoService.actualizarUnPedido(this.pedido.id).update(this.pedido).then (() => {                                 
-          loading.dismiss();  
-          console.log('Documento editado exitósamente');
-      })
-       
+    loading.onDidDismiss(() => {
+      console.log('Dismissed loading');
+    });
+
+    loading.present();
+
+    this.pedido.productos[index].estado = estado;
+
+    this.pedidoService.actualizarUnPedido(this.pedido.id).update(this.pedido).then(() => {
+      loading.dismiss();
+      console.log('Documento editado exitósamente');
+    })
+
   }
 
 }
