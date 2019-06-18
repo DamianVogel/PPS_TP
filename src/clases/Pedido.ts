@@ -1,9 +1,11 @@
+import {Usuario} from '../clases/usuario';
+
 export class Pedido {
 
     id: string; //<-- Damian: id debe ser string.
     productos: Array<any>;
     mesaId: string;
-    cliente: string;
+    cliente: Usuario;
     estado: string; //<-- Damian: Estado debe ser string{"solicitado","en proceso","terminado","entregado","recibido","pagado"}
     costo: number;
     descuento_10: boolean;
@@ -18,7 +20,7 @@ export class Pedido {
         id?:string,
         productos?:Array<any>,
         mesaId?: string,
-        cliente?: string,
+        cliente?: Usuario,
         estado?: string,
         costo?: number,
         descuento_10?: boolean,
@@ -31,7 +33,7 @@ export class Pedido {
             if(id == null || id == undefined) this.id = ""; else this.id = id;
             if(productos == null || productos == undefined) this.productos = new Array<any>(); else this.productos = productos;
             if(mesaId == null || mesaId == undefined) this.mesaId = ""; else this.mesaId = mesaId;
-            if(cliente == null || cliente == undefined) this.cliente = ""; else this.cliente = cliente;
+            if(cliente == null || cliente == undefined) this.cliente = new Usuario() ; else this.cliente = cliente;
             if(estado == null || estado == undefined) this.estado = ""; else this.estado = estado;
             if(costo == null || costo == undefined) this.costo = 0; else this.costo = costo;
             if(descuento_10 == null || descuento_10 == undefined) this.descuento_10 = false; else this.descuento_10 = descuento_10;
