@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, DateTime } from 'ionic-angular';
 import { FormBuilder, FormControl, Validators, FormGroup } from '@angular/forms';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { Reserva } from '../../clases/Reserva';
@@ -40,11 +40,7 @@ export class PagesReservaPage {
     {
 
     this.usuario=JSON.parse(sessionStorage.getItem("usuario")); 
-    this.mesas= this.mesasProv.mesas;
-    this.reservas= this.reservaProv.reservas;
-    console.log(this.mesas);
-    console.log(this.reservas);
-    
+    this.TraerReservas();
 
   }
 
@@ -85,56 +81,103 @@ Registrar()
   let cant_comensales= this.registroForm.get('cant_comensales').value;
   let tipo;
   this.registroForm.get('vip').value ? tipo ="discapacitados" : tipo = "vip";
-
-
   this.BuscarMesaReserva(reserva.fecha,reserva.hora , cant_comensales,tipo);
 
 }
 
 
-BuscarMesaReserva(fecha,hora, cant_comensales, tipo)
+ BuscarMesaReserva(fecha,hora, cant_comensales, tipo)
 {
   let laReserva: Reserva;
   let disponible: boolean= true;
   let ok:boolean= true;
 
-  this.mesas.forEach(mesa => {
-    if(ok)
-    {
+  let mesasAdecuadas= this.mesasProv.mesas.filter((mesa)=>{
+    return (mesa.cantidadComensales >= cant_comensales && mesa.tipoMesa== tipo);
+  } );
+//console.log(this.reservas);
+mesasAdecuadas.forEach(async (mesa)=>
+{
+  disponible=true;
+  
+  if(ok)
+  {
+  this.reservas.forEach((reserva)=>
+{
+ //console.log(reserva.fecha + " " + reserva.mesas );
+ let fechaAReservar = new Date(fecha+" "+ hora);
+ let fechaRservada = new Date(reserva.fecha+" "+reserva.hora);
+ let minReserva=((Date.parse(fechaRservada.toString())) / 1000 )/ 60;
+ let minLaReserva=(Date.parse(fechaAReservar.toString()) / 1000) / 60;
 
-      if(mesa.cantidadComensales >= cant_comensales && mesa.tipo == tipo )
-      { 
-        this.reservas.forEach(reserva =>{
-          if( reserva.mesas == mesa.numero && reserva.fecha == fecha && reserva.hora == hora)
-          {
+/*
+ console.log(reserva.mesas);
+ console.log(mesa.numero);
+ console.log(reserva.fecha);
+ console.log(fecha);*/
+ //&& (minLaReserva > minReserva - 30 && minLaReserva < minReserva + 30)
 
-            disponible= false;
-            
-          }
-        })
-      }
-      if(disponible)
-      {
-        laReserva = new Reserva();
-        laReserva.mesas=mesa.numero;
-        laReserva.fecha=fecha;
-        laReserva.hora=hora;
-        laReserva.cliente=this.usuario;
-        laReserva.estado="pendiente";
-        ok=false;
-       
-        this.reservaProv.GuardarReserva(laReserva);
-        
-      }
-
-
-    }
-this.registroForm.reset();
-    
-  });
  
 
+  if((mesa.numero == reserva.mesas && 
+    reserva.fecha == fecha) &&(minLaReserva > minReserva - 30 && minLaReserva < minReserva + 30))
+  {
+    
+    disponible=false;
+  }
 
+})
+  
+if(disponible)
+{
+  
+  laReserva = new Reserva();
+  laReserva.mesas=mesa.numero;
+  laReserva.fecha=fecha;
+  laReserva.hora=hora;
+  laReserva.cliente=this.usuario;
+  laReserva.estado="pendiente";
+  ok=false;
+
+  await this.reservaProv.GuardarReserva(laReserva);
+  
+  
+}
+
+}
+
+})
+ 
+  if(!disponible)
+  {
+    let toast = this.toastCtrl.create({
+      message: "Lo sientimos, no hay mesas disponibles para esa fecha/horario" ,
+      duration: 3000,
+      position: 'middle' //middle || top
+    });
+    toast.present();
+  }
+
+ 
+   //this.TraerReservas();
+   console.log(this.reservas);
+}
+
+async TraerReservas()
+{
+  this.reservas= new Array<Reserva>();
+  this.reservaProv.TraerReservas().subscribe( (arr)=>{  
+   arr.forEach((res: any) => {
+     //console.log(res[0].payload.doc.data()) ;
+      this.reservas.push(res.payload.doc.data());
+    })
+
+   
+    
+    
+  })
+
+  console.log(this.reservas);
 }
 
 

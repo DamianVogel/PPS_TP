@@ -18,8 +18,8 @@
   <ion-title> Lista de reservas </ion-title>
   
     <ion-list>
-        <ion-card *ngFor="let reserva of lista_de_reservas" padding style="background-color: rgba(77, 76, 76, 0.589); color: white">
-        <!-- Cliente: {{ reserva.cliente.apellido }}-->
+        <ion-card *ngFor="let reserva of lista_de_reservas"  padding style="background-color: rgba(77, 76, 76, 0.589); color: white">
+        <!-- Cliente: {{ reserva.cliente.apellido }}--> <div *ngIf="reserva.estado=='pendiente'">
               <br>
            Fecha: {{ reserva.fecha }}
            Hora: {{ reserva.hora }}
@@ -31,6 +31,7 @@
               
               <button  ion-button style="background-color: green" (click)="AutorizarReserva(reserva)" >Autorizar</button>
               <button  ion-button style="background-color:rgb(233, 53, 33)" (click)="CancelarReserva(reserva)">Cancelar</button>
+            </div>
             </ion-card>
       </ion-list>
 
