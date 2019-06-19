@@ -59,7 +59,7 @@ export class PagesClienteMenuPage {
   }
 
   juegos(){
-    this.navCtrl.push(PagesJuegosMenuPage, {"pedido": this.pedido.id}); //TODO Aca deberia enviarsele el id del pedido al cual se le aplicara el descuento
+    this.navCtrl.push(PagesJuegosMenuPage, {"pedido": this.pedido}); //TODO Aca deberia enviarsele el id del pedido al cual se le aplicara el descuento
   }                                                                     //18/06: Se agrega el id de pedido, validar funcionamiento
 
   hacerPedido(){

@@ -221,14 +221,6 @@ export class LoginPage {
           }
         },
         {
-          text: "Cliente Anónimo",
-          icon: "people",
-          cssClass: "loginProfileButton",
-          handler: () => {
-            this.loadLoginFields("", "");
-          }
-        },
-        {
           text: "Cliente Registrado",
           icon: "people",
           cssClass: "loginProfileButton",
