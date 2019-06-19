@@ -27,24 +27,17 @@ export class ReservasProvider {
     //this.TraerReservas();
   }
 
-   async TraerReservas()
+    TraerReservas()
   {
     
     this.listaReservasFirebase = this.objFirebase.collection<any>("SP_reservas", ref => ref.orderBy('fecha', 'desc') );
 
-    this.listaReservasFirebase.snapshotChanges().subscribe( (arr)=>{
-      
-      arr.forEach((res: any) => {
-        this.reservas.push(res.payload.doc.data());
-      })
-      console.log(this.reservas);
-      
-    })
+    return this.listaReservasFirebase.snapshotChanges();
 
 
   }
 
-  GuardarReserva(reserva:Reserva)
+ async GuardarReserva(reserva:Reserva)
   {
     let usuario= JSON.parse(sessionStorage.getItem("usuario"));
 
@@ -79,12 +72,9 @@ export class ReservasProvider {
  AutorizarReseva(reserva: Reserva)
   {
     reserva.estado="Autorizada";
-    this.reservas = [];
+    
     this.objFirebase.collection("SP_reservas").doc(reserva.id).set(reserva).then(() => {
             
-      
-
-    this.TraerReservas();
     
       console.log('Documento editado exitósamente');
 
@@ -104,14 +94,11 @@ export class ReservasProvider {
   CancelarReserva(reserva: Reserva)
   {
     reserva.estado="Cancelada";
-    this.reservas = [];
+
     this.objFirebase.collection("SP_reservas").doc(reserva.id).set(reserva).then(() => {
      
       
       console.log('Documento editado exitósamente');
-      
-   
-    this.TraerReservas();
 
     }, (error) => {
       console.log(error);
