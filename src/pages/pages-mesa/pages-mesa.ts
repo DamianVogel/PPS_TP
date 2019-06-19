@@ -39,11 +39,13 @@ export class PagesMesaPage {
 
   TraerPedidos()
   {
+    
+    console.log("mesa: " +this.mesa.id);
     this.pedidosProv.TraerPedidos().subscribe((pedidos)=>{
       
       this.listaPedidos = pedidos.filter((pedido)=>{
-
-        return pedido.mesa == this.mesa.numero && pedido.estado !== "entregado";
+        console.log("id<mesaPedido: " +pedido.mesa);
+        return pedido.mesa == this.mesa.id && pedido.estado != "entregado";
 
 
       });
