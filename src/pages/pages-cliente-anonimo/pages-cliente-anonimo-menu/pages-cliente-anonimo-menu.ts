@@ -65,7 +65,8 @@ export class PagesClienteAnonimoMenuPage {
 
     this.navCtrl.push(PagesPedidosAltaPage, {
       "mesa": mesa, 
-      "cliente": usuario
+      "cliente": usuario,
+      "tipo": "restaurant"
     },null, ); //TODO Aca se le deberia pasar el id del cliente, y el id de la mesa para generar el pedido
   
   }
@@ -104,6 +105,8 @@ export class PagesClienteAnonimoMenuPage {
             this.ocupaMesa = true;
 
             sessionStorage.setItem("mesaOcupada", JSON.stringify(mesa));  
+
+            alert(JSON.stringify(mesa));  
 
             }, (error) => {
               console.log(error);
