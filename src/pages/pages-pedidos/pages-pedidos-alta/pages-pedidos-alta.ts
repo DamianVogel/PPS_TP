@@ -85,7 +85,10 @@ export class PagesPedidosAltaPage {
   validarPedidoExistente() {
     this.pedidoService.traerPedidos().subscribe(pedidos => {
       let pedidoExistente: Array<Pedido> = pedidos.filter(pedido => {
-        return pedido.cliente.id === this.pedido.cliente.id && pedido.mesaId === this.pedido.mesaId && pedido.estado !== 'pagado'
+        return pedido.cliente.id === this.pedido.cliente.id
+        && pedido.mesaId === this.pedido.mesaId 
+        && pedido.estado !== 'pagado' 
+        && pedido.tipo === this.pedido.tipo
       });
       if (pedidoExistente.length === 1) {
         this.pedidoExistia = true;
