@@ -56,17 +56,25 @@ export class PagesJuegosMenuPage {
     public toastCtrl:ToastController,
     public alertCtrl: AlertController
     ) {
-      this.pedido = JSON.parse(navParams.get("pedido"));
+      this.pedido = navParams.get("pedido");
       this.descuentoJuego = new DescuentoJuego();
       
-      if(this.pedido.cliente.tipo === 'Registrado'){
-        this.juegaPorDescuento = true;
-      }else{
-        this.juegaPorDescuento = false;
+      if(this.pedido !== undefined){
+        
+        if(this.pedido.cliente.tipo === 'Registrado' &&
+          !this.pedido.descuento_10 && 
+          !this.pedido.descuento_bebida && 
+          !this.pedido.descuento_postre       
+        ){
+          this.juegaPorDescuento = true;
+        }else{
+          this.juegaPorDescuento = false;
+        }
       }
    
   }
 
+  
 
 
 
@@ -84,17 +92,18 @@ export class PagesJuegosMenuPage {
       showAlert(this.alertController,"Error","Debe ingresar un valor en el resultado primero!")
     } else {
       if(round(Number(this.resultado),0) === this.descuentoJuego.resultado){
-        showAlert(this.alertController,"Felicidades","Gano un descuento!")
-        //TODO Si gana alguno de los juegos, se deberia poner el flag de pedido en true, y no dejar que juegue denuevo para este pedido
-          
+        
+       
+     
           if(this.juegaPorDescuento){
+            showAlert(this.alertController,"Felicidades","Gano un descuento!")
             this.pedido.descuento_10 = true;
 
             this.pedidoService.actualizarUnPedido(this.pedido.id).update(this.pedido).then(() => {
               
               // spin(this.modalController, false);
               // showAlert(this.alertController, "Exito", "Pedido actualizado exitosamente");
-              // this.navCtrl.pop();
+              this.navCtrl.pop();
             })
           }       
         this.juegoDescuendoMostrado = false;
@@ -127,22 +136,21 @@ export class PagesJuegosMenuPage {
         // Recorremos las letras de la palabra (array), para detectar si la letra se encuentra en ella.
           if (this.nombreSecreto.indexOf(letraMayusculas) != -1) {
 
-              let nombreSecretoModificado = this.nombreSecreto;
-          let posicion = new Array;
-          let posicionTotal = 0;
+            let nombreSecretoModificado = this.nombreSecreto;
+            let posicion = new Array;
+            let posicionTotal = 0;
 
-          let contador = 1;
+            let contador = 1;
 
-          while (nombreSecretoModificado.indexOf(letraMayusculas) != -1) {
+            while (nombreSecretoModificado.indexOf(letraMayusculas) != -1) {
 
-          posicion[contador] = nombreSecretoModificado.indexOf(letraMayusculas);
-              nombreSecretoModificado = nombreSecretoModificado.substring(nombreSecretoModificado.indexOf(letraMayusculas) + letraMayusculas.length, nombreSecretoModificado.length);
+            posicion[contador] = nombreSecretoModificado.indexOf(letraMayusculas);
+            nombreSecretoModificado = nombreSecretoModificado.substring(nombreSecretoModificado.indexOf(letraMayusculas) + letraMayusculas.length, nombreSecretoModificado.length);
 
           // Calculamos la posición total.
           if (contador > 1) {
               posicionTotal = posicionTotal + posicion[contador] + 1;
-            }
-          else { 
+          }else { 
               posicionTotal = posicionTotal + posicion[contador];
           }
 
@@ -170,7 +178,7 @@ export class PagesJuegosMenuPage {
 
               // Sumamos puntos
               if (this.controlLetras.indexOf(letraMayusculas) == -1) {
-            this.puntos = this.puntos + 50;
+                this.puntos = this.puntos + 50;
               }
 
               // Damos el juego por finalizado, el jugador gana.
@@ -369,7 +377,7 @@ public finDelJuego(valor) {
 
     // Mostramos el mensaje como que el juego ha terminado
       let toast = this.toastCtrl.create({
-        message: 'Perdiste!, Inténtalo de nuevo. Has conseguido un total de ' + this.puntos + ' puntos. La palabra secreta es ' + this.nombreSecreto,
+        message: 'Perdiste!, Inténtalo de nuevo. La palabra secreta es ' + this.nombreSecreto,
         duration: this.durationMessages,
         cssClass: 'toast-danger',
         position: 'top'
@@ -381,14 +389,42 @@ public finDelJuego(valor) {
     if (valor == 'gana') { 
 
       this.ganador = 1;
+          
+      if(this.juegaPorDescuento){
+      
+        let toast = this.toastCtrl.create({
+          message: 'Bien!, Acertaste la palabra secreta. Si pediste una bebida, la descontamos del pedido!',
+          duration: this.durationMessages,
+          cssClass: 'toast-success',
+          position: 'top'
+        });
+        toast.present();
+          
+          spin(this.modalController, true);
+          this.pedido.descuento_bebida =  true;
+      
+          this.pedidoService.actualizarUnPedido(this.pedido.id).update(this.pedido).then(() => {
+                  
+          spin(this.modalController, false);
+            // showAlert(this.alertController, "Exito", "Pedido actualizado exitosamente");
+            this.navCtrl.pop();
+          })
+      }else{
+        
+        let toast = this.toastCtrl.create({
+          message: 'Bien!, Acertaste la palabra secreta.',
+          duration: this.durationMessages,
+          cssClass: 'toast-success',
+          position: 'top'
+        });
+        toast.present();
+      }
+
       this.juegoAhorcadoMostrado = false;
-      let toast = this.toastCtrl.create({
-        message: 'Enhorabuena!, Has acertado la palabra secreta. Has conseguido un total de ' + this.puntos + ' puntos.',
-        duration: this.durationMessages,
-        cssClass: 'toast-success',
-        position: 'top'
-      });
-    toast.present();
+    
+
+
+    
     }		
 }
 
