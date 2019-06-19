@@ -72,19 +72,8 @@ export class PagesDuenoMenuPage {
     actionSheet.present();
   }
 
-  ChequearMesa() {
-    this.mesasProvider.EstadoMesa();
-  }
-
-  OcuparMesa(){
-    this.mesasProvider.CambiarEstadoMesaOcupada();
-  }
-
-  RelacionMesaUsuario(){
-     let usuario = this.mesasProvider.RelacionMesaUsuario(3);
-     console.log("Usuario obtenido: ",usuario);
-  }
-
+  
+  
   Reservas()
   {
     this.navCtrl.push(this.reservasPage);
