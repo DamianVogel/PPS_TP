@@ -56,25 +56,29 @@ export class PagesJuegosMenuPage {
     public toastCtrl:ToastController,
     public alertCtrl: AlertController
     ) {
-      this.pedido = navParams.get("pedido");
-      this.descuentoJuego = new DescuentoJuego();
       
-      if(this.pedido !== undefined){
-        
-        if(this.pedido.cliente.tipo === 'Registrado' &&
-          !this.pedido.descuento_10 && 
-          !this.pedido.descuento_bebida && 
-          !this.pedido.descuento_postre       
-        ){
-          this.juegaPorDescuento = true;
-        }else{
-          this.juegaPorDescuento = false;
-        }
-      }
-   
   }
 
-  
+  ionViewDidEnter(){
+    
+    this.pedido = this.navParams.get("pedido");
+    this.descuentoJuego = new DescuentoJuego();
+    
+    if(this.pedido !== undefined){
+      
+      if(this.pedido.cliente.estado === 'Registrado' &&
+        this.pedido.descuento_10 == false  && 
+        this.pedido.descuento_bebida == false && 
+        this.pedido.descuento_postre == false       
+      ){
+        this.juegaPorDescuento = true;
+      }else{
+        this.juegaPorDescuento = false;
+      }
+    }
+
+
+  }
 
 
 
@@ -97,6 +101,7 @@ export class PagesJuegosMenuPage {
      
           if(this.juegaPorDescuento){
             showAlert(this.alertController,"Felicidades","Gano un descuento!")
+            
             this.pedido.descuento_10 = true;
 
             this.pedidoService.actualizarUnPedido(this.pedido.id).update(this.pedido).then(() => {
@@ -105,7 +110,10 @@ export class PagesJuegosMenuPage {
               // showAlert(this.alertController, "Exito", "Pedido actualizado exitosamente");
               this.navCtrl.pop();
             })
+          }else{
+            showAlert(this.alertController,"Felicidades","Acerto el resultado!")
           }       
+        
         this.juegoDescuendoMostrado = false;
       } else {
         showAlert(this.alertController,"Lastima","Vuelva a intentarlo")

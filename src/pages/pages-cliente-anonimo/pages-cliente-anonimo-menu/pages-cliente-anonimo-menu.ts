@@ -56,7 +56,8 @@ export class PagesClienteAnonimoMenuPage {
   }
 
   juegos(){
-    this.navCtrl.push(PagesJuegosMenuPage, {"pedido": "asñdlkwdowiw"}); //TODO Aca deberia enviarsele el id del pedido al cual se le aplicara el descuento
+    this.navCtrl.push(PagesJuegosMenuPage, {"pedido": this.pedido}); //TODO Aca deberia enviarsele el id del pedido al cual se le aplicara el descuento
+  
   }
 
   hacerPedido(){
@@ -104,9 +105,7 @@ export class PagesClienteAnonimoMenuPage {
             
             this.ocupaMesa = true;
 
-            sessionStorage.setItem("mesaOcupada", JSON.stringify(mesa));  
-
-            alert(JSON.stringify(mesa));  
+            sessionStorage.setItem("mesaOcupada", JSON.stringify(mesa));               
 
             }, (error) => {
               console.log(error);
