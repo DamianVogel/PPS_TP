@@ -9,7 +9,7 @@ import { DirectivesModule } from '../../directives/directives.module';
   ],
   imports: [
     DirectivesModule,
-    
+ 
     IonicPageModule.forChild(PagesMozoPage),
   ],
 })
