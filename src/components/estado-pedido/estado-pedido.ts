@@ -118,7 +118,7 @@ export class EstadoPedidoComponent {
 
       this.pedidoService.actualizarUnPedido(this.pedido.id).update({
     
-        'propina': (this.pedido.costo * gradoSafisfaccion)
+        'propina': (this.pedido.costo * gradoSafisfaccion).toFixed(2)
       
       }).then(() => {
         loading.dismiss();
