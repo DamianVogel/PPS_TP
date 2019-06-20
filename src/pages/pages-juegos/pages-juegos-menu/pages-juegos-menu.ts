@@ -29,7 +29,7 @@ export class PagesJuegosMenuPage {
 
   // Definimos las variables
 	letra: string = '';
-	nombres: any = ['COCHE'];
+	nombres: any = ['COCHE', 'CASA', 'SAPO','PERRO'];
 	nombreSecreto: any = this.palabraAleatoria(0, (this.nombres.length - 1));
 	palabra: any = '';
 	muestraHuecos: any = this.muestraHuecosPalabra();

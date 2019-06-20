@@ -76,7 +76,7 @@ export class UsuarioService {
   RelacionUsuarioMesa(){
     let usuario = JSON.parse(sessionStorage.getItem('usuario')); 
     
-    console.log(usuario);
+    //console.log(usuario);
 
     let ocupaMesa:boolean = false;
       
