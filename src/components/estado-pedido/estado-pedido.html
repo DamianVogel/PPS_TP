@@ -1,17 +1,28 @@
 
 <ion-card padding style="background-color: rgba(77, 76, 76, 0.589); color: white">
-  Muchas gracias por su pedido!
   Usted se encuentra en la Mesa Nro.: {{ pedido.mesa }}   
-   <br>
-   El estado de su pedido es: {{ pedido.estado }}   
-   <br>
-    
-   <productos-en-pedido 
+  Muchas gracias por su pedido!
+  <br>
+  Estado: 
+
+    <ion-badge *ngIf="pedido.estado == 'solicitado'" class="pendiente">Ya confirmamos tu pedido</ion-badge>
+    <ion-badge *ngIf="pedido.estado == 'pendiente'" class="pendiente">Pedido Confirmado</ion-badge>  
+    <ion-badge *ngIf="pedido.estado == 'proceso'" class="preparacion">Lo estamos preparando</ion-badge>
+    <ion-badge *ngIf="pedido.estado == 'terminado'" class="terminado">Ya casi lo tenes</ion-badge>
+    <ion-badge *ngIf="pedido.estado == 'entregado'" class="terminado">Buen Provecho!</ion-badge>
+    <ion-badge *ngIf="pedido.estado == 'solicita_cuenta'" class="terminado">Ya te indicamos el importe!</ion-badge>
+    <ion-badge *ngIf="pedido.estado == 'pagado'" class="terminado">Muchas gracias por elegirnos!</ion-badge>
+
+  <br>  
+   <!-- <productos-en-pedido 
      [pedido]='pedido'
-   ></productos-en-pedido>
+   ></productos-en-pedido> -->
           
   <button  *ngIf="pedido.estado == 'entregado'" ion-button style="background-color: green" (click)="ConfirmarEntrega()">Recibido</button>
-  <button *ngIf="pedido.estado == 'recibido' && pedido.estado !== 'pagado' && pedido.propina == 0" ion-button style="background-color:rgb(233, 53, 33)" (click)="IndicarPropina()">Grado de Satisfacción</button> 
-  <button *ngIf="pedido.estado == 'recibido' && pedido.estado !== 'solicita_cuenta'" ion-button style="background-color:rgb(233, 53, 33)" (click)="SolicitarCuenta()">Solicitar La Cuenta</button> 
+  <button *ngIf="pedido.estado == 'recibido' && pedido.estado !== 'pagado' && pedido.propina == 0" ion-button style="background-color: green" (click)="IndicarPropina()">Grado de Satisfacción</button> 
+  <button *ngIf="pedido.estado == 'recibido' && pedido.estado !== 'solicita_cuenta'" ion-button style="background-color: green" (click)="SolicitarCuenta()">Solicitar La Cuenta</button> 
+   
+
+
 
 </ion-card>

@@ -5,9 +5,11 @@
           Producto: {{producto.nombre}}
           <br>
           <br>
-          <ion-badge *ngIf="producto.estado == 'pendiente'" class="pendiente">Estado: {{producto.estado}}</ion-badge>
-          <ion-badge *ngIf="producto.estado == 'preparacion'" class="preparacion">Estado: {{producto.estado}}</ion-badge>
-          <ion-badge *ngIf="producto.estado == 'terminado'" class="terminado">Estado: {{producto.estado}}</ion-badge>
+          <ion-badge *ngIf="producto.estado == 'pendiente'" class="pendiente">Pendiente</ion-badge>
+          <ion-badge *ngIf="producto.estado == 'preparacion'" class="preparacion">En preparacion</ion-badge>
+          <ion-badge *ngIf="producto.estado == 'terminado'" class="terminado">Terminado</ion-badge>
+          
+          
           <br>
           <br>
           <button  *ngIf="producto.estado == 'pendiente' && 
