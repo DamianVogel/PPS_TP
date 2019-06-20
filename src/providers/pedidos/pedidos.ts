@@ -28,7 +28,36 @@ export class PedidosProvider {
     this.pedidos= this.listaPedidosFirebase.valueChanges();
     return this.pedidos;
     
+  }
+
+ async AceptarPedido(pedido: Pedido)
+  {
+    pedido.estado="pendiente";
     
+    this.objFirebase.collection("SP_pedidos").doc(pedido.id).set(pedido).then(() => {
+            
+    
+      console.log('Documento editado exitósamente');
+
+    }, (error) => {
+      console.log(error);
+    });
+
+  }
+
+ async ServirPedido(pedido: Pedido)
+  {
+    pedido.estado="entregado";
+    
+    this.objFirebase.collection("SP_pedidos").doc(pedido.id).set(pedido).then(() => {
+            
+    
+      console.log('Documento editado exitósamente');
+
+    }, (error) => {
+      console.log(error);
+    });
+
   }
 
 }
