@@ -30,10 +30,20 @@ export class PagesMesaPage {
    
   }
 
+  AceptarPedido(pedido: Pedido)
+  {
+    this.pedidosProv.AceptarPedido(pedido);
+  }
+
+  ServirPedido(pedido: Pedido)
+  {
+    this.pedidosProv.ServirPedido(pedido);
+  }
+
 
   TomarPedido()
   {
-    this.navCtrl.push(PagesPedidosAltaPage, {"idMesa": this.mesa.id, "idUsuario": this.mesa.usuario.id})
+    this.navCtrl.push(PagesPedidosAltaPage, {"mesa": this.mesa, "cliente": this.mesa.usuario.id, "tipo": "restaurant"})
   }
 
 
@@ -42,10 +52,10 @@ export class PagesMesaPage {
     
     console.log("mesa: " +this.mesa.id);
     this.pedidosProv.TraerPedidos().subscribe((pedidos)=>{
-      
+      console.log(pedidos)
       this.listaPedidos = pedidos.filter((pedido)=>{
-        console.log("id<mesaPedido: " +pedido.mesa);
-        return pedido.mesa == this.mesa.id && pedido.estado != "entregado";
+       
+        return pedido.mesaId == this.mesa.id && pedido.estado != "entregado";
 
 
       });

@@ -32,6 +32,17 @@ listaMesas;
     this.navCtrl.push(this.listaEspera);
   }
 
+  PedidosPendientes()
+  {/*
+    Opciones(mesa) {
+
+      if(mesa.estado=="ocupada")
+      {
+        this.navCtrl.push(PagesMesaPage,{"mesa": mesa});
+      }
+      }*/
+  }
+
   TraerMesas()
   {
     this.listaMesas=this.mesasProv.mesas;
