@@ -44,7 +44,9 @@ export class EstadoPedidoComponent {
     loading.onDidDismiss(() => {
       console.log('Dismissed loading');
     });
-
+    
+    loading.present();
+    
     this.pedidoService.actualizarUnPedido(this.pedido.id).update({
     
       'estado':'recibido'
@@ -115,10 +117,11 @@ export class EstadoPedidoComponent {
         console.log('Dismissed loading');
       });
 
+      loading.present();
 
       this.pedidoService.actualizarUnPedido(this.pedido.id).update({
     
-        'propina': (this.pedido.costo * gradoSafisfaccion)
+        'propina': (this.pedido.costo * gradoSafisfaccion).toFixed(2)
       
       }).then(() => {
         loading.dismiss();
@@ -155,6 +158,8 @@ export class EstadoPedidoComponent {
     loading.onDidDismiss(() => {
       console.log('Dismissed loading');
     });
+
+    loading.present();
 
     this.pedidoService.actualizarUnPedido(this.pedido.id).update({
     
