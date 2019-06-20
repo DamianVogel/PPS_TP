@@ -6,7 +6,10 @@ export class Pedido {
     productos: Array<any>;
     mesaId: string;
     cliente: Usuario;
-    estado: string; //<-- Damian: Estado debe ser string{"solicitado","en proceso","terminado","entregado","recibido","pagado"}
+    estado: string; //Estados: 
+                        // -Restaurant {"solicitado","pendiente","proceso","terminado","entregado","recibido","solicita_cuenta", "pagado"}
+                        // -Delivery   {"solicitado","pendiente","proceso","terminado","en_camino","entregado","recibido","pagado"} 
+    
     costo: number;
     descuento_10: boolean;
     descuento_bebida: boolean;

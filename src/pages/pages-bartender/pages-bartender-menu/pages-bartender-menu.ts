@@ -59,9 +59,10 @@ export class BartenderMenuPage {
       });
     
 
-      //SE FILTRAN LOS PEDIDOS PENDIENTES
-      this.pedidos = array.filter( pedido => pedido.estado == filtro );
+     // SE FILTRAN LOS PEDIDOS PENDIENTES
+     this.pedidos = array.filter( pedido =>   pedido.estado == filtro || pedido.estado == 'proceso');
       
+    
       //POR CADA PEDIDO UN ARRAY DE PRODUCTOS. SE LE ASIGNA EL ID DE ACUERDO AL INDICE
       //PARA PODER FILTRAR Y SABER EXACTAMENTE QUE SE DEBE MODIFICAR.
       this.pedidos.forEach( pedido => {

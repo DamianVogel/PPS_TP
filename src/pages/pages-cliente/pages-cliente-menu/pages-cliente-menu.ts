@@ -80,7 +80,7 @@ export class PagesClienteMenuPage {
   }
 
   estadoPedido(){
-    console.log(this.mesa);
+    //console.log(this.mesa);
     
     if(this.mesa !== undefined ){      
       this.pedidoService.traerPedidos().subscribe( pedidos=> {
@@ -97,6 +97,8 @@ export class PagesClienteMenuPage {
   OcuparMesa(){
     //this.mesasProvider.CambiarEstadoMesaOcupada();
     //this.HabilitarBotones();
+    this.mesasProvider.TraerMesas();
+    
     var usuario = JSON.parse(sessionStorage.getItem('usuario'));
 
     this.qrService.readQR().then(QRdata => {

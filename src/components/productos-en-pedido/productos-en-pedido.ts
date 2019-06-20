@@ -80,8 +80,33 @@ export class ProductosEnPedidoComponent {
     loading.present();
 
     this.pedido.productos[index].estado = estado;
+    this.pedido.estado = 'proceso';
+    
+    
+    //AVERIGUAMOS SI TODOS LOS PRODUCTOS DEL ESTAN TERMINADOS
+    let cantidadProductos;
+    var cuenta = 0;
+    cantidadProductos = this.pedido.productos.length
+
+    this.pedido.productos.forEach( producto =>{
+      
+      if(producto.estado == 'terminado'){
+        cuenta =  cuenta + 1;
+        console.log(cuenta);
+      }     
+    })
+
+    if(cuenta == cantidadProductos && this.pedido.estado == 'proceso'){
+      this.pedido.estado = 'terminado'
+    }
+
+
 
     this.pedidoService.actualizarUnPedido(this.pedido.id).update(this.pedido).then(() => {
+      
+
+
+      
       loading.dismiss();
       console.log('Documento editado exitósamente');
     })

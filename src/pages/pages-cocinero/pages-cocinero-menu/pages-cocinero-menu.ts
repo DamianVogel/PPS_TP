@@ -57,8 +57,8 @@ export class CocineroMenuPage {
       });
     
       
-      
-      this.pedidos = array.filter( pedido => pedido.estado == filtro );
+      this.pedidos = array.filter( pedido =>   pedido.estado == filtro || pedido.estado == 'proceso');
+      //this.pedidos = array.filter( pedido => pedido.estado == filtro );
       
       this.pedidos.forEach( pedido => {
         pedido.productos.forEach( (producto,index) => {
