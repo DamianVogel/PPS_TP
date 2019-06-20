@@ -17,7 +17,7 @@
 
   <button ion-button full (click)="ListaEspera()">Lista de espera</button>
 
-  <button ion-button full (click)="ListaEspera()">Pedidos pendientes</button>
+  <button ion-button full (click)="PedidosPendientes()">Pedidos pendientes</button>
 
   <ion-list>
     <ion-item *ngFor="let mesa of listaMesas"  mesa [estado]="mesa.estado" (click)="Opciones(mesa)" >
