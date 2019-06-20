@@ -23,18 +23,21 @@
 
   <ion-title>Lista de pedidos</ion-title>
   <ion-list>
-    <ion-card *ngFor="let pedido of listaPedidos">
-      Estado: {{pedido.estado}}
+    <ion-card style="background-color: rgba(77, 77, 77, 0.493);" *ngFor="let pedido of listaPedidos">
+     <ion-card-header style="color: white">  Estado: {{pedido.estado}} </ion-card-header>
+     <ion-card-content>
       <ion-list>
-        <ion-item *ngFor="let prod of pedido.productos">
+        <ion-item style="background-color: rgba(43, 44, 44, 0); color: white" *ngFor="let prod of pedido.productos">
          Peoducto: {{prod.nombre}} <br>
           Cantidad: {{prod.cantidad}} <br>
          Estado: {{prod.estado}}
         </ion-item>
       </ion-list>
-      <button *ngIf="pedido.estado=='solicitado'" style="background-color: rgba(9, 255, 9, 0.767)">Aceptar</button>
-      <button *ngIf="pedido.estado=='terminado'" ion-button style="background-color: rgb(255, 239, 16)" (click)="ServirProducto(pedido.id)">Servir</button>
 
+      <ion-badge *ngIf="pedido.estado=='pendiente'" style="background-color: yellow">En preparacion</ion-badge>
+      <button *ngIf="pedido.estado=='solicitado'" ion-button style="background-color: rgba(9, 255, 9, 0.767)" (click)="AceptarPedido(pedido)">Aceptar</button>
+      <button *ngIf="pedido.estado=='terminado'" ion-button style="background-color: rgb(255, 239, 16)" (click)="ServirPedido(pedido)">Servir</button>
+    </ion-card-content>
     </ion-card>
   </ion-list>
 
