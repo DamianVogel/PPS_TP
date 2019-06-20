@@ -62,42 +62,47 @@
   3) Desarrollo de obtencion de token de dispositivos en diferentes puntos de la aplicacion.
   4) Test de Push Notifications al dar de alta de usuarios.
   
-  #### PUSH NOTIFICATIONS
-  #### LOG IN
-  #### SERVICIOS MESA
-  #### PERSISTENCIA PEDIDOS TEST
-  #### COMPONENTES LISTA PEDIDOS \ PRODUCTOS
-  ###(09/06 al 15/06)
+  #### PUSH NOTIFICATIONS - LOG IN -SERVICIOS MESA - PERSISTENCIA PEDIDOS TEST - COMPONENTES LISTA PEDIDOS \ PRODUCTOS -###(09/06 al 15/06)
   
   1) Desarrollo de funciones en Firebase para Push Notification:
-      # HTTPS - Solicitud de mesa: 
+        * HTTPS - Solicitud de mesa: 
           Aviso a Mozo y Supervisores.
-      # onCreate - Alta de pedido: 
+        * onCreate - Alta de pedido: 
           Aviso a empleados del evento.
   
   2) Adecuacion de acceso al sistema como cliente anonimo.
-      # Persistencia del usuario anonimo con id en coleccion de documentos.
-      # Agregado de spinner y deshabilitacion de botones en request.
+      * Persistencia del usuario anonimo con id en coleccion de documentos.
+      * Agregado de spinner y deshabilitacion de botones en request.
 
   3) En formulario de registro validacion de que email no exista para un usuario registrado.
 
   3) Servicio Mesa:
-      # Servicio de obtencion de usuario en mesa para consumir en alta de pedido.
-      # Numero de mesa autoincremental de acuerdo a ultimo registro en base para nuevas altas.
-      # Validacion de estado de mesa al asignar via QR. 
+      * Servicio de obtencion de usuario en mesa para consumir en alta de pedido.
+      * Numero de mesa autoincremental de acuerdo a ultimo registro en base para nuevas altas.
+      * Validacion de estado de mesa al asignar via QR. 
   
   4) Componentes Lista Pedido \ Producto:
-      # Generacion de servicios para la obtencion de pedidos filtrados por estado.
-      # Generacion Component Lista y Pedido para mostrar los productos de un pedido.
+      * Generacion de servicios para la obtencion de pedidos filtrados por estado.
+      * Generacion Component Lista y Pedido para mostrar los productos de un pedido.
         Cada uno de estos cuenta con un boton de accion que cambia el estado del mismo para cumplimentar el flujo del sistema.
 
  
-#### COMPONENTES LISTA PEDIDOS \ PRODUCTOS #### (15/06 al 22/06) 
+#### COMPONENTES LISTA PEDIDOS \ PRODUCTOS - JUEGO AHORCADO - DESCUENTO POR JUEGOS - CAMBIO DE ESTADO EN PEDIDO - TEST QA - PAGINAS CLIENTE ANONIMO Y REGISTRADO #### (15/06 al 22/06) 
 
   1) Componentes Lista Pedido \ Producto:
-      # Filtro de acuerdo a tipo de producto para que sea tomado por cada responsable.
+      * Filtro de acuerdo a tipo de producto para que sea tomado por cada responsable.
 
-  2)    
+  2)  Descuento por Juegos:
+      * Funcionalidad de persistencia de descuento si se juega y se gana en un pedido. Validando que puede jugar N veces pero solo gana una vez. Discriminando que tipo de descuento recibe en base al juego. 
+  
+  3)  Cambio de estado en pedidos:
+      * Al completarse todos los productos de un pedido por los responsables el pedido se marcara automaticamente como "terminado para que el mozo pueda entregarlo a la mesa. 
+  
+  4)  Paginas Cliente Anonimo y Cliente Registrado:
+      * Habilitacion y creacion de servicios para identificar si una mesa se encuentra ocupado por que usuario y en base a eso que opciones puede realizar, habilitando botones de acciones, etc.
+  
+  5)  TEST QA:
+      * Test de todo el flujo de la aplicacion desde la generacion de un pedido por un usuario anonimo como por usuario registrado validando que acciones puede realizar y cuales de acuerdo a su perfil.
 
 ## ==========================================
 
