@@ -87,7 +87,7 @@
         Cada uno de estos cuenta con un boton de accion que cambia el estado del mismo para cumplimentar el flujo del sistema.
 
  
-#### COMPONENTES LISTA PEDIDOS \ PRODUCTOS - JUEGO AHORCADO - DESCUENTO POR JUEGOS - CAMBIO DE ESTADO EN PEDIDO - TEST QA - PAGINAS CLIENTE ANONIMO Y REGISTRADO #### (15/06 al 22/06) 
+#### COMPONENTES LISTA PEDIDOS \ PRODUCTOS - JUEGO AHORCADO - DESCUENTO POR JUEGOS - CAMBIO DE ESTADO EN PEDIDO - TEST QA - PAGINAS CLIENTE ANONIMO Y REGISTRADO - PROPINA EN PEDIDO #### (15/06 al 22/06) 
 
   1) Componentes Lista Pedido \ Producto:
       * Filtro de acuerdo a tipo de producto para que sea tomado por cada responsable.
@@ -100,6 +100,9 @@
   
   4)  Paginas Cliente Anonimo y Cliente Registrado:
       * Habilitacion y creacion de servicios para identificar si una mesa se encuentra ocupado por que usuario y en base a eso que opciones puede realizar, habilitando botones de acciones, etc.
+  
+  5)  Propina en pedido:
+      * Persistencia de la propina en cada pedido en base al grado de satisfaccion.
   
   5)  TEST QA:
       * Test de todo el flujo de la aplicacion desde la generacion de un pedido por un usuario anonimo como por usuario registrado validando que acciones puede realizar y cuales de acuerdo a su perfil.
