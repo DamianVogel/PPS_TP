@@ -4,6 +4,7 @@ import { ListaDeEsperaMenuPage } from '../pages-lista-de-espera/pages-lista-de-e
 import { MesasProvider } from '../../providers/mesas/mesas';
 import { PagesPedidosAltaPage } from '../pages-pedidos/pages-pedidos-alta/pages-pedidos-alta';
 import { PagesMesaPage } from '../pages-mesa/pages-mesa';
+import { PagesPedidosPendientesMozoPage } from '../pages-pedidos-pendientes-mozo/pages-pedidos-pendientes-mozo';
 
 /**
  * Generated class for the PagesMozoPage page.
@@ -32,21 +33,17 @@ listaMesas;
     this.navCtrl.push(this.listaEspera);
   }
 
-  PedidosPendientes()
-  {/*
-    Opciones(mesa) {
 
-      if(mesa.estado=="ocupada")
-      {
-        this.navCtrl.push(PagesMesaPage,{"mesa": mesa});
-      }
-      }*/
-  }
 
   TraerMesas()
   {
     this.listaMesas=this.mesasProv.mesas;
     console.log(this.listaMesas);
+  }
+
+  PedidosPendientes()
+  {
+    this.navCtrl.push(PagesPedidosPendientesMozoPage);
   }
 
 
