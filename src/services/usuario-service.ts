@@ -82,7 +82,7 @@ export class UsuarioService {
       
     this.mesaProvider.mesas.forEach( mesa => {      
         
-        if(mesa.usuario !== undefined){
+        if(mesa.usuario !== undefined && mesa.usuario !== null){
           if(mesa.usuario.id == usuario.id){              
             ocupaMesa = true;         
             sessionStorage.setItem("mesaOcupada", JSON.stringify(mesa));  

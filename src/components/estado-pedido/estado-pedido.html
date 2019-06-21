@@ -4,7 +4,7 @@
   
   <span *ngIf="pedido.estado !== 'pagado'"> Gracias por su pedido! </span><br><br> 
   
-  <span *ngIf="pedido.estado !== 'entregado' || 'pagado' ">Estado:</span>
+  <span *ngIf="pedido.estado !== 'recibido' && pedido.estado !== 'solicita_cuenta' && pedido.estado !== 'pagado'  ">Estado:</span>
     <ion-badge *ngIf="pedido.estado == 'solicitado'" class="pendiente">A CONFIRMAR</ion-badge>
     <ion-badge *ngIf="pedido.estado == 'pendiente'" class="pendiente">PEDIDO CONFIRMADO</ion-badge>  
     <ion-badge *ngIf="pedido.estado == 'proceso'" class="preparacion">LO ESTAMOS PREPARANDO</ion-badge>
