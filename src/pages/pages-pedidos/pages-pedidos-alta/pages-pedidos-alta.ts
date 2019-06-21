@@ -8,6 +8,7 @@ import { PagesPedidosListaPage } from '../pages-pedidos-lista/pages-pedidos-list
 import { PedidoService } from '../../../services/pedidos-service';
 import { QRService } from '../../../services/QR-service';
 import { PagesPedidosDeliveryPage } from '../pages-pedidos-delivery/pages-pedidos-delivery';
+import { SoundsService } from '../../../services/sounds-service';
 
 @IonicPage()
 @Component({
@@ -37,6 +38,7 @@ export class PagesPedidosAltaPage {
     public navParams: NavParams,
     public productoService: ProductoService,
     public pedidoService: PedidoService,
+    public soundsService: SoundsService,
     private qrService: QRService) {
     this.pedido = new Pedido();
     this.productos = new Array<Producto>();
@@ -143,7 +145,7 @@ export class PagesPedidosAltaPage {
           text: 'Agregar',
           handler: data => {
             if (Number(data.cantidad) <= 0) {
-              showAlert(this.alertController, "Error", "La cantidad debe ser mayor a 0");
+              showAlert(this.alertController, "Error", "La cantidad debe ser mayor a 0", this.soundsService, 'error');
             } else {
               if (this.pedido.productos.filter((producto) => { return producto.nombre === nombre; }).length === 1) {
                 this.pedido.productos.forEach((producto, index) => {
@@ -185,13 +187,13 @@ export class PagesPedidosAltaPage {
           if (this.productos.filter(producto => { return producto.nombre === data.nombre && producto.tipo === data.tipo }).length === 1) {
             this.cargar(data.nombre, data.tipo);
           } else {
-            showAlert(this.alertController, "Error", "Producto en JSON invalido");
+            showAlert(this.alertController, "Error", "Producto en JSON invalido", this.soundsService, 'error');
           }
         } else {
           throw new Error();
         }
       } catch (err) {
-        showAlert(this.alertController, "Error", "QR invalido");
+        showAlert(this.alertController, "Error", "QR invalido", this.soundsService, 'error');
       }
     }).catch(err => {
       console.log('Error', err);
@@ -217,7 +219,7 @@ export class PagesPedidosAltaPage {
           text: 'Sacar',
           handler: data => {
             if (Number(data.cantidad) <= 0) {
-              showAlert(this.alertController, "Error", "La cantidad debe ser mayor a 0");
+              showAlert(this.alertController, "Error", "La cantidad debe ser mayor a 0", this.soundsService, 'error');
             } else {
               this.pedido.productos.forEach((producto, index) => {
                 if (producto.nombre === nombre) {
@@ -255,8 +257,10 @@ export class PagesPedidosAltaPage {
       if (this.pedido.tipo === "delivery") {
         let modal: any = this.modalController.create(PagesPedidosDeliveryPage, { "pedido": this.pedido })
         modal.onDidDismiss(data => {
-          this.pedido = data;
-          this.cargarPedidoFirebase();
+          if (data !== null) {
+            this.pedido = data;
+            this.cargarPedidoFirebase();
+          }
         })
         modal.present();
       }
@@ -287,13 +291,13 @@ export class PagesPedidosAltaPage {
     if (this.pedidoExistia) {
       this.pedidoService.actualizarUnPedido(this.pedido.id).update(this.pedido).then(() => {
         spin(this.modalController, false);
-        showAlert(this.alertController, "Exito", "Pedido actualizado exitosamente");
+        showAlert(this.alertController, "Éxito", "Pedido actualizado exitosamente", this.soundsService, 'success');
         this.navCtrl.pop();
       })
     } else {
       this.pedidoService.cargarPedido(this.pedido.dameJSON()).then(() => {
         spin(this.modalController, false);
-        showAlert(this.alertController, "Exito", "Pedido dado de alta exitosamente");
+        showAlert(this.alertController, "Éxito", "Pedido dado de alta exitosamente", this.soundsService, 'success');
         this.navCtrl.pop();
       })
     }

@@ -1,14 +1,8 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, Navbar } from 'ionic-angular';
 import { PedidoService } from '../../services/pedidos-service';
 import { Pedido } from '../../clases/Pedido';
-
-/**
- * Generated class for the PagesDeliveryBoyPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { SoundsService } from '../../services/sounds-service';
 
 @IonicPage()
 @Component({
@@ -19,17 +13,22 @@ export class PagesDeliveryBoyPage {
 
   pedidos: Array<Pedido>;
 
+  @ViewChild(Navbar) navBar: Navbar;
+
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
-    public pedidosService: PedidoService
+    public pedidosService: PedidoService,
+    private soundsService: SoundsService
     ) {
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad PagesDeliveryBoyPage');
+  ionViewDidLoad(){
+    this.navBar.backButtonClick = (e:UIEvent)=>{
+      this.soundsService.sound('logout');
+      this.navCtrl.pop();
+     }
   }
-
 
   CargarPedidosPendientes(filtro: string){
     

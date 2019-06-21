@@ -1,11 +1,12 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController, ModalController, ActionSheetController, AlertController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, ToastController, ModalController, ActionSheetController, AlertController, Navbar } from 'ionic-angular';
 import { AltaMesaComponent } from '../../../components/alta-mesa/alta-mesa';
 import { AltaDuenoComponent } from '../../../components/alta-dueno/alta-dueno';
 import { AltaEmpleadoComponent } from '../../../components/alta-empleado/alta-empleado';
 import { MesasProvider } from '../../../providers/mesas/mesas';
 import { PagesReservasPage } from '../../pages-reservas/pages-reservas';
 import { PagesRegistrosPendientesPage } from '../../pages-registros-pendientes/pages-registros-pendientes';
+import { SoundsService } from '../../../services/sounds-service';
 
 
 @IonicPage()
@@ -14,6 +15,8 @@ import { PagesRegistrosPendientesPage } from '../../pages-registros-pendientes/p
   templateUrl: 'pages-dueno-menu.html',
 })
 export class PagesDuenoMenuPage {
+
+  @ViewChild(Navbar) navBar: Navbar;
 
   validation_messages = {
     'dni': [
@@ -37,9 +40,17 @@ export class PagesDuenoMenuPage {
     public toastCtrl: ToastController,
     public modalVotacion: ModalController,
     private mesasProvider: MesasProvider,
-    public actionSheetController: ActionSheetController
+    public actionSheetController: ActionSheetController,
+    private soundsService: SoundsService
   ) {
 
+  }
+
+  ionViewDidLoad(){
+    this.navBar.backButtonClick = (e:UIEvent)=>{
+      this.soundsService.sound('logout');
+      this.navCtrl.pop();
+     }
   }
 
   altas() {

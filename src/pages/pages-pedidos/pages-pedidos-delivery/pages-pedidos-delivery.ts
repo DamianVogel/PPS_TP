@@ -24,7 +24,8 @@ export class PagesPedidosDeliveryPage {
   directionsService: any;
   directionsDisplay: any;
 
-  duracion: number;
+  tiempo_total: number;
+  costo_total: number;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -33,7 +34,8 @@ export class PagesPedidosDeliveryPage {
     this.pedido = this.navParams.get("pedido");
     this.localizacionBase = DIRECCION_LOCAL;
     this.direccionValida = false;
-    this.duracion = 0;
+    this.tiempo_total = 0;
+    this.costo_total = 0;
   }
 
   ionViewDidLoad() {
@@ -127,8 +129,10 @@ export class PagesPedidosDeliveryPage {
     };
     this.directionsService.route(request, function (result, status) {
       if (status == 'OK') {
-        superScope.duracion = round((result.routes[0].legs[0].duration.value / 100), 0);
+        superScope.pedido.tiempo_envio = round((result.routes[0].legs[0].duration.value / 100), 0);
         superScope.pedido.costo_envio = round(result.routes[0].legs[0].distance.value / 100, 0);
+        superScope.tiempo_total = round(superScope.pedido.tiempo_envio + superScope.pedido.tiempo_espera, 0);
+        superScope.costo_total = round(superScope.pedido.costo + superScope.pedido.costo_envio, 0);
         superScope.directionsDisplay.setDirections(result);
       }
     });
@@ -153,6 +157,10 @@ export class PagesPedidosDeliveryPage {
         superScope.direccionValida = false;
       }
     });
+  }
+
+  cancelar() {
+    this.viewCtrl.dismiss(null);
   }
 
 }

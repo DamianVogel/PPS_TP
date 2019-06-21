@@ -1,17 +1,10 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, ActionSheetController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, ModalController, ActionSheetController, Navbar } from 'ionic-angular';
 import { ListaDeEsperaMenuPage } from '../pages-lista-de-espera/pages-lista-de-espera-menu/pages-lista-de-espera-menu';
 import { MesasProvider } from '../../providers/mesas/mesas';
-import { PagesPedidosAltaPage } from '../pages-pedidos/pages-pedidos-alta/pages-pedidos-alta';
 import { PagesMesaPage } from '../pages-mesa/pages-mesa';
 import { PagesPedidosPendientesMozoPage } from '../pages-pedidos-pendientes-mozo/pages-pedidos-pendientes-mozo';
-
-/**
- * Generated class for the PagesMozoPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { SoundsService } from '../../services/sounds-service';
 
 @IonicPage()
 @Component({
@@ -20,43 +13,43 @@ import { PagesPedidosPendientesMozoPage } from '../pages-pedidos-pendientes-mozo
 })
 export class PagesMozoPage {
 
-  listaEspera= ListaDeEsperaMenuPage;
-listaMesas;
+  @ViewChild(Navbar) navBar: Navbar;
+
+  listaEspera = ListaDeEsperaMenuPage;
+  listaMesas;
   constructor(public navCtrl: NavController,
-     public navParams: NavParams,
-    private mesasProv: MesasProvider) {
-      this.TraerMesas();
+    public navParams: NavParams,
+    private mesasProv: MesasProvider,
+    private soundsService: SoundsService) {
+    this.TraerMesas();
   }
 
-  ListaEspera()
-  {
+  ionViewDidLoad(){
+    this.navBar.backButtonClick = (e:UIEvent)=>{
+      this.soundsService.sound('logout');
+      this.navCtrl.pop();
+     }
+  }
+
+  ListaEspera() {
     this.navCtrl.push(this.listaEspera);
   }
 
-
-
-  TraerMesas()
-  {
-    this.listaMesas=this.mesasProv.mesas;
+  TraerMesas() {
+    this.listaMesas = this.mesasProv.mesas;
     console.log(this.listaMesas);
   }
 
-  PedidosPendientes()
-  {
+  PedidosPendientes() {
     this.navCtrl.push(PagesPedidosPendientesMozoPage);
   }
 
 
   Opciones(mesa) {
 
-  if(mesa.estado=="ocupada")
-  {
-    this.navCtrl.push(PagesMesaPage,{"mesa": mesa});
-  }
-  }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad PagesMozoPage');
+    if (mesa.estado == "ocupada") {
+      this.navCtrl.push(PagesMesaPage, { "mesa": mesa });
+    }
   }
 
 }

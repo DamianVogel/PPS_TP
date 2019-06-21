@@ -112,6 +112,8 @@ import { PagesPedidosDeliveryPageModule } from '../pages/pages-pedidos/pages-ped
 import { PagesPedidosDeliveryPage } from '../pages/pages-pedidos/pages-pedidos-delivery/pages-pedidos-delivery';
 import { PagesDeliveryBoyPage } from '../pages/pages-delivery-boy/pages-delivery-boy';
 import { PagesDeliveryBoyPageModule } from '../pages/pages-delivery-boy/pages-delivery-boy.module';
+import { SoundsService } from '../services/sounds-service';
+import { Vibration } from '@ionic-native/vibration';
 
 export function provideSettings(storage: Storage) {
   /**
@@ -226,6 +228,7 @@ export function provideSettings(storage: Storage) {
     StatusBar,
     BarcodeScanner,
     EmailComposer,
+    Vibration,
     { provide: Settings, useFactory: provideSettings, deps: [Storage] },
     // Keep this to enable Ionic's runtime error handling during development
     { provide: ErrorHandler, useClass: IonicErrorHandler },
@@ -241,6 +244,7 @@ export function provideSettings(storage: Storage) {
     EncuestaService,
     HttpMailProvider,
     PedidoService,
+    SoundsService,
     PedidosProvider
   ]
 })

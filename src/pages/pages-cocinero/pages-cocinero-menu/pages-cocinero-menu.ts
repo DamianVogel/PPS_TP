@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, Navbar } from 'ionic-angular';
 import { ActionSheetController } from 'ionic-angular';
 import { ProductoAltaPage } from '../../pages-producto/pages-producto-alta/pages-producto-alta';
 import { PedidoService } from '../../../services/pedidos-service';
 import { Pedido } from '../../../clases/Pedido';
+import { SoundsService } from '../../../services/sounds-service';
 
 
 
@@ -15,17 +16,23 @@ import { Pedido } from '../../../clases/Pedido';
 export class CocineroMenuPage {
 
   pedidos: Array<Pedido>;
+  
+  @ViewChild(Navbar) navBar: Navbar;
 
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams, 
     public actionSheetController: ActionSheetController,
-    public pedidosService: PedidoService
+    public pedidosService: PedidoService,
+    private soundsService: SoundsService
     ) {
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad CocineroMenuPage');
+  ionViewDidLoad(){
+    this.navBar.backButtonClick = (e:UIEvent)=>{
+      this.soundsService.sound('logout');
+      this.navCtrl.pop();
+     }
   }
 
   presentActionSheet() {

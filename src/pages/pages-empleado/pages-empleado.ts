@@ -1,15 +1,9 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, Platform, Navbar } from 'ionic-angular';
 import { FcmProvider } from '../../providers/fcm/fcm';
 import { ToastController } from 'ionic-angular';
-import { Subject } from 'rxjs/Subject';
 import { tap } from 'rxjs/operators';
-/**
- * Generated class for the PagesEmpleadoPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { SoundsService } from '../../services/sounds-service';
 
 @IonicPage()
 @Component({
@@ -18,17 +12,25 @@ import { tap } from 'rxjs/operators';
 })
 export class PagesEmpleadoPage {
 
+  @ViewChild(Navbar) navBar: Navbar;
+
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
     public platform: Platform,
     public fcm: FcmProvider,
-    public toastCtrl: ToastController
+    public toastCtrl: ToastController,
+    private soundsService: SoundsService
     ) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad PagesEmpleadoPage');
+    
+    this.navBar.backButtonClick = (e:UIEvent)=>{
+      this.soundsService.sound('logout');
+      this.navCtrl.pop();
+     }
+
     if(this.platform.is('cordova')){
           
       // Get a FCM token

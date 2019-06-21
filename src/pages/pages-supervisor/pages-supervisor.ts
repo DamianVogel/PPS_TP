@@ -1,11 +1,12 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController, ModalController, ActionSheetController, AlertController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, ToastController, ModalController, ActionSheetController, AlertController, Navbar } from 'ionic-angular';
 import { AltaMesaComponent } from '../../components/alta-mesa/alta-mesa';
 import { AltaDuenoComponent } from '../../components/alta-dueno/alta-dueno';
 import { AltaEmpleadoComponent } from '../../components/alta-empleado/alta-empleado';
 import { PagesEncuestasUsuariosPage } from '../pages-encuestas/pages-encuestas-usuarios/pages-encuestas-usuarios';
 import { QRService } from '../../services/QR-service';
 import { showAlert } from '../../environments/environment';
+import { SoundsService } from '../../services/sounds-service';
 
 @IonicPage()
 @Component({
@@ -14,6 +15,8 @@ import { showAlert } from '../../environments/environment';
 })
 export class PagesSupervisorPage {
 
+  @ViewChild(Navbar) navBar: Navbar;
+
   constructor(
     public alertController: AlertController,
     public navCtrl: NavController,
@@ -21,9 +24,17 @@ export class PagesSupervisorPage {
     public toastCtrl: ToastController,
     public modalVotacion: ModalController,
     public actionSheetController: ActionSheetController,
-    private qrService: QRService
+    private qrService: QRService,
+    private soundsService: SoundsService
   ) {
 
+  }
+
+  ionViewDidLoad(){
+    this.navBar.backButtonClick = (e:UIEvent)=>{
+      this.soundsService.sound('logout');
+      this.navCtrl.pop();
+     }
   }
 
   altas() {
