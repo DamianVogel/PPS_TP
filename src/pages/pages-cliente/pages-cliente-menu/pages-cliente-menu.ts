@@ -81,17 +81,23 @@ export class PagesClienteMenuPage {
 
   estadoPedido(){
     //console.log(this.mesa);
-    
-    if(this.mesa !== undefined ){      
+         
       this.pedidoService.traerPedidos().subscribe( pedidos=> {
         pedidos.forEach(pedido => {
-          if(pedido.mesaId == JSON.parse(sessionStorage.getItem("mesaOcupada")).id && 
-            pedido.cliente.id == JSON.parse(sessionStorage.getItem("usuario")).id){
-            this.pedido = pedido; 
-          }
+          
+          if(pedido.tipo == 'restaurant'){
+            if(pedido.mesaId == JSON.parse(sessionStorage.getItem("mesaOcupada")).id && 
+              pedido.cliente.id == JSON.parse(sessionStorage.getItem("usuario")).id){
+              this.pedido = pedido; 
+            }          
+          }else{
+            if(pedido.cliente.id == JSON.parse(sessionStorage.getItem("usuario")).id){
+              this.pedido = pedido; 
+            }          
+          } 
         });
       })
-    }  
+     
   }
 
   OcuparMesa(){
@@ -128,7 +134,9 @@ export class PagesClienteMenuPage {
             console.log('Documento editado exitósamente');
             
             this.ocupaMesa = true;
-
+            
+            this.estadoPedido();
+            
             sessionStorage.setItem("mesaOcupada", JSON.stringify(mesa));  
 
             }, (error) => {
