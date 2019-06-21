@@ -198,4 +198,21 @@ export class MesasProvider {
     });
   }
 
+LiberarMesa(mesa:Mesa)
+{
+mesa.estado="disponible";
+mesa.usuario=null;
+
+
+  this.objFirebase.collection("SP_mesas").doc(mesa.id).set(mesa).then(() => {
+              
+            
+    console.log('Documento editado exitósamente');
+
+    }, (error) => {
+      console.log(error);
+    });
+
+}
+
 }
