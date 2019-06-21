@@ -7,9 +7,13 @@
 import { SpinnerPage } from "../pages/pages-spinner/pages-spinner";
 import * as firebase from 'firebase';
 
+declare var google: any;
+
 export let spinner = undefined;
 
 export let SPINNER_IMG = "assets/img/spinner.gif";
+
+export const DIRECCION_LOCAL = new google.maps.LatLng(-34.662544, -58.364732);
 
 export const environment = {
     production: false,
