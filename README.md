@@ -31,7 +31,13 @@
   38) Se selecciona el plato / bebida y su cantidad.
   39) Se pueden seleccionar desde un código Qr e indicar la cantidad.
   
-  #### Juegos - Juego 10% de descuento (05/06/2019 - TBD)
+  #### Delivery - Realizar pedido con GPS o dirección. (16/06/2019 - 20/06/2019)
+  51) Se podrá realizar pedidos de productos (solo usuarios registrados)
+  52) Se podrá ingresar una dirección de entrega o se podrá tomar las coordenadas de GPS para saber dónde entregar el pedido, (al cargar una dirección, igualmente en nuestro sistema queda registrada la posición del GPS).
+  53) Se debe agregar el tiempo de demora del plato más la demora en el traslado, tomada por la distancia entre le local y la dirección de entrega.
+  54) Los pedidos los confirman el dueño o el supervisor.
+  
+  #### Juegos - Juego 10% de descuento (05/06/2019 - 20/06/2019)
   57) En caso de ganar se le descontará de la cuenta final el porcentaje correspondiente.
   
 ## ==========================================
