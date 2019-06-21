@@ -150,13 +150,25 @@ export class PagesClienteAnonimoMenuPage {
   estadoPedido(){
     this.pedidoService.traerPedidos().subscribe( pedidos=> {
         pedidos.forEach(pedido => {
-          if(pedido.mesaId == JSON.parse(sessionStorage.getItem("mesaOcupada")).id && 
-             pedido.cliente.id == JSON.parse(sessionStorage.getItem("usuario")).id){
-             this.pedido = pedido; 
-          }
+          
+          if(pedido.tipo == 'restaurant'){
+              
+            if(pedido.mesaId == JSON.parse(sessionStorage.getItem("mesaOcupada")).id && 
+                pedido.cliente.id == JSON.parse(sessionStorage.getItem("usuario")).id){
+                this.pedido = pedido; 
+            }
+          
+          }else{
+            
+            if(pedido.cliente.id == JSON.parse(sessionStorage.getItem("usuario")).id){
+            
+              this.pedido = pedido; 
+            
+            }
+          }         
         });
 
-    } )
+    })
   }
 
   // HabilitarBotones(){

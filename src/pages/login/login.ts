@@ -29,6 +29,7 @@ import { CocineroMenuPage } from "../pages-cocinero/pages-cocinero-menu/pages-co
 import { Platform } from 'ionic-angular';
 import { FcmProvider } from '../../providers/fcm/fcm';
 import { PagesMozoPage } from "../pages-mozo/pages-mozo";
+import { PagesDeliveryBoyPage } from "../pages-delivery-boy/pages-delivery-boy";
 
 
 @IonicPage()
@@ -118,13 +119,18 @@ export class LoginPage {
                   this.navCtrl.push(BartenderMenuPage);
                   break;
 
-                  case "mozo":
+                case "mozo":
                   this.navCtrl.push(PagesMozoPage);
                   break;
 
-                default:
-                  this.navCtrl.push(PagesEmpleadoPage);
-                  break;
+                
+                case "delivery":
+                    this.navCtrl.push(PagesDeliveryBoyPage);
+                    break;
+
+                // default:
+                //   this.navCtrl.push(PagesEmpleadoPage);
+                //   break;
               }
               break;
 
