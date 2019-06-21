@@ -28,7 +28,7 @@
   <br>
   <button *ngIf="(pedido.estado == 'recibido' || pedido.estado == 'solicita_cuenta')  && pedido.estado !== 'pagado' && pedido.propina == 0" ion-button style="background-color: green" (click)="IndicarPropina()">Grado de Satisfacción</button> 
   <br>
-  <button *ngIf="pedido.estado == 'recibido' && pedido.estado !== 'solicita_cuenta'" ion-button style="background-color: green" (click)="SolicitarCuenta()">Solicitar La Cuenta</button> 
+  <button *ngIf="pedido.tipo == 'restaurant' && pedido.estado == 'recibido' && pedido.estado !== 'solicita_cuenta'" ion-button style="background-color: green" (click)="SolicitarCuenta()">Solicitar La Cuenta</button> 
    
 
 
