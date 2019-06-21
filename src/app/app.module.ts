@@ -108,6 +108,8 @@ import { PagesPedidosListaPage } from '../pages/pages-pedidos/pages-pedidos-list
 import { PagesPedidosListaPageModule } from '../pages/pages-pedidos/pages-pedidos-lista/pages-pedidos-lista.module';
 import { PagesPedidosPendientesMozoPage } from '../pages/pages-pedidos-pendientes-mozo/pages-pedidos-pendientes-mozo';
 import { PagesPedidosPendientesMozoPageModule } from '../pages/pages-pedidos-pendientes-mozo/pages-pedidos-pendientes-mozo.module';
+import { PagesDeliveryBoyPage } from '../pages/pages-delivery-boy/pages-delivery-boy';
+import { PagesDeliveryBoyPageModule } from '../pages/pages-delivery-boy/pages-delivery-boy.module';
 
 export function provideSettings(storage: Storage) {
   /**
@@ -173,7 +175,8 @@ export function provideSettings(storage: Storage) {
     PagesRegistrosPendientesPageModule,
     PagesJuegosMenuPageModule,
     PagesPedidosListaPageModule,
-    PagesPedidosPendientesMozoPageModule
+    PagesPedidosPendientesMozoPageModule,
+    PagesDeliveryBoyPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -203,7 +206,9 @@ export function provideSettings(storage: Storage) {
     AltaEmpleadoComponent,
     SolicitudMesaComponent,
     PagesPedidosAltaPage,
-    PagesPedidosPendientesMozoPage
+    PagesPedidosPendientesMozoPage,
+    PagesDeliveryBoyPage
+
    
     
   ],

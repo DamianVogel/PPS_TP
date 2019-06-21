@@ -85,9 +85,11 @@ export class UsuarioService {
         if(mesa.usuario !== undefined){
           if(mesa.usuario.id == usuario.id){              
             ocupaMesa = true;         
+            sessionStorage.setItem("mesaOcupada", JSON.stringify(mesa));  
           }
         }          
       });          
+
 
     return ocupaMesa;
 
