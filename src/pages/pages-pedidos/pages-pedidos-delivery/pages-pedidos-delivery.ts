@@ -1,8 +1,7 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController, ToastController } from 'ionic-angular';
 import { Pedido } from '../../../clases/Pedido';
-import { of } from 'rxjs/observable/of';
-import { round } from '../../../environments/environment';
+import { round, DIRECCION_LOCAL } from '../../../environments/environment';
 
 declare var google: any;
 
@@ -32,7 +31,7 @@ export class PagesPedidosDeliveryPage {
     public viewCtrl: ViewController,
     public toastController: ToastController) {
     this.pedido = this.navParams.get("pedido");
-    this.localizacionBase = new google.maps.LatLng(-34.662544, -58.364732);
+    this.localizacionBase = DIRECCION_LOCAL;
     this.direccionValida = false;
     this.duracion = 0;
   }
