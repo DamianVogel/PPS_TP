@@ -74,7 +74,7 @@ export class EstadoPedidoComponent {
   IndicarPropina(){
     this.qrService.readQR().then(QRdata => {
       
-      let gradoSafisfaccion;
+      let gradoSafisfaccion:number;
       // 27) Que establezca el nivel de satisfacción del cliente, estableciendo el porcentaje de propina a la cuenta: (Antes de marcarse como pagado el pedido, distintos QR)									
       // Excelente -> 20%								
       // Muy Bien -> 15%								
@@ -121,7 +121,7 @@ export class EstadoPedidoComponent {
 
       this.pedidoService.actualizarUnPedido(this.pedido.id).update({
     
-        'propina': (this.pedido.costo * gradoSafisfaccion).toFixed(2)
+        'propina': Math.round((this.pedido.costo * gradoSafisfaccion)*100)/100
       
       }).then(() => {
         loading.dismiss();

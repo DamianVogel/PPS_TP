@@ -1,7 +1,9 @@
 import { Component, Input } from '@angular/core';
 import { PedidoService } from '../../services/pedidos-service';
 import { Pedido } from '../../clases/Pedido';
-import { LoadingController } from 'ionic-angular';
+import { LoadingController, AlertController } from 'ionic-angular';
+import { Producto } from '../../clases/Producto';
+import { PedidosProvider } from '../../providers/pedidos/pedidos';
 
 
 /**
@@ -17,12 +19,15 @@ import { LoadingController } from 'ionic-angular';
 export class ListapedidosComponent {
 
   filtroDelivery: boolean;
+  listaProductos:Array<Producto>;
 
   @Input() pedidos: Array<Pedido>;
 
   constructor(
     private pedidoService: PedidoService,
-    private loadingController: LoadingController
+    private loadingController: LoadingController,
+    private alertCtrl: AlertController,
+    private pedidosProv: PedidosProvider
   ) {
        
       this.filtroDelivery = false;
@@ -115,6 +120,96 @@ export class ListapedidosComponent {
     });
 
   }
+
+  buscarCosto(nombre)
+  { let prod;
+     prod= this.listaProductos.filter((p=>{
+       return p.nombre==nombre;
+     }));
+
+     return prod[0].precio;
+  }
+
+  async Cobrar(pedido: Pedido)
+  {
+    let total=pedido.costo;
+    let propina;
+
+    if(pedido.descuento_10)
+    {
+      total= total - (total*10)/100;
+    }
+
+    
+    if(pedido.propina)
+    {
+      //propina = (total *pedido.propina)/100;
+      total += pedido.propina;
+    }
+
+    if(pedido.descuento_bebida)
+    {
+      let bandera=true;
+      pedido.productos.forEach((prod: Producto)=>
+    {
+      
+      if(prod.tipo=="bebida" && bandera)
+      {
+        let precioProducto=this.buscarCosto(prod.nombre)
+        console.log(precioProducto);
+        total-= precioProducto;
+        bandera=false
+      }
+    })
+    }
+
+    if(pedido.descuento_postre)
+    {
+      let bandera=true;
+      pedido.productos.forEach((prod: Producto)=>
+    {
+      
+      if(prod.tipo=="postre" && bandera)
+      {
+        let precioProducto=this.buscarCosto(prod.nombre)
+        total-= precioProducto;
+        bandera=false
+      }
+    }) 
+    }
+    
+    total= Math.floor(total*100)/100;
+
+    const alert = this.alertCtrl.create({
+      title: 'Cuenta',
+      message: "El total a pagar es de $ " + total,
+      buttons: [
+        {
+          text: 'Pago',
+          handler: () => {
+             this.pedidosProv.Cobrar(pedido);
+             
+             //this.navCtrl.pop().then(()=>{this.mesaProv.LiberarMesa(this.mesa)})
+             
+          }
+        },
+        {
+          text: 'Cancelar',
+          handler: () => {
+            console.log('Agree clicked');
+          }
+        }
+      ]
+    
+    });
+    alert.present();
+
+
+  }
+
+
+
+
 
 
 }

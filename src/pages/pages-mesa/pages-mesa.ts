@@ -86,8 +86,8 @@ export class PagesMesaPage {
     
     if(pedido.propina)
     {
-      propina = (total *pedido.propina)/100;
-      total += propina;
+      //propina = (total *pedido.propina)/100;
+      total += pedido.propina;
     }
 
     if(pedido.descuento_bebida)

@@ -60,6 +60,7 @@ export class PagesClienteMenuPage {
      }
   }
 
+
   reserva() {
     this.navCtrl.push(this.reservaPage);
   }
@@ -90,21 +91,30 @@ export class PagesClienteMenuPage {
   }
 
   estadoPedido() {
-    //console.log(this.mesa);
-
+    
     this.pedidoService.traerPedidos().subscribe(pedidos => {
       pedidos.forEach(pedido => {
-
-        if (pedido.tipo == 'restaurant') {
-          if (pedido.mesaId == JSON.parse(sessionStorage.getItem("mesaOcupada")).id &&
-            pedido.cliente.id == JSON.parse(sessionStorage.getItem("usuario")).id) {
-            this.pedido = pedido;
-          }
-        } else {
-          if (pedido.cliente.id == JSON.parse(sessionStorage.getItem("usuario")).id) {
-            this.pedido = pedido;
-          }
+        
+        if (  (pedido.tipo == 'restaurant') 
+              && (pedido.estado !== 'pagado') 
+              && (pedido.mesaId == JSON.parse(sessionStorage.getItem("mesaOcupada")).id &&
+                  pedido.cliente.id == JSON.parse(sessionStorage.getItem("usuario")).id)
+            ) {            
+              this.pedido = pedido;
+              
+            }
+        
+        if (pedido.tipo == 'delivery' 
+            && pedido.estado !== 'pagado' 
+            && pedido.cliente.id == JSON.parse(sessionStorage.getItem("usuario")).id 
+            ) {
+                  
+          
+            this.pedido = pedido;                      
         }
+      
+     
+      
       });
     })
 

@@ -48,7 +48,7 @@ export class PedidosProvider {
 
   async Cobrar(pedido: Pedido)
   {
-    pedido.estado="cobrado";
+    pedido.estado="pagado";
     
     this.objFirebase.collection("SP_pedidos").doc(pedido.id).set(pedido).then(() => {
             

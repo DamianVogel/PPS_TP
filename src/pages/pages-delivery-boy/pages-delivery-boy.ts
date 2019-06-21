@@ -39,7 +39,7 @@ export class PagesDeliveryBoyPage {
       });
     
       
-      this.pedidos = array.filter( pedido =>   pedido.tipo == 'delivery');
+      this.pedidos = array.filter( pedido =>   pedido.tipo == 'delivery' && pedido.estado !== 'pagado');
       //this.pedidos = array.filter( pedido => pedido.estado == filtro );
       
       this.pedidos.forEach( pedido => {
@@ -61,9 +61,5 @@ export class PagesDeliveryBoyPage {
     })
    
   }
-
-
-
-
 
 }
