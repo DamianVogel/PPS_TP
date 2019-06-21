@@ -7,6 +7,7 @@ import { getImageURL, SPINNER_IMG, showAlert, round, spin } from '../../../envir
 import { PagesPedidosListaPage } from '../pages-pedidos-lista/pages-pedidos-lista';
 import { PedidoService } from '../../../services/pedidos-service';
 import { QRService } from '../../../services/QR-service';
+import { PagesPedidosDeliveryPage } from '../pages-pedidos-delivery/pages-pedidos-delivery';
 
 @IonicPage()
 @Component({
@@ -44,11 +45,11 @@ export class PagesPedidosAltaPage {
     this.productosCargados = new Array<any>();
     this.pedido.cliente = navParams.get("cliente");
     this.pedido.tipo = navParams.get("tipo");
-    if(this.pedido.tipo==="restaurant"){
+    if (this.pedido.tipo === "restaurant") {
       this.pedido.mesaId = navParams.get("mesa").id;
       this.pedido.mesa = navParams.get("mesa").numero;
     }
-    if(this.pedido.tipo==="delivery"){
+    if (this.pedido.tipo === "delivery") {
       this.pedido.mesaId = null;
       this.pedido.mesa = null;
     }
@@ -86,9 +87,9 @@ export class PagesPedidosAltaPage {
     this.pedidoService.traerPedidos().subscribe(pedidos => {
       let pedidoExistente: Array<Pedido> = pedidos.filter(pedido => {
         return pedido.cliente.id === this.pedido.cliente.id
-        && pedido.mesaId === this.pedido.mesaId 
-        && pedido.estado !== 'pagado' 
-        && pedido.tipo === this.pedido.tipo
+          && pedido.mesaId === this.pedido.mesaId
+          && pedido.estado !== 'pagado'
+          && pedido.tipo === this.pedido.tipo
       });
       if (pedidoExistente.length === 1) {
         this.pedidoExistia = true;
@@ -250,20 +251,20 @@ export class PagesPedidosAltaPage {
         position: 'bottom'
       }).present();
     } else {
-      spin(this.modalController, true);
-      if (this.pedidoExistia) {
-        this.pedidoService.actualizarUnPedido(this.pedido.id).update(this.pedido).then(() => {
-          spin(this.modalController, false);
-          showAlert(this.alertController, "Exito", "Pedido actualizado exitosamente");
-          this.navCtrl.pop();
+
+      if (this.pedido.tipo === "delivery") {
+        let modal: any = this.modalController.create(PagesPedidosDeliveryPage, { "pedido": this.pedido })
+        modal.onDidDismiss(data => {
+          this.pedido = data;
+          this.cargarPedidoFirebase();
         })
-      } else {
-        this.pedidoService.cargarPedido(this.pedido.dameJSON()).then(() => {
-          spin(this.modalController, false);
-          showAlert(this.alertController, "Exito", "Pedido dado de alta exitosamente");
-          this.navCtrl.pop();
-        })
+        modal.present();
       }
+
+      if (this.pedido.tipo === "restaurant") {
+        this.cargarPedidoFirebase();
+      }
+
     }
   }
 
@@ -279,6 +280,23 @@ export class PagesPedidosAltaPage {
       })
     })
     this.pedido.costo = round(this.pedido.costo, 2);
+  }
+
+  cargarPedidoFirebase() {
+    spin(this.modalController, true);
+    if (this.pedidoExistia) {
+      this.pedidoService.actualizarUnPedido(this.pedido.id).update(this.pedido).then(() => {
+        spin(this.modalController, false);
+        showAlert(this.alertController, "Exito", "Pedido actualizado exitosamente");
+        this.navCtrl.pop();
+      })
+    } else {
+      this.pedidoService.cargarPedido(this.pedido.dameJSON()).then(() => {
+        spin(this.modalController, false);
+        showAlert(this.alertController, "Exito", "Pedido dado de alta exitosamente");
+        this.navCtrl.pop();
+      })
+    }
   }
 
 }

@@ -18,6 +18,8 @@ export class Pedido {
     tiempo_espera: number;
     mesa: number;
     tipo: string;
+    direccion: string;
+    costo_envio: number;
 
     constructor(
         id?:string,
@@ -32,7 +34,9 @@ export class Pedido {
         propina?: number,
         tiempo_espera?: number,
         mesa?: number,
-        tipo?: string){
+        tipo?: string,
+        direccion?: string,
+        costo_envio?: number){
             if(id == null || id == undefined) this.id = ""; else this.id = id;
             if(productos == null || productos == undefined) this.productos = new Array<any>(); else this.productos = productos;
             if(mesaId == null || mesaId == undefined) this.mesaId = ""; else this.mesaId = mesaId;
@@ -46,6 +50,8 @@ export class Pedido {
             if(tiempo_espera == null || tiempo_espera == undefined) this.tiempo_espera = 0; else this.tiempo_espera = tiempo_espera;
             if(mesa == null || mesa == undefined) this.mesa = 0; else this.mesa = mesa;
             if(tipo == null || tipo == undefined) this.tipo = ""; else this.tipo = tipo;
+            if(direccion == null || direccion == undefined) this.direccion = ""; else this.direccion = direccion;
+            if(costo_envio == null || costo_envio == undefined) this.costo_envio = 0; else this.costo_envio = costo_envio;
     }
 
     dameJSON() {
