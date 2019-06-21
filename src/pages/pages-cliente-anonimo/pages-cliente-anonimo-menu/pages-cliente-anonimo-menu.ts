@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, Navbar } from 'ionic-angular';
 import { Usuario } from '../../../clases/usuario';
 import { ListaDeEsperaMenuPage } from '../../pages-lista-de-espera/pages-lista-de-espera-menu/pages-lista-de-espera-menu';
 import { PagesJuegosMenuPage } from '../../pages-juegos/pages-juegos-menu/pages-juegos-menu';
@@ -12,6 +12,7 @@ import { AngularFirestoreCollection, AngularFirestore } from 'angularfire2/fires
 import { ToastController } from 'ionic-angular';
 import { PedidoService } from '../../../services/pedidos-service'
 import { Pedido } from '../../../clases/Pedido';
+import { SoundsService } from '../../../services/sounds-service';
 
 
 
@@ -25,6 +26,8 @@ export class PagesClienteAnonimoMenuPage {
   usuario: Usuario;
   ocupaMesa: boolean;
   pedido : Pedido;
+
+  @ViewChild(Navbar) navBar: Navbar;
   
   constructor(
     public navCtrl: NavController, 
@@ -34,7 +37,8 @@ export class PagesClienteAnonimoMenuPage {
     private qrService: QRService,
     private objFirebase: AngularFirestore,
     public toastCtrl: ToastController,
-    private pedidoService: PedidoService
+    private pedidoService: PedidoService,
+    private soundsService: SoundsService
     ) {
       //this.ocupaMesa = this.usuarioService.RelacionUsuarioMesa();
   }
@@ -43,6 +47,14 @@ export class PagesClienteAnonimoMenuPage {
     this.ocupaMesa = this.usuarioService.RelacionUsuarioMesa();
     this.estadoPedido();
   }
+
+  ionViewDidLoad(){
+    this.navBar.backButtonClick = (e:UIEvent)=>{
+      this.soundsService.sound('logout');
+      this.navCtrl.pop();
+     }
+  }
+
   
   ngOnChanges() {
     this.ocupaMesa = this.usuarioService.RelacionUsuarioMesa();

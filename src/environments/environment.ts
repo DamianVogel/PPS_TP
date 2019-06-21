@@ -6,6 +6,7 @@
 
 import { SpinnerPage } from "../pages/pages-spinner/pages-spinner";
 import * as firebase from 'firebase';
+import { SoundsService } from "../services/sounds-service";
 
 declare var google: any;
 
@@ -27,11 +28,11 @@ export const environment = {
     }
 };
 
-export const showAlert = function (alertCtrl: any, title: string, message: string, cssClass?: string) {
+export const showAlert = function (alertCtrl: any, title: string, message: string, soundsService?: SoundsService, sound?: string) {
   let alert = alertCtrl.create({
     title: title,
     message: message,
-    cssClass: (cssClass === undefined) ? 'alertConfirm': cssClass,
+    cssClass: 'alertConfirm',
     buttons: [
       {
         text: 'Ok',
@@ -41,6 +42,7 @@ export const showAlert = function (alertCtrl: any, title: string, message: strin
       }
     ]
   });
+  if(sound && soundsService){ soundsService.sound(sound); }
   alert.present();
 }
 
