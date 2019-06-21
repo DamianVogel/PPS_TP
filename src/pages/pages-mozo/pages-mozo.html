@@ -14,12 +14,18 @@
   <button ion-button full (click)="PedidosPendientes()">Pedidos pendientes</button>
 
   <ion-list>
-    <ion-item *ngFor="let mesa of listaMesas"  mesa [estado]="mesa.estado" (click)="Opciones(mesa)" >
 
-     Numero: {{mesa.numero}}
-     Estado: {{mesa.estado}}
+    <ion-card *ngFor="let mesa of listaMesas" mesa [estado]="mesa.estado">
+      <ion-card-header>
+        <ion-title> Mesa: {{mesa.numero}}</ion-title>
+         
+      </ion-card-header>
+      <ion-card-content>
+          Estado: {{mesa.estado}}
+          <div *ngIf="mesa.estado=='ocupada'"><button ion-button (click)="Opciones(mesa)" full >Ingresar</button></div>
+      </ion-card-content>
+    </ion-card>
 
-    </ion-item>
   </ion-list>
 
 </ion-content>

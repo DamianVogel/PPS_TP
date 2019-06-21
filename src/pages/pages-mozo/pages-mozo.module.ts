@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { IonicPageModule } from 'ionic-angular';
+import { IonicPageModule, IonicModule } from 'ionic-angular';
 import { PagesMozoPage } from './pages-mozo';
 import { DirectivesModule } from '../../directives/directives.module';
 
@@ -8,6 +8,7 @@ import { DirectivesModule } from '../../directives/directives.module';
     PagesMozoPage,
   ],
   imports: [
+    IonicModule,
     DirectivesModule,
  
     IonicPageModule.forChild(PagesMozoPage),

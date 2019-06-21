@@ -45,6 +45,22 @@ export class PedidosProvider {
 
   }
 
+
+  async Cobrar(pedido: Pedido)
+  {
+    pedido.estado="cobrado";
+    
+    this.objFirebase.collection("SP_pedidos").doc(pedido.id).set(pedido).then(() => {
+            
+    
+      console.log('Documento editado exitósamente');
+
+    }, (error) => {
+      console.log(error);
+    });
+
+  }
+
  async ServirPedido(pedido: Pedido)
   {
     pedido.estado="entregado";
@@ -59,5 +75,7 @@ export class PedidosProvider {
     });
 
   }
+
+
 
 }
