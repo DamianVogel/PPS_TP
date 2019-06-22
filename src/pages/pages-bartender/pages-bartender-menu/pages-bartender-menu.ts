@@ -5,6 +5,7 @@ import { ProductoAltaPage } from '../../pages-producto/pages-producto-alta/pages
 import { PedidoService } from '../../../services/pedidos-service';
 import { Pedido } from '../../../clases/Pedido';
 import { SoundsService } from '../../../services/sounds-service';
+import { PagesProductoCargaMasivaPage } from '../../pages-producto/pages-producto-carga-masiva/pages-producto-carga-masiva';
 
 
 @IonicPage()
@@ -42,6 +43,12 @@ export class BartenderMenuPage {
         icon: 'add-circle',
         handler: () => {
           this.navCtrl.push(ProductoAltaPage);
+        }
+      }, {
+        text: 'Descarga/carga masiva',
+        icon: 'add-circle',
+        handler: () => {
+          this.navCtrl.push(PagesProductoCargaMasivaPage);
         }
       }, {
         text: 'Cancelar',

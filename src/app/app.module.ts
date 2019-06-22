@@ -117,6 +117,10 @@ import { Vibration } from '@ionic-native/vibration';
 import { PagesChatPageModule } from '../pages/pages-chat/pages-chat.module';
 import { PagesChatPage } from '../pages/pages-chat/pages-chat';
 import { MensajesProvider } from '../providers/mensajes/mensajes';
+import { File } from '@ionic-native/file';
+import { FileChooser } from '@ionic-native/file-chooser';
+import { PagesProductoCargaMasivaPageModule } from '../pages/pages-producto/pages-producto-carga-masiva/pages-producto-carga-masiva.module';
+import { PagesProductoCargaMasivaPage } from '../pages/pages-producto/pages-producto-carga-masiva/pages-producto-carga-masiva';
 
 export function provideSettings(storage: Storage) {
   /**
@@ -185,7 +189,8 @@ export function provideSettings(storage: Storage) {
     PagesPedidosPendientesMozoPageModule,
     PagesPedidosDeliveryPageModule,
     PagesDeliveryBoyPageModule,
-    PagesChatPageModule
+    PagesChatPageModule,
+    PagesProductoCargaMasivaPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -218,7 +223,8 @@ export function provideSettings(storage: Storage) {
     PagesPedidosPendientesMozoPage,
     PagesPedidosDeliveryPage,
     PagesDeliveryBoyPage,
-    PagesChatPage
+    PagesChatPage,
+    PagesProductoCargaMasivaPage
   ],
   providers: [
     Api,
@@ -234,6 +240,8 @@ export function provideSettings(storage: Storage) {
     BarcodeScanner,
     EmailComposer,
     Vibration,
+    File,
+    FileChooser,
     { provide: Settings, useFactory: provideSettings, deps: [Storage] },
     // Keep this to enable Ionic's runtime error handling during development
     { provide: ErrorHandler, useClass: IonicErrorHandler },
