@@ -5,6 +5,7 @@ import { EncuestaService } from '../../../../services/encuesta-service';
 import { Encuesta_supervisor } from '../../../../clases/encuesta_supervisor';
 import { showAlert, spin, getRandomColor, round } from '../../../../environments/environment';
 import { Chart } from 'chart.js';
+import { SoundsService } from '../../../../services/sounds-service';
 
 @IonicPage()
 @Component({
@@ -31,7 +32,8 @@ export class PagesEncuestaUsuarioPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public encuestaService: EncuestaService,
-    public modalController: ModalController
+    public modalController: ModalController,
+    public soundsService: SoundsService
   ) {
     this.usuario = JSON.parse(navParams.get("usuario"));
     this.inicializarEncuesta();
@@ -157,7 +159,7 @@ export class PagesEncuestaUsuarioPage {
       spin(this.modalController, true);
       this.encuestaService.cargarEncuesta(this.encuestaACargar.dameJSON()).then(() => {
         spin(this.modalController, false);
-        showAlert(this.alertController, "Exito", "Encuesta dada de alta exitosamente");
+        showAlert(this.alertController, "Exito", "Encuesta dada de alta exitosamente", this.soundsService, 'success');
         this.navCtrl.pop();
       })
         .catch(error => {
@@ -181,15 +183,15 @@ export class PagesEncuestaUsuarioPage {
 
   validarCampos() {
     if (this.encuestaACargar.puntualidad === undefined || this.encuestaACargar.puntualidad < 1 || this.encuestaACargar.puntualidad > 5) {
-      showAlert(this.alertController, "Error", "El campo puntualidad debe tener un valor entre 1 y 5 inclusive");
+      showAlert(this.alertController, "Error", "El campo puntualidad debe tener un valor entre 1 y 5 inclusive", this.soundsService, 'error');
       return false;
     }
     if (this.encuestaACargar.responsabilidad === undefined) {
-      showAlert(this.alertController, "Error", "El campo responsabilidad es obligatorio");
+      showAlert(this.alertController, "Error", "El campo responsabilidad es obligatorio", this.soundsService, 'error');
       return false;
     }
     if (this.encuestaACargar.conversacion === undefined) {
-      showAlert(this.alertController, "Error", "El campo conversacion es obligatorio");
+      showAlert(this.alertController, "Error", "El campo conversacion es obligatorio", this.soundsService, 'error');
       return false;
     }
 

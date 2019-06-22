@@ -78,7 +78,7 @@ export class PagesSupervisorPage {
           this.mostrarEncuestas(); //Comentar todo menos esto cuando se quiera probar sin lectura de QR
         }
       } catch (err) {
-        showAlert(this.alertController, "Error", "QR invalido");
+        showAlert(this.alertController, "Error", "QR invalido", this.soundsService, 'error');
       }
     }).catch(err => {
       console.log('Error', err);

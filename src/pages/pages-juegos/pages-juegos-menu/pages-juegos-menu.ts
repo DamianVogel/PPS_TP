@@ -4,6 +4,7 @@ import { DescuentoJuego } from '../../../clases/DescuentoJuego';
 import { showAlert, round, spin } from '../../../environments/environment';
 import { PedidoService } from '../../../services/pedidos-service';
 import { Pedido } from '../../../clases/Pedido';
+import { SoundsService } from '../../../services/sounds-service';
 
 
 
@@ -28,24 +29,24 @@ export class PagesJuegosMenuPage {
   juegoAhorcadoMostrado: boolean = false;
 
   // Definimos las variables
-	letra: string = '';
-	nombres: any = ['COCHE', 'CASA', 'SAPO','PERRO'];
-	nombreSecreto: any = this.palabraAleatoria(0, (this.nombres.length - 1));
-	palabra: any = '';
-	muestraHuecos: any = this.muestraHuecosPalabra();
-	mensaje: string = '';
-	letras_utilizadas: string = '';
-	nombresecretomostrar: string = '';
- 
-	vidas: number = 6;
-	puntos: number = 0;
-	ganador: number = 0;
-	imagen: number = 1;
- 
-	durationMessages: number = 3000;
- 
-	// Creamos un array para guardar las letras que se van seleccionando.
-	controlLetras = new Array;
+  letra: string = '';
+  nombres: any = ['COCHE', 'CASA', 'SAPO', 'PERRO'];
+  nombreSecreto: any = this.palabraAleatoria(0, (this.nombres.length - 1));
+  palabra: any = '';
+  muestraHuecos: any = this.muestraHuecosPalabra();
+  mensaje: string = '';
+  letras_utilizadas: string = '';
+  nombresecretomostrar: string = '';
+
+  vidas: number = 6;
+  puntos: number = 0;
+  ganador: number = 0;
+  imagen: number = 1;
+
+  durationMessages: number = 3000;
+
+  // Creamos un array para guardar las letras que se van seleccionando.
+  controlLetras = new Array;
 
 
   constructor(public alertController: AlertController,
@@ -53,83 +54,76 @@ export class PagesJuegosMenuPage {
     public navParams: NavParams,
     private pedidoService: PedidoService,
     public modalController: ModalController,
-    public toastCtrl:ToastController,
-    public alertCtrl: AlertController
-    ) {
-      
+    public toastCtrl: ToastController,
+    public alertCtrl: AlertController,
+    public soundsService: SoundsService
+  ) {
+
   }
 
-  ionViewDidEnter(){
-    
+  ionViewDidEnter() {
+
     this.pedido = this.navParams.get("pedido");
     this.descuentoJuego = new DescuentoJuego();
-    
-    if(this.pedido !== undefined){
-      
-      if(this.pedido.cliente.estado === 'Registrado' &&
-        this.pedido.descuento_10 == false  && 
-        this.pedido.descuento_bebida == false && 
-        this.pedido.descuento_postre == false       
-      ){
+
+    if (this.pedido !== undefined) {
+
+      if (this.pedido.cliente.estado === 'Registrado' &&
+        this.pedido.descuento_10 == false &&
+        this.pedido.descuento_bebida == false &&
+        this.pedido.descuento_postre == false
+      ) {
         this.juegaPorDescuento = true;
-      }else{
+      } else {
         this.juegaPorDescuento = false;
       }
     }
+  }
 
+  juegoDescuento() {
+
+    this.juegoDescuendoMostrado = true;
+    this.resultado = 0;
+    this.descuentoJuego.inicializarValores();
 
   }
 
-
-
-
-  juegoDescuento(){
-   
-      this.juegoDescuendoMostrado = true;
-      this.resultado = 0;
-      this.descuentoJuego.inicializarValores();
-    
-  }
-
-  verificarResultado(){
-    if(this.resultado === undefined || this.resultado.toString() === ""){
-      showAlert(this.alertController,"Error","Debe ingresar un valor en el resultado primero!")
+  verificarResultado() {
+    if (this.resultado === undefined || this.resultado.toString() === "") {
+      showAlert(this.alertController, "Error", "Debe ingresar un valor en el resultado primero!", this.soundsService, 'error')
     } else {
-      if(round(Number(this.resultado),0) === this.descuentoJuego.resultado){
-        
-       
-     
-          if(this.juegaPorDescuento){
-            showAlert(this.alertController,"Felicidades","Gano un descuento!")
-            
-            this.pedido.descuento_10 = true;
+      if (round(Number(this.resultado), 0) === this.descuentoJuego.resultado) {
 
-            this.pedidoService.actualizarUnPedido(this.pedido.id).update(this.pedido).then(() => {
-              
-              // spin(this.modalController, false);
-              // showAlert(this.alertController, "Exito", "Pedido actualizado exitosamente");
-              this.navCtrl.pop();
-            })
-          }else{
-            showAlert(this.alertController,"Felicidades","Acerto el resultado!")
-          }       
-        
+
+
+        if (this.juegaPorDescuento) {
+          showAlert(this.alertController, "Felicidades", "Gano un descuento!", this.soundsService, 'success')
+
+          this.pedido.descuento_10 = true;
+
+          this.pedidoService.actualizarUnPedido(this.pedido.id).update(this.pedido).then(() => {
+            this.navCtrl.pop();
+          })
+        } else {
+          showAlert(this.alertController, "Felicidades", "Acerto el resultado!", this.soundsService, 'success')
+        }
+
         this.juegoDescuendoMostrado = false;
       } else {
-        showAlert(this.alertController,"Lastima","Vuelva a intentarlo")
+        showAlert(this.alertController, "Lastima", "Vuelva a intentarlo", this.soundsService, 'lose')
       }
     }
   }
 
-  bebida(){
+  bebida() {
 
 
 
 
   }
 
-  Ahorcado(){
-    this.juegoAhorcadoMostrado=true;
+  Ahorcado() {
+    this.juegoAhorcadoMostrado = true;
   }
 
   public compruebaLetra() {
@@ -142,31 +136,31 @@ export class PagesJuegosMenuPage {
       if (this.controlLetras.indexOf(letraMayusculas) == -1) {
 
         // Recorremos las letras de la palabra (array), para detectar si la letra se encuentra en ella.
-          if (this.nombreSecreto.indexOf(letraMayusculas) != -1) {
+        if (this.nombreSecreto.indexOf(letraMayusculas) != -1) {
 
-            let nombreSecretoModificado = this.nombreSecreto;
-            let posicion = new Array;
-            let posicionTotal = 0;
+          let nombreSecretoModificado = this.nombreSecreto;
+          let posicion = new Array;
+          let posicionTotal = 0;
 
-            let contador = 1;
+          let contador = 1;
 
-            while (nombreSecretoModificado.indexOf(letraMayusculas) != -1) {
+          while (nombreSecretoModificado.indexOf(letraMayusculas) != -1) {
 
             posicion[contador] = nombreSecretoModificado.indexOf(letraMayusculas);
             nombreSecretoModificado = nombreSecretoModificado.substring(nombreSecretoModificado.indexOf(letraMayusculas) + letraMayusculas.length, nombreSecretoModificado.length);
 
-          // Calculamos la posición total.
-          if (contador > 1) {
+            // Calculamos la posición total.
+            if (contador > 1) {
               posicionTotal = posicionTotal + posicion[contador] + 1;
-          }else { 
+            } else {
               posicionTotal = posicionTotal + posicion[contador];
-          }
+            }
 
-          // Preparamos la palabra para que sea mostrara en modal de solución directa.
-          this.palabra[posicionTotal] = letraMayusculas;
+            // Preparamos la palabra para que sea mostrara en modal de solución directa.
+            this.palabra[posicionTotal] = letraMayusculas;
 
-                  // Sumamos puntos
-          if (this.controlLetras.indexOf(letraMayusculas) == -1) {
+            // Sumamos puntos
+            if (this.controlLetras.indexOf(letraMayusculas) == -1) {
               this.puntos = this.puntos + 10;
 
               // Hacemos uso de Toast Controller para lanzar mensajes flash.
@@ -177,12 +171,12 @@ export class PagesJuegosMenuPage {
                 position: 'top'
               });
               toast.present();
-          }
+            }
 
-                  contador++;
+            contador++;
 
-                  // Si ya no quedan huecos, mostramos el mensaje para el ganador.
-          if (this.palabra.indexOf('_') == -1) { 
+            // Si ya no quedan huecos, mostramos el mensaje para el ganador.
+            if (this.palabra.indexOf('_') == -1) {
 
               // Sumamos puntos
               if (this.controlLetras.indexOf(letraMayusculas) == -1) {
@@ -190,12 +184,12 @@ export class PagesJuegosMenuPage {
               }
 
               // Damos el juego por finalizado, el jugador gana.
-              this.finDelJuego('gana')					
-          }
+              this.finDelJuego('gana')
             }
+          }
         }
-          else {
-              // Restamos una vida.
+        else {
+          // Restamos una vida.
           this.nuevoFallo();
           // Actualizamos la imagen
           this.nuevaImagen(this.imagen);
@@ -203,203 +197,203 @@ export class PagesJuegosMenuPage {
           // Comprobamos si nos queda alguna vida.
           if (this.vidas > 0) {
 
-              // Restamos puntos siempre y cuando no sean 0.
-          if (this.puntos > 0) { 
+            // Restamos puntos siempre y cuando no sean 0.
+            if (this.puntos > 0) {
               if (this.controlLetras.indexOf(letraMayusculas) == -1) {
-              this.puntos = this.puntos - 5;
+                this.puntos = this.puntos - 5;
               }
-          }
+            }
 
-          // Mostramos un mensaje indicando el fallo.	
+            // Mostramos un mensaje indicando el fallo.	
             let toast = this.toastCtrl.create({
               message: 'Fallo, la letra ' + letraMayusculas + ' no está en la palabra secreta. Recuerda que te quedan ' + this.vidas + ' vidas.',
               duration: this.durationMessages,
               cssClass: 'toast-danger',
               position: 'top'
             });
-          toast.present();				
+            toast.present();
+          }
+          else {
+            // Damos el juego por finalizado, el jugador pierde.
+            this.finDelJuego('pierde')
+          }
         }
-          else { 
-          // Damos el juego por finalizado, el jugador pierde.
-          this.finDelJuego('pierde')
-          }
-          }
 
-          // Array de letras utilizadas para mostrar al jugador.
-          if(this.letras_utilizadas == ''){
-        this.letras_utilizadas += letraMayusculas;
-      }
-      else{
-        this.letras_utilizadas += ' - '+letraMayusculas;
-      }
+        // Array de letras utilizadas para mostrar al jugador.
+        if (this.letras_utilizadas == '') {
+          this.letras_utilizadas += letraMayusculas;
+        }
+        else {
+          this.letras_utilizadas += ' - ' + letraMayusculas;
+        }
 
-      // Añadimos al array de letras la nueva letra seleccionada.
-      this.controlLetras.push(letraMayusculas);
+        // Añadimos al array de letras la nueva letra seleccionada.
+        this.controlLetras.push(letraMayusculas);
       }
-      else{
-      // En caso de que la letra ya hubiera sido seleccionada, mostramos un mensaje.
+      else {
+        // En caso de que la letra ya hubiera sido seleccionada, mostramos un mensaje.
         let toast = this.toastCtrl.create({
           message: 'La letra ' + letraMayusculas + ' fue seleccionada anteriormente. Por favor, seleccione una letra diferente.',
           duration: this.durationMessages,
           cssClass: 'toast-warning',
           position: 'top'
-        }); 
+        });
         toast.present();
+      }
+
     }
-
   }
-}
 
-public muestraHuecosPalabra() {
+  public muestraHuecosPalabra() {
     let totalHuecos = this.nombreSecreto.length;
 
     // Declaramos la variable huecos como nuevo array.		
     let huecos = new Array;
     for (let i = 0; i < totalHuecos; i++) {
-    //Asignamos tantos huecos como letras tenga la palabra.
-    huecos.push('_');
+      //Asignamos tantos huecos como letras tenga la palabra.
+      huecos.push('_');
     }
 
     // Para empezar formamos la variable palabra tan solo con los huecos, ya que en este momento aún no se ha seleccionado ninguna letra.	
     this.palabra = huecos;
     return this.palabra;
-}
+  }
 
   // Método que genera una palabra aleatoria comprendida en el array nombres.	
-public palabraAleatoria(primer, ultimo) {
+  public palabraAleatoria(primer, ultimo) {
     let numberOfName = Math.round(Math.random() * (ultimo - primer) + (primer));
     return this.nombres[numberOfName];
-}
+  }
 
-public nuevoFallo() {
+  public nuevoFallo() {
     this.vidas = this.vidas - 1;
     return this.vidas;
-}
+  }
 
-public nuevaImagen(imagen) {
+  public nuevaImagen(imagen) {
     this.imagen = imagen + 1;
     return this.imagen;
-}
+  }
 
-public confirmarResolver(){
-  this.showPrompt();
-}
+  public confirmarResolver() {
+    this.showPrompt();
+  }
 
-public showPrompt() {
-  const prompt = this.alertCtrl.create({
+  public showPrompt() {
+    const prompt = this.alertCtrl.create({
       title: 'Solución directa',
       message: "¿Está seguro de resolver la palabra secreta directamente?",
       inputs: [
-      {
+        {
           name: 'palabraSolucion',
           id: 'palabraSolucion',
           placeholder: this.palabra
-      },
+        },
       ],
       buttons: [
-      {
+        {
           text: 'Cancelar',
           handler: data => {
             // Se cierra ventana.
           }
-      },
-      {
+        },
+        {
           text: 'Resolver',
           handler: data => {
             // Llamamos a método que compara la palabra secreta con la insertada mediante teclado.
             // var solucion = this.palabra.toString();
             // var solucion = solucion.replace(/,/g, '');
-        var solucion = ((document.getElementById("palabraSolucion") as HTMLInputElement).value);
+            var solucion = ((document.getElementById("palabraSolucion") as HTMLInputElement).value);
             this.resolver(solucion);
           }
-      }]
-  });
-  prompt.present();
-}
-
-public showConfirm(accion) {
-
-  // Resolver
-  if(accion == 'resolver'){
-    const confirm = this.alertCtrl.create({
-          title: 'Solución directa',
-          message: '¿Está seguro de resolver la palabra secreta directamente?',
-          buttons: [
-          {
-              text: 'Cancelar',
-              handler: () => {
-                //
-              }
-          },
-          {
-              text: 'Confirmar',
-              handler: () => {
-                //
-              }
-          }]
-      });
-    confirm.present();
+        }]
+    });
+    prompt.present();
   }
 
-}
+  public showConfirm(accion) {
 
-public resolver(solucion){
-  // Comprobamos la solución directa.
+    // Resolver
+    if (accion == 'resolver') {
+      const confirm = this.alertCtrl.create({
+        title: 'Solución directa',
+        message: '¿Está seguro de resolver la palabra secreta directamente?',
+        buttons: [
+          {
+            text: 'Cancelar',
+            handler: () => {
+              //
+            }
+          },
+          {
+            text: 'Confirmar',
+            handler: () => {
+              //
+            }
+          }]
+      });
+      confirm.present();
+    }
 
-  if(this.nombreSecreto == solucion.toUpperCase()){
-    var totalOcultas = 0;
-    // Recorremos el array para detectar huecos sin transformar a letras.
-    for ( var i = 0; i < this.palabra.length; i++ ) {
-          if(this.palabra[i] == '_'){
-            totalOcultas = totalOcultas + 1;
-          }
+  }
+
+  public resolver(solucion) {
+    // Comprobamos la solución directa.
+
+    if (this.nombreSecreto == solucion.toUpperCase()) {
+      var totalOcultas = 0;
+      // Recorremos el array para detectar huecos sin transformar a letras.
+      for (var i = 0; i < this.palabra.length; i++) {
+        if (this.palabra[i] == '_') {
+          totalOcultas = totalOcultas + 1;
+        }
       }
 
       // ACIERTO :: Sumamos +50 y + 20 por cada hueco sin desvelar.
       this.puntos = this.puntos + 50 + (20 * totalOcultas);
 
-    this.finDelJuego('gana')
+      this.finDelJuego('gana')
 
-    // Colocamos la palabra secreta en el
-  }else{
-    // ERROR :: RESTAMOS 50.
-    this.puntos = this.puntos - 25;
+      // Colocamos la palabra secreta en el
+    } else {
+      // ERROR :: RESTAMOS 50.
+      this.puntos = this.puntos - 25;
 
-    let toast = this.toastCtrl.create({
-        message: 'Lo sentimos!, La palabra '+solucion+' no es la palabra secreta. Su error le resta 25 puntos.',
+      let toast = this.toastCtrl.create({
+        message: 'Lo sentimos!, La palabra ' + solucion + ' no es la palabra secreta. Su error le resta 25 puntos.',
         duration: this.durationMessages,
         cssClass: 'toast-danger',
         position: 'top'
       });
-    toast.present();
+      toast.present();
+    }
+
+
   }
 
-
-}
-
-public finDelJuego(valor) { 
+  public finDelJuego(valor) {
     // Perdedor
     if (valor == 'pierde') {
 
       this.ganador = 0;
 
-    // Mostramos el mensaje como que el juego ha terminado
+      // Mostramos el mensaje como que el juego ha terminado
       let toast = this.toastCtrl.create({
         message: 'Perdiste!, Inténtalo de nuevo. La palabra secreta es ' + this.nombreSecreto,
         duration: this.durationMessages,
         cssClass: 'toast-danger',
         position: 'top'
       });
-    toast.present();
-  }
+      toast.present();
+    }
 
     // Ganador
-    if (valor == 'gana') { 
+    if (valor == 'gana') {
 
       this.ganador = 1;
-          
-      if(this.juegaPorDescuento){
-      
+
+      if (this.juegaPorDescuento) {
+
         let toast = this.toastCtrl.create({
           message: 'Bien!, Acertaste la palabra secreta. Si pediste una bebida, la descontamos del pedido!',
           duration: this.durationMessages,
@@ -407,18 +401,16 @@ public finDelJuego(valor) {
           position: 'top'
         });
         toast.present();
-          
-          spin(this.modalController, true);
-          this.pedido.descuento_bebida =  true;
-      
-          this.pedidoService.actualizarUnPedido(this.pedido.id).update(this.pedido).then(() => {
-                  
+
+        spin(this.modalController, true);
+        this.pedido.descuento_bebida = true;
+
+        this.pedidoService.actualizarUnPedido(this.pedido.id).update(this.pedido).then(() => {
           spin(this.modalController, false);
-            // showAlert(this.alertController, "Exito", "Pedido actualizado exitosamente");
-            this.navCtrl.pop();
-          })
-      }else{
-        
+          this.navCtrl.pop();
+        })
+      } else {
+
         let toast = this.toastCtrl.create({
           message: 'Bien!, Acertaste la palabra secreta.',
           duration: this.durationMessages,
@@ -429,27 +421,27 @@ public finDelJuego(valor) {
       }
 
       this.juegoAhorcadoMostrado = false;
-    
 
 
-    
-    }		
-}
 
-public reiniciaJuego() { 
+
+    }
+  }
+
+  public reiniciaJuego() {
     this.letra = '';
     this.palabra = '';
     this.vidas = 6;
     this.mensaje = '';
     this.ganador = 0;
     this.puntos = 0;
-    this.nombreSecreto = this.palabraAleatoria(0, (this.nombres.length-1));
+    this.nombreSecreto = this.palabraAleatoria(0, (this.nombres.length - 1));
     this.muestraHuecos = this.muestraHuecosPalabra();
     this.imagen = 1;
     this.letras_utilizadas = '';
-   this.nombresecretomostrar = '';
-   this.controlLetras = new Array;
-}
+    this.nombresecretomostrar = '';
+    this.controlLetras = new Array;
+  }
 
 
 

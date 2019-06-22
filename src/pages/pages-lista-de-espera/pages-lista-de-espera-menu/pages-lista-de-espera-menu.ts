@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, AlertController, ModalController }
 import { UsuarioService } from '../../../services/usuario-service';
 import { QRService } from '../../../services/QR-service';
 import { showAlert, spin } from '../../../environments/environment';
+import { SoundsService } from '../../../services/sounds-service';
 
 @IonicPage()
 @Component({
@@ -19,7 +20,8 @@ export class ListaDeEsperaMenuPage {
     public modalController: ModalController,
     public navParams: NavParams, 
     public usuarioService: UsuarioService,
-    private qrService: QRService) {
+    private qrService: QRService,
+    private soundsService: SoundsService) {
     this.registros = new Array<any>();
     this.cargarLista();
   }
@@ -31,7 +33,7 @@ export class ListaDeEsperaMenuPage {
         return registro.nombre === JSON.parse(sessionStorage.getItem("usuario")).nombre
       }).length === 1
     ) {
-      showAlert(this.alertCtrl,"Error","Ya existe un usuario con su nombre en la lista de espera");
+      showAlert(this.alertCtrl,"Error","Ya existe un usuario con su nombre en la lista de espera", this.soundsService, 'error');
       return false;
     }
 
@@ -52,7 +54,7 @@ export class ListaDeEsperaMenuPage {
 
           this.usuarioService.cargarRegistroListaDeEspera(JSON.parse(JSON.stringify(registro))).then(() => {
             spin(this.modalController, false);
-            showAlert(this.alertCtrl,"Exito","Agregado a la lista de espera exitosamente");
+            showAlert(this.alertCtrl,"Exito","Agregado a la lista de espera exitosamente", this.soundsService, 'success');
           })
           .catch( error => {
             console.log(error);
@@ -60,7 +62,7 @@ export class ListaDeEsperaMenuPage {
           });
         }
       } catch(err) {
-        showAlert(this.alertCtrl, "Error", "QR invalido");
+        showAlert(this.alertCtrl, "Error", "QR invalido", this.soundsService, 'error');
       }
     }).catch(err => {
        console.log('Error', err);
