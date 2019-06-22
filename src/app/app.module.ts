@@ -114,6 +114,9 @@ import { PagesDeliveryBoyPage } from '../pages/pages-delivery-boy/pages-delivery
 import { PagesDeliveryBoyPageModule } from '../pages/pages-delivery-boy/pages-delivery-boy.module';
 import { SoundsService } from '../services/sounds-service';
 import { Vibration } from '@ionic-native/vibration';
+import { PagesChatPageModule } from '../pages/pages-chat/pages-chat.module';
+import { PagesChatPage } from '../pages/pages-chat/pages-chat';
+import { MensajesProvider } from '../providers/mensajes/mensajes';
 
 export function provideSettings(storage: Storage) {
   /**
@@ -181,7 +184,8 @@ export function provideSettings(storage: Storage) {
     PagesPedidosListaPageModule,
     PagesPedidosPendientesMozoPageModule,
     PagesPedidosDeliveryPageModule,
-    PagesDeliveryBoyPageModule
+    PagesDeliveryBoyPageModule,
+    PagesChatPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -213,7 +217,8 @@ export function provideSettings(storage: Storage) {
     PagesPedidosAltaPage,
     PagesPedidosPendientesMozoPage,
     PagesPedidosDeliveryPage,
-    PagesDeliveryBoyPage
+    PagesDeliveryBoyPage,
+    PagesChatPage
   ],
   providers: [
     Api,
@@ -245,7 +250,8 @@ export function provideSettings(storage: Storage) {
     HttpMailProvider,
     PedidoService,
     SoundsService,
-    PedidosProvider
+    PedidosProvider,
+    MensajesProvider
   ]
 })
 export class AppModule {}
