@@ -18,11 +18,13 @@
     <ion-item *ngIf="mensaje.usuario.tipo=='delivery'" style="background-color: rgba(246, 250, 14, 0.685)">
         <p style="color: white">{{mensaje.usuario.nombre}} dice:</p> 
         <p style="color: black">{{mensaje.mensaje}}</p> 
+        <p style="color: gray">{{mensaje.fecha}}</p> 
        </ion-item>
 
     <ion-item *ngIf="mensaje.usuario.tipo=='cliente'" style="background-color: rgba(0, 128, 128, 0.37)">
      <p style="color: gray">{{mensaje.usuario.nombre}} dice:</p> 
       <p style="color: white">{{mensaje.mensaje}}</p>
+      <p style="color: gray">{{mensaje.fecha}}</p> 
     </ion-item>
 </ion-list>
   

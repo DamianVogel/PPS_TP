@@ -31,12 +31,15 @@ export class PagesChatPage {
   GuardarMensaje()
   {
     let mensaje = new Mensaje();
+    let fecha = new Date();
 
     mensaje.usuario=this.usuario;
-    mensaje.fecha= Date.now().toString();
+    mensaje.fecha= fecha.getDate() + "/" + fecha.getMonth() + "/" + fecha.getFullYear() + " " + fecha.getHours() + ":" + fecha.getMinutes();
+    console.log(mensaje.fecha);
     mensaje.mensaje=this.mensaje;
 
     this.mensajesProv.GuardarMensaje(mensaje.dameJSON());
+    this.mensaje="";
 
   }
 
