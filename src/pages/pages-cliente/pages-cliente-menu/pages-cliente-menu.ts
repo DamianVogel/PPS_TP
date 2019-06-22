@@ -14,6 +14,7 @@ import { QRService } from '../../../services/QR-service';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { MesasProvider } from '../../../providers/mesas/mesas';
 import { SoundsService } from '../../../services/sounds-service';
+import { PagesChatPage } from '../../pages-chat/pages-chat';
 
 
 @IonicPage()
@@ -31,6 +32,7 @@ export class PagesClienteMenuPage {
   usuario: Usuario;
   ocupaMesa: boolean;
   pedido: Pedido;
+  tieneChat: boolean;
 
   constructor(
     public navCtrl: NavController,
@@ -46,10 +48,12 @@ export class PagesClienteMenuPage {
   ) {
     //this.mesa = JSON.parse(sessionStorage.getItem("mesaOcupada"));
     this.usuario = JSON.parse(sessionStorage.getItem("usuario"));
+   
   }
 
   ionViewWillEnter() {
     this.ocupaMesa = this.usuarioService.RelacionUsuarioMesa();
+    this.tieneChat=false;
     this.estadoPedido();
   }
 
@@ -109,8 +113,10 @@ export class PagesClienteMenuPage {
             && pedido.cliente.id == JSON.parse(sessionStorage.getItem("usuario")).id 
             ) {
                   
-          
-            this.pedido = pedido;                      
+              
+            this.pedido = pedido;       
+            this.tieneChat= true;  
+                        
         }
       
      
@@ -193,5 +199,25 @@ export class PagesClienteMenuPage {
     });
 
   }
+
+  Chat()
+  {
+    this.navCtrl.push(PagesChatPage);
+  }
+
+  ValidarChatCargosos()
+  {
+    if(this.pedido)
+    {
+      if(this.pedido.tipo=='delivery' && this.pedido.estado=='en_camino')
+      {
+        this.tieneChat= true;
+      }
+    }
+    else{
+      this.tieneChat= false;
+    }
+  }
+
 
 }
