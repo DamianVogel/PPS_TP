@@ -59,7 +59,7 @@ console.log(usuario.id);
       console.log(data);
 
       let toast = this.toastCtrl.create({
-        message: "Error al enviar correo.",
+        message: "Correo de confirmacion enviado.",
         duration: 3000,
         position: 'middle' //middle || top
       });

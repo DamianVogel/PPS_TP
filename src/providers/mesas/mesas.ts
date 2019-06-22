@@ -20,6 +20,8 @@ export class MesasProvider {
 
   private listaMesasFirebase: AngularFirestoreCollection<Mesa>;
   private listaMesasObservable: Observable<Mesa[]>;
+  private listaMesasMozoFirebase: AngularFirestoreCollection<Mesa>;
+  private listaMesasMozoObservable: Observable<Mesa[]>;
   public mesas:Array<Mesa>;
   public mesasId:Array<any>;
   //public mesasDisponibles: Array<Mesa>;
@@ -53,6 +55,12 @@ export class MesasProvider {
       });
     });
 
+  }
+
+  TraerMesasMozo(){
+    this.listaMesasMozoFirebase = this.objFirebase.collection<any>("SP_mesas", ref => ref.orderBy('numero', 'asc') );
+    this.listaMesasMozoObservable = this.listaMesasMozoFirebase.valueChanges();
+    return this.listaMesasMozoObservable;
   }
 
   
