@@ -90,9 +90,15 @@
         "ANDROID_SUPPORT_V4_VERSION": "27.+"
       },
       "cordova-plugin-vibration": {},
+<<<<<<< HEAD
       "cordova-plugin-firebase": {},
       "cordova-plugin-androidx": {},
       "cordova-plugin-androidx-adapter": {}
+=======
+      "cordova-plugin-androidx": {},
+      "cordova-plugin-androidx-adapter": {},
+      "cordova-plugin-firebase": {}
+>>>>>>> master
     },
     "platforms": [
       "android"

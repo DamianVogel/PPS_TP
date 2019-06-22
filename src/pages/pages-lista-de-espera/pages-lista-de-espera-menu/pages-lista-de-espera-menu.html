@@ -6,12 +6,13 @@
 <ion-content padding class="cocineroMenu">
   <button ion-button expand="block" class="menuButtonPPT ios button button-block button-solid ion-activatable ion-focusable hydrated" (click)="agregarse()">Agregarse</button>
   <br>
-  <ion-list>
-    <ion-item *ngFor="let registro of registros">
+  <ion-list class="listaEsperaList">
+    <ion-item class="listaEsperaItem" *ngFor="let registro of registros" style="background-color: transparent;">
       <ion-row>
-        <ion-col col-2>{{registro.indice}}</ion-col>
-        <ion-col>{{registro.nombre}}</ion-col>
+        <ion-col col-2 class="listaEsperaIndice">{{registro.indice}}</ion-col>
+        <ion-col class="listaEsperaNombre">{{registro.nombre}}</ion-col>
       </ion-row>
     </ion-item>
+    <br>
   </ion-list>
 </ion-content>
