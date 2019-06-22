@@ -4,6 +4,7 @@ import { AngularFirestoreCollection, AngularFirestore } from 'angularfire2/fires
 import { Observable } from 'rxjs/Observable';
 import { Reserva } from '../../clases/Reserva';
 import { ToastController } from 'ionic-angular';
+import { Mesa } from '../../clases/mesa';
 
 /*
   Generated class for the ReservasProvider provider.
@@ -104,6 +105,36 @@ export class ReservasProvider {
       console.log(error);
     });
 
+  }
+
+  MesaReservada(mesa:Mesa)
+  {
+    let now=new Date();
+    let fecha=now.getFullYear()+"-"+now.getMonth()+"-"+now.getDate();
+    let hora=now.getHours()+":"+now.getMinutes();
+    let reservada=false;
+
+    let nowMin=((Date.parse(hora)) / 1000 )/ 60;
+   
+    this.listaReservasFirebase = this.objFirebase.collection<any>("SP_reservas", ref => ref.orderBy('fecha', 'desc') );
+
+     this.listaReservasFirebase.valueChanges()
+     .subscribe(array=>{
+
+       array.forEach((reserva:Reserva)=>{
+
+        let reservaMin=(Date.parse(reserva.hora) / 1000) / 60;
+      
+         if((mesa.numero==reserva.mesas) &&
+         (reserva.fecha==fecha) &&
+         (nowMin >= reservaMin - 4) &&
+         (reserva.estado=="Autorizada"))
+         {
+          reservada=true;
+         }
+       })
+     })
+     return reservada;
   }
 
   
