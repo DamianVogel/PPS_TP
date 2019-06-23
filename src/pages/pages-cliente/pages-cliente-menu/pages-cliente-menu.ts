@@ -15,6 +15,7 @@ import { AngularFirestore } from 'angularfire2/firestore';
 import { MesasProvider } from '../../../providers/mesas/mesas';
 import { SoundsService } from '../../../services/sounds-service';
 import { PagesChatPage } from '../../pages-chat/pages-chat';
+import { ReservasProvider } from '../../../providers/reservas/reservas';
 
 
 @IonicPage()
@@ -44,7 +45,8 @@ export class PagesClienteMenuPage {
     private qrService: QRService,
     private objFirebase: AngularFirestore,
     private mesasProvider: MesasProvider,
-    private soundsService: SoundsService
+    private soundsService: SoundsService,
+    private rservasProvider: ReservasProvider
   ) {
     //this.mesa = JSON.parse(sessionStorage.getItem("mesaOcupada"));
     this.usuario = JSON.parse(sessionStorage.getItem("usuario"));
@@ -145,7 +147,7 @@ export class PagesClienteMenuPage {
             this.estadoPedido();
           }
 
-          if (mesa.estado == 'disponible') {
+          if ((mesa.estado == 'disponible') && (this.rservasProvider.MesaReservada(mesa)==false) ) {
 
             let mesaUpdate = new Mesa();
             mesaUpdate = mesa;

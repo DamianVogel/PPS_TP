@@ -45,6 +45,21 @@ export class PedidosProvider {
 
   }
 
+  async CancelarPedido(pedido: Pedido)
+  {
+    pedido.estado="cancelado";
+    
+    this.objFirebase.collection("SP_pedidos").doc(pedido.id).set(pedido).then(() => {
+            
+    
+      console.log('Documento editado exitósamente');
+
+    }, (error) => {
+      console.log(error);
+    });
+
+  }
+
 
   async Cobrar(pedido: Pedido)
   {
