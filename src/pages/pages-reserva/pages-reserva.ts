@@ -29,6 +29,7 @@ export class PagesReservaPage {
   reservas: Array<Reserva>;
   usuario:Usuario;
   mesas;
+  hoy:string;
 
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
@@ -42,6 +43,10 @@ export class PagesReservaPage {
     this.usuario=JSON.parse(sessionStorage.getItem("usuario")); 
     this.TraerReservas();
 
+    let t=new Date();
+    
+   this.hoy=t.getFullYear() + "-0" + t.getMonth()+ "-" + t.getDate();
+ 
   }
 
 
@@ -76,6 +81,7 @@ Registrar()
   let reserva= new Reserva();
 
   reserva.fecha= this.registroForm.get('fecha').value;
+  
   reserva.hora= this.registroForm.get('hora').value;
   reserva.cliente= this.usuario;
   let cant_comensales= this.registroForm.get('cant_comensales').value;
@@ -183,6 +189,10 @@ async TraerReservas()
 
 
   ionViewDidLoad() {
+    let t=new Date();
+    
+
+    this.hoy=t.getFullYear() + "-0" + (t.getMonth()+1)+ "-" + t.getDate();
     console.log('ionViewDidLoad PagesReservaPage');
   }
 
