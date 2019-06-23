@@ -109,6 +109,7 @@ export class ReservasProvider {
 
   MesaReservada(mesa:Mesa)
   {
+    let usuario=JSON.parse(sessionStorage.getItem("usuario"));
     let now=new Date();
     let fecha=now.getFullYear()+"-"+now.getMonth()+"-"+now.getDate();
     let hora=now.getHours()+":"+now.getMinutes();
@@ -130,7 +131,11 @@ export class ReservasProvider {
          (nowMin >= reservaMin - 4) &&
          (reserva.estado=="Autorizada"))
          {
-          reservada=true;
+           if(usuario.id!= reserva.cliente.id)
+           {
+            reservada=true;
+           }
+          
          }
        })
      })
