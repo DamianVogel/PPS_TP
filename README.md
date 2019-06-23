@@ -118,8 +118,39 @@
 ### **Augusto Morelli (AugustoMorelli / AugustoBranch)**
 
   #### Alta de cliente (TBD - TBD)
-  13) Se ingresará el nombre, apellido, DNI, y foto.
-  14) La foto se tomará del celular.
-  15) Si se registra como ‘anónimo’ solo se cargarán el nombre y la foto.
-  16) Brindar la posibilidad de contar con un lector de código QR para el DNI, que cargará la información disponible (sólo aplicable a aquellos documentos que lo posean).
-  17) Esta acción la podrá realizar el cliente o el metre.
+
+- Formulario de registro de clientes.
+- Validación de todos los campos del formulario (form vacío, correo, DNI)
+- *Se pueden cargar los datos del cliente por medio del lector de cofigo QR con el dni del mismo.*
+- Se toma la foto del cliente.
+- El dueño acepta la solicitud de registro del cliente.
+- Se le envía un correo al cliente con un link de validación del correo.
+- Dicho link habilita al usuario del cliente.
+
+#### Reservas agendadas:
+
+- Formulario de solicitud de reservas.
+- Se valida que dicho formulario no este vacío.
+- Se valida que no se pueda tomar una reserva anterior a la fecha actual.
+- Se valida que las que el sistema asigne automáticamente una mesa acorde a lo solicitado.
+- Se valida que dicha mesa no esté reservada previamente.
+- Se valida que que la mesa no se pueda reservar por un período de 30 min anteriores y posteriores.
+- Se valida que no se pueda tomar por QR una mesa en una fecha reservada (desde 4 min anteriores).
+- La reserva puede ser aceptada o rechazada por el dueño.
+- *Se le envía un push notification al cliente que hizo la reserva con el la aceptación o cancelación de la misma*.
+
+#### Flujo del mozo:
+
+- *Se le envía un push notification al mozo cuando un nuevo cliente se agrega a la lista de espera*.
+- Pagina principal del mozo con el listado de todas las mesas y el estado de las mismas.
+- El mozo puede aceptar o rechazar los pedidos de los clientes, tanto en salón como en delivery.
+- El mozo puede acceder a cada mesa en particular con el estado de todos los pedidos que hizo el cliente.
+- El mozo retira los productos terminados por el resto de los empleados y los entrega al cliente.
+- El mozo cobra al cliente cuando este solicita la cuenta (se tiene en cuenta el cálculo de la propina y los descuentos).
+- Cuando el cliente pagó, el mozo libera la mesa (se desvincula al cliente con la mesa).
+
+#### Chat de delivery y clientes:
+
+-Se valida que el chat sólo este disponible para aquellos clientes que tienen pedidos "en camino".
+-Sala de chat entre el delivery y los clientes.
+-Se le agrega la fecha de los mensajes.
