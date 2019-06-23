@@ -17,15 +17,15 @@ export let SPINNER_IMG = "assets/img/spinner.gif";
 export const DIRECCION_LOCAL = new google.maps.LatLng(-34.662544, -58.364732);
 
 export const environment = {
-    production: false,
-    firebase: {
-      apiKey: "AIzaSyAM-VSDDi0jqIXQxjdMh71lxTfTlpQEFpI",
-      authDomain: "practicaprofesional-dbd4e.firebaseapp.com",
-      databaseURL: "https://practicaprofesional-dbd4e.firebaseio.com",
-      projectId: "practicaprofesional-dbd4e",
-      storageBucket: "practicaprofesional-dbd4e.appspot.com",
-      messagingSenderId: "273959203301"
-    }
+  production: false,
+  firebase: {
+    apiKey: "AIzaSyAM-VSDDi0jqIXQxjdMh71lxTfTlpQEFpI",
+    authDomain: "practicaprofesional-dbd4e.firebaseapp.com",
+    databaseURL: "https://practicaprofesional-dbd4e.firebaseio.com",
+    projectId: "practicaprofesional-dbd4e",
+    storageBucket: "practicaprofesional-dbd4e.appspot.com",
+    messagingSenderId: "273959203301"
+  }
 };
 
 export const showAlert = function (alertCtrl: any, title: string, message: string, soundsService?: SoundsService, sound?: string) {
@@ -42,38 +42,38 @@ export const showAlert = function (alertCtrl: any, title: string, message: strin
       }
     ]
   });
-  if(sound && soundsService){ soundsService.sound(sound); }
+  if (sound && soundsService) { soundsService.sound(sound); }
   alert.present();
 }
 
-export const spin = function (modalCtrl:any, status: boolean) {
-  if(spinner === undefined && status === true) {
+export const spin = function (modalCtrl: any, status: boolean) {
+  if (spinner === undefined && status === true) {
     spinner = modalCtrl.create(SpinnerPage);
     spinner.present();
-  } else if(spinner !== undefined && status === false) {
+  } else if (spinner !== undefined && status === false) {
     spinner.dismiss();
     spinner = undefined;
   }
 }
 
-export const wait = function (ms){
+export const wait = function (ms) {
   var start = new Date().getTime();
   var end = start;
-  while(end < start + ms) {
+  while (end < start + ms) {
     end = new Date().getTime();
- }
+  }
 }
 
-export const uploadImage = function(image: string, path: string): any {
+export const uploadImage = function (image: string, path: string): any {
   let data = getBlob(image);
-  let storageRef =  firebase.storage().ref();
+  let storageRef = firebase.storage().ref();
   let imageRef = storageRef.child(path);
   imageRef.put(data).then((snapshot) => {
-    console.log('Imagen subida exitosamente: '+path);
+    console.log('Imagen subida exitosamente: ' + path);
   });
 }
 
-export const getBlob = function(b64Data): any {
+export const getBlob = function (b64Data): any {
   let contentType = '';
   let sliceSize = 512;
 
@@ -87,18 +87,18 @@ export const getBlob = function(b64Data): any {
 
     let byteNumbers = new Array(slice.length);
     for (let i = 0; i < slice.length; i++) {
-        byteNumbers[i] = slice.charCodeAt(i);
+      byteNumbers[i] = slice.charCodeAt(i);
     }
 
     let byteArray = new Uint8Array(byteNumbers);
     byteArrays.push(byteArray);
   }
 
-  let blob = new Blob(byteArrays, {type: contentType});
+  let blob = new Blob(byteArrays, { type: contentType });
   return blob;
 }
 
-export const round = function(value, exp) {
+export const round = function (value, exp) {
   if (typeof exp === 'undefined' || +exp === 0)
     return Math.round(value);
 
@@ -117,16 +117,16 @@ export const round = function(value, exp) {
   return +(value[0] + 'e' + (value[1] ? (+value[1] - exp) : -exp));
 }
 
-export const getRandomColor = function() {
+export const getRandomColor = function () {
   var letters = '0123456789ABCDEF'.split('');
   var color = '#';
-  for (var i = 0; i < 6; i++ ) {
-      color += letters[Math.floor(Math.random() * 16)];
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
   }
   return color;
 }
 
-export const getImageURL = function(path: string): any {
+export const getImageURL = function (path: string): any {
   let storageRef = firebase.storage().ref();
   let imageRef = storageRef.child(path);
   return imageRef.getDownloadURL();
