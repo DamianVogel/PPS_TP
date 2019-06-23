@@ -35,8 +35,15 @@ export class PagesMozoPage {
     this.navCtrl.push(this.listaEspera);
   }
 
-  TraerMesas() {
-    this.listaMesas = this.mesasProv.mesas;
+  TraerMesas() {/*
+    this.listaMesas = this.mesasProv.mesas;*/
+
+    this.mesasProv.TraerMesasMozo().subscribe(arr => {
+   
+      this.listaMesas = arr.map(function(mesa, index){
+        return mesa;
+      });
+    });
     console.log(this.listaMesas);
   }
 

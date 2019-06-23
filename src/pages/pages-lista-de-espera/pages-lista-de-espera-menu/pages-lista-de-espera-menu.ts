@@ -13,6 +13,7 @@ import { SoundsService } from '../../../services/sounds-service';
 export class ListaDeEsperaMenuPage {
 
   registros:Array<any>;
+  usuario;
 
   constructor(
     public alertCtrl: AlertController,
@@ -22,6 +23,7 @@ export class ListaDeEsperaMenuPage {
     public usuarioService: UsuarioService,
     private qrService: QRService,
     private soundsService: SoundsService) {
+      this.usuario=JSON.parse(sessionStorage.getItem("usuario"));
     this.registros = new Array<any>();
     this.cargarLista();
   }

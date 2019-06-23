@@ -49,6 +49,11 @@ export class PagesPedidosPendientesMozoPage {
     this.pedidosProv.AceptarPedido(pedido);
   }
 
+  CancelarPedido(pedido: Pedido)
+  {
+    this.pedidosProv.CancelarPedido(pedido);
+  }
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad PagesPedidosPendientesMozoPage');
   }

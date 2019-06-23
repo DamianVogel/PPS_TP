@@ -19,6 +19,13 @@
       <ion-title>{{producto.nombre}}</ion-title>
     </ion-item>
     <ion-slides pager="true" effect="coverflow" zoom="true">
+
+      <ion-slide *ngIf="producto.foto1 === '' && producto.foto2 === '' && producto.foto3 === ''">
+        <div class="swiper-zoom-container">
+          <img class="imagen" src="../assets/img/noPhoto.png">
+        </div>
+      </ion-slide>
+
       <ion-slide *ngIf="producto.foto1 !== ''">
         <div class="swiper-zoom-container">
           <img class="imagen" [src]="producto.foto1">

@@ -279,7 +279,9 @@ export class PagesPedidosAltaPage {
       this.pedido.productos.forEach((productoEnPedido) => {
         if (producto.nombre === productoEnPedido.nombre) {
           this.pedido.costo += producto.precio * productoEnPedido.cantidad;
-          this.pedido.tiempo_espera += producto.tiempo;
+          if(this.pedido.tiempo_espera < producto.tiempo){
+            this.pedido.tiempo_espera = producto.tiempo;
+          }
         }
       })
     })

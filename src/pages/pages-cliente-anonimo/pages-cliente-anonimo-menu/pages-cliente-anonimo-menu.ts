@@ -40,7 +40,7 @@ export class PagesClienteAnonimoMenuPage {
     private pedidoService: PedidoService,
     private soundsService: SoundsService
     ) {
-      //this.ocupaMesa = this.usuarioService.RelacionUsuarioMesa();
+      this.usuario = JSON.parse(sessionStorage.getItem("usuario"));
   }
 
   ionViewWillEnter(){

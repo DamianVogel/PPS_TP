@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, Navbar } from 'ionic-angular';
 import { PedidoService } from '../../services/pedidos-service';
 import { Pedido } from '../../clases/Pedido';
 import { SoundsService } from '../../services/sounds-service';
+import { PagesChatPage } from '../pages-chat/pages-chat';
 
 @IonicPage()
 @Component({
@@ -60,6 +61,12 @@ export class PagesDeliveryBoyPage {
      
     })
    
+  }
+
+
+  Chat()
+  {
+    this.navCtrl.push(PagesChatPage);
   }
 
 }
