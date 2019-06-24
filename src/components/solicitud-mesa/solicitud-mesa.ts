@@ -14,6 +14,7 @@ import { LoadingController } from 'ionic-angular'
 export class SolicitudMesaComponent {
 
   @Input() ocupaMesa: boolean;
+  @Input() tieneChat: boolean;
 
   constructor(
     public api: Api,

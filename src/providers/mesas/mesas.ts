@@ -19,7 +19,7 @@ import { Usuario } from '../../clases/usuario';
 export class MesasProvider {
 
   private listaMesasFirebase: AngularFirestoreCollection<Mesa>;
-  private listaMesasObservable: Observable<Mesa[]>;
+  public listaMesasObservable: Observable<Mesa[]>;
   private listaMesasMozoFirebase: AngularFirestoreCollection<Mesa>;
   private listaMesasMozoObservable: Observable<Mesa[]>;
   public mesas:Array<Mesa>;
