@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Navbar } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Navbar, AlertController } from 'ionic-angular';
 import { Usuario } from '../../../clases/usuario';
 import { ListaDeEsperaMenuPage } from '../../pages-lista-de-espera/pages-lista-de-espera-menu/pages-lista-de-espera-menu';
 import { PagesJuegosMenuPage } from '../../pages-juegos/pages-juegos-menu/pages-juegos-menu';
@@ -13,6 +13,7 @@ import { ToastController } from 'ionic-angular';
 import { PedidoService } from '../../../services/pedidos-service'
 import { Pedido } from '../../../clases/Pedido';
 import { SoundsService } from '../../../services/sounds-service';
+import { getImageURL, SPINNER_IMG, showAlert, round, spin } from '../../../environments/environment';
 
 
 
@@ -24,7 +25,7 @@ import { SoundsService } from '../../../services/sounds-service';
 export class PagesClienteAnonimoMenuPage {
 
   usuario: Usuario;
-  ocupaMesa: Promise<boolean>;
+  ocupaMesa: boolean;
   pedido : Pedido;
 
   @ViewChild(Navbar) navBar: Navbar;
@@ -38,26 +39,52 @@ export class PagesClienteAnonimoMenuPage {
     private objFirebase: AngularFirestore,
     public toastCtrl: ToastController,
     private pedidoService: PedidoService,
-    private soundsService: SoundsService
+    private soundsService: SoundsService,
+    private alertController: AlertController
+
     ) {
       this.usuario = JSON.parse(sessionStorage.getItem("usuario"));
+      
+      this.mesasProvider.listaMesasObservable.subscribe(arr => {
+            
+       arr.forEach((mesa: Mesa) => {
+        if(mesa.usuario !== undefined && mesa.usuario !== null){
+          if(mesa.usuario.id == this.usuario.id){              
+            //alert("entra aca");
+            this.ocupaMesa = true;         
+            sessionStorage.setItem("mesaOcupada", JSON.stringify(mesa));  
+            this.estadoPedido();
+          }
+        }   
+              
+       });
+     });
   }
 
   ionViewWillEnter(){
-    this.ocupaMesa = this.usuarioService.RelacionUsuarioMesa();
+    //this.ocupaMesa = this.usuarioService.RelacionUsuarioMesa();
     this.estadoPedido();
   }
 
   ionViewDidLoad(){
     this.navBar.backButtonClick = (e:UIEvent)=>{
+      
       this.soundsService.sound('logout');
+      
+      
+      let mesa = JSON.parse(sessionStorage.getItem('mesaOcupada'));
+      
+      this.mesasProvider.LiberarMesa(mesa);
+      
+      sessionStorage.removeItem('mesaOcupada');
+      this.ocupaMesa = false;
       this.navCtrl.pop();
-     }
+    }
   }
 
   
   ngOnChanges() {
-    this.ocupaMesa = this.usuarioService.RelacionUsuarioMesa();
+    //this.ocupaMesa = this.usuarioService.RelacionUsuarioMesa();
     
   }
 
@@ -115,9 +142,8 @@ export class PagesClienteAnonimoMenuPage {
             
             console.log('Documento editado exitósamente');
             
-            //this.ocupaMesa = true;
-            this.ocupaMesa = this.usuarioService.RelacionUsuarioMesa();  
-            
+            this.ocupaMesa = true;
+           
 
             sessionStorage.setItem("mesaOcupada", JSON.stringify(mesa));               
 
@@ -161,28 +187,83 @@ export class PagesClienteAnonimoMenuPage {
   
   }
 
-  estadoPedido(){
-    this.pedidoService.traerPedidos().subscribe( pedidos=> {
-        pedidos.forEach(pedido => {
+  // estadoPedido(){
+  //   this.pedidoService.traerPedidos().subscribe( pedidos=> {
+  //       pedidos.forEach(pedido => {
           
-          if(pedido.tipo == 'restaurant'){
+  //         if(pedido.tipo == 'restaurant'){
               
-            if(pedido.mesaId == JSON.parse(sessionStorage.getItem("mesaOcupada")).id && 
-                pedido.cliente.id == JSON.parse(sessionStorage.getItem("usuario")).id){
-                this.pedido = pedido; 
-            }
+  //           if(pedido.mesaId == JSON.parse(sessionStorage.getItem("mesaOcupada")).id && 
+  //               pedido.cliente.id == JSON.parse(sessionStorage.getItem("usuario")).id){
+  //               this.pedido = pedido; 
+  //           }
           
-          }else{
+  //         }else{
             
-            if(pedido.cliente.id == JSON.parse(sessionStorage.getItem("usuario")).id){
+  //           if(pedido.cliente.id == JSON.parse(sessionStorage.getItem("usuario")).id){
             
-              this.pedido = pedido; 
+  //             this.pedido = pedido; 
             
-            }
-          }         
-        });
+  //           }
+  //         }         
+  //       });
 
+  //   })
+  // }
+
+  estadoPedido() {
+    let usuarioNoTienePedido =  true;
+
+
+    this.pedidoService.traerPedidos().subscribe(pedidos => {
+      pedidos.forEach(pedido => {
+    
+        if (  (pedido.tipo == 'restaurant') 
+              && (pedido.estado !== 'pagado' && pedido.estado !== 'cancelado') 
+              && (pedido.mesaId == JSON.parse(sessionStorage.getItem("mesaOcupada")).id &&
+                  pedido.cliente.id == JSON.parse(sessionStorage.getItem("usuario")).id)
+            ) {            
+             
+              this.pedido = pedido;
+              
+            }
+        
+        if (pedido.tipo == 'delivery' 
+            && pedido.estado !== 'pagado' 
+            && pedido.cliente.id == JSON.parse(sessionStorage.getItem("usuario")).id 
+            && pedido.estado !== 'cancelado'
+            ) {
+                  
+           
+            this.pedido = pedido;       
+           
+                        
+        }
+      
+        if(this.pedido !== undefined){
+          if(this.pedido.id == pedido.id  && pedido.estado == 'pagado'){          
+           
+            if(this.pedido.tipo == 'restaurant'){
+              sessionStorage.removeItem('mesaOcupada');
+              this.ocupaMesa = false;
+            } 
+            this.pedido =  undefined;
+            
+            showAlert(this.alertController, "MUCHAS GRACIAS POR ELEGIRNOS!", "Te esperamos nuevamente!", this.soundsService, 'success');
+                     
+          }
+
+          if(this.pedido.id == pedido.id  && pedido.estado == 'cancelado'){
+            showAlert(this.alertController, "LO SENTIMOS!", "TU PEDIDO FUE CANCELADO", this.soundsService, 'error');            
+            this.pedido =  undefined;
+          }
+
+
+        }
+      });
     })
+
+   
   }
 
   // HabilitarBotones(){
