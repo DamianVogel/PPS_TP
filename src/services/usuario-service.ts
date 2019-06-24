@@ -73,7 +73,7 @@ export class UsuarioService {
     return this.objFirebase.collection<Usuario>("SP_usuarios").doc(id).set(usuarioAGuardarJSON);
   }
 
-  async RelacionUsuarioMesa(){
+  RelacionUsuarioMesa(){
     let usuario = JSON.parse(sessionStorage.getItem('usuario')); 
     
     //console.log(usuario);
@@ -91,7 +91,7 @@ export class UsuarioService {
       });          
 
 
-    return await ocupaMesa;
+    return ocupaMesa;
 
   }
 

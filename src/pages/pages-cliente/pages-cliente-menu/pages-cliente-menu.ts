@@ -17,6 +17,7 @@ import { SoundsService } from '../../../services/sounds-service';
 import { PagesChatPage } from '../../pages-chat/pages-chat';
 import { ReservasProvider } from '../../../providers/reservas/reservas';
 import { getImageURL, SPINNER_IMG, showAlert, round, spin } from '../../../environments/environment';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 
 
@@ -36,6 +37,8 @@ export class PagesClienteMenuPage {
   ocupaMesa:boolean;
   pedido: Pedido;
   tieneChat: boolean;
+  mesasSubscription: any;
+  pedidosSubscription: any;
 
   constructor(
     public navCtrl: NavController,
@@ -51,15 +54,33 @@ export class PagesClienteMenuPage {
     private rservasProvider: ReservasProvider,
     private alertController: AlertController
   ) {
-   
     this.usuario = JSON.parse(sessionStorage.getItem("usuario"));
-    this.mesasProvider.listaMesasObservable.subscribe(arr => {
-            
+    
+     //.unsubscribe();
+  
+  
+  }
+
+  ionViewWillEnter() {
+    console.log("entro en ionViewWillEnter");
+    //this.ocupaMesa = this.usuarioService.RelacionUsuarioMesa();
+
+    this.usuario = JSON.parse(sessionStorage.getItem("usuario"));
+    
+    if(sessionStorage.getItem("mesaOcupada") !== null && sessionStorage.getItem("mesaOcupada") !== undefined ){
+      this.ocupaMesa = true;
+    }else{
+      this.ocupaMesa =  false;
+    }
+
+    this.mesasSubscription = this.mesasProvider.listaMesasObservable.subscribe(arr => {
+       console.log("Entro al subscribe en ionViewWillEnter");     
        arr.forEach((mesa: Mesa) => {
         if(mesa.usuario !== undefined && mesa.usuario !== null){
           if(mesa.usuario.id == this.usuario.id){              
-            //alert("entra aca");
+            console.log("entro a buscar las mesas");
             this.ocupaMesa = true;         
+            this.mesa = mesa;
             sessionStorage.setItem("mesaOcupada", JSON.stringify(mesa));  
             this.estadoPedido();
           }
@@ -67,19 +88,32 @@ export class PagesClienteMenuPage {
               
        });
      });
-  
-  
-  }
+     
+     this.estadoPedido();
 
-  ionViewWillEnter() {
-            this.estadoPedido();
-  }
-
-  ionViewDidLoad(){
-    this.navBar.backButtonClick = (e:UIEvent)=>{
+     this.navBar.backButtonClick = (e:UIEvent)=>{
       this.soundsService.sound('logout');
       this.navCtrl.pop();
-     }
+      //sessionStorage.clear();
+      //console.log("deberia unsubscribe");
+      this.mesasSubscription.unsubscribe();
+      this.pedidosSubscription.unsubscribe();
+    }
+
+  
+    }
+  
+    
+
+
+  ionViewDidLoad(){
+    // this.navBar.backButtonClick = (e:UIEvent)=>{
+    //   this.soundsService.sound('logout');
+    //   this.navCtrl.pop();
+    //   // sessionStorage.clear();
+    //   //console.log("deberia unsubscribe");
+    //   //this.mesasSubscription.unsubscribe();
+    // }
   
   }
 
@@ -127,10 +161,9 @@ export class PagesClienteMenuPage {
   }
 
   estadoPedido() {
-    let usuarioNoTienePedido =  true;
+    console.log("Entro a buscar los pedidos");
 
-
-    this.pedidoService.traerPedidos().subscribe(pedidos => {
+    this.pedidosSubscription = this.pedidoService.traerPedidos().subscribe(pedidos => {
       pedidos.forEach(pedido => {
     
         if (  (pedido.tipo == 'restaurant') 
@@ -139,8 +172,9 @@ export class PagesClienteMenuPage {
                   pedido.cliente.id == JSON.parse(sessionStorage.getItem("usuario")).id)
             ) {            
              
+              console.log("encontro el pedido");
               this.pedido = pedido;
-              
+              console.log(this.pedido);
             }
         
         if (pedido.tipo == 'delivery' 
@@ -149,18 +183,19 @@ export class PagesClienteMenuPage {
             && pedido.estado !== 'cancelado'
             ) {
                   
-            usuarioNoTienePedido = false;
             this.pedido = pedido;       
             this.tieneChat= true;  
                         
         }
       
-        if(this.pedido !== undefined){
+        if(this.pedido !== undefined && this.pedido !== null){
           if(this.pedido.id == pedido.id  && pedido.estado == 'pagado'){          
+            
             this.tieneChat =  false;
             if(this.pedido.tipo == 'restaurant'){
               sessionStorage.removeItem('mesaOcupada');
               this.ocupaMesa = false;
+              console.log("removio la mesa");
             } 
             this.pedido =  undefined;
             
@@ -168,12 +203,13 @@ export class PagesClienteMenuPage {
                      
           }
 
+        if(this.pedido !== undefined && this.pedido !== null){  
           if(this.pedido.id == pedido.id  && pedido.estado == 'cancelado'){
             this.tieneChat =  false;
             showAlert(this.alertController, "LO SENTIMOS!", "TU PEDIDO FUE CANCELADO", this.soundsService, 'error');            
             this.pedido =  undefined;
           }
-
+        }  
 
         }
       });

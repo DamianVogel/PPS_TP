@@ -91,6 +91,7 @@ export class PagesPedidosAltaPage {
         return pedido.cliente.id === this.pedido.cliente.id
           && pedido.mesaId === this.pedido.mesaId
           && pedido.estado !== 'pagado'
+          && pedido.estado !== 'cancelado'
           && pedido.tipo === this.pedido.tipo
       });
       if (pedidoExistente.length === 1) {
