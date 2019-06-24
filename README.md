@@ -41,15 +41,15 @@
   57) En caso de ganar se le descontará de la cuenta final el porcentaje correspondiente.
   
   #### Requerimientos basicos
-  # Splash animado con ícono de la aplicación y el nombre de los alumnos.
-  # Todo error o información mostrarlo con distintas ventanas. (DISTINTAS, ¡NO alerts!).
-  # Sonidos distintos al iniciar y cerrar la aplicación.
-  # Spinners, con el logo de la empresa, en todas las esperas. (TODAS).
-  # Vibraciones al detectarse un error. (TODOS LOS ERRORES).
-  # Distintos botones de usuario para testear el ingreso (flotantes, fijos, con distintas formas y distintas posiciones).
-  # Generación de documentos (JSON / EXCEL).
-  # Cargado de datos por medio de un archivo (JSON / EXCEL).
-  # Gráficos estadísticos (torta, barra, etc.).
+  .Splash animado con ícono de la aplicación y el nombre de los alumnos.
+  .Todo error o información mostrarlo con distintas ventanas. (DISTINTAS, ¡NO alerts!).
+  .Sonidos distintos al iniciar y cerrar la aplicación.
+  .Spinners, con el logo de la empresa, en todas las esperas. (TODAS).
+  .Vibraciones al detectarse un error. (TODOS LOS ERRORES).
+  .Distintos botones de usuario para testear el ingreso (flotantes, fijos, con distintas formas y distintas posiciones).
+  .Generación de documentos (JSON / EXCEL).
+  .Cargado de datos por medio de un archivo (JSON / EXCEL).
+  .Gráficos estadísticos (torta, barra, etc.).
 
   #### Listado de funcionalidades mininas a ser evaluadas (PDF de git de fecha 08/06/2019)
   7 - Se le permite ver los productos y hacer el pedido para todos los comensales de la mesa.
