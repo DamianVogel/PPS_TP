@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController, Navbar } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, Navbar, AlertController } from 'ionic-angular';
 import { ActionSheetController } from 'ionic-angular';
 import { PagesReservaPage } from '../../pages-reserva/pages-reserva';
 import { ListaDeEsperaMenuPage } from '../../pages-lista-de-espera/pages-lista-de-espera-menu/pages-lista-de-espera-menu';
@@ -16,6 +16,8 @@ import { MesasProvider } from '../../../providers/mesas/mesas';
 import { SoundsService } from '../../../services/sounds-service';
 import { PagesChatPage } from '../../pages-chat/pages-chat';
 import { ReservasProvider } from '../../../providers/reservas/reservas';
+import { getImageURL, SPINNER_IMG, showAlert, round, spin } from '../../../environments/environment';
+
 
 
 @IonicPage()
@@ -31,7 +33,7 @@ export class PagesClienteMenuPage {
 
   mesa: Mesa;
   usuario: Usuario;
-  ocupaMesa: boolean;
+  ocupaMesa:boolean;
   pedido: Pedido;
   tieneChat: boolean;
 
@@ -46,17 +48,31 @@ export class PagesClienteMenuPage {
     private objFirebase: AngularFirestore,
     private mesasProvider: MesasProvider,
     private soundsService: SoundsService,
-    private rservasProvider: ReservasProvider
+    private rservasProvider: ReservasProvider,
+    private alertController: AlertController
   ) {
-    //this.mesa = JSON.parse(sessionStorage.getItem("mesaOcupada"));
-    this.usuario = JSON.parse(sessionStorage.getItem("usuario"));
    
+    this.usuario = JSON.parse(sessionStorage.getItem("usuario"));
+    this.mesasProvider.listaMesasObservable.subscribe(arr => {
+            
+       arr.forEach((mesa: Mesa) => {
+        if(mesa.usuario !== undefined && mesa.usuario !== null){
+          if(mesa.usuario.id == this.usuario.id){              
+            //alert("entra aca");
+            this.ocupaMesa = true;         
+            sessionStorage.setItem("mesaOcupada", JSON.stringify(mesa));  
+            this.estadoPedido();
+          }
+        }   
+              
+       });
+     });
+  
+  
   }
 
   ionViewWillEnter() {
-    this.ocupaMesa = this.usuarioService.RelacionUsuarioMesa();
-    this.tieneChat=false;
-    this.estadoPedido();
+            this.estadoPedido();
   }
 
   ionViewDidLoad(){
@@ -64,7 +80,21 @@ export class PagesClienteMenuPage {
       this.soundsService.sound('logout');
       this.navCtrl.pop();
      }
+  
   }
+
+  // pedidoEstaPago(pago: boolean){
+  //   alert("entro");
+  //   if(pago){
+  //     alert("ESTA PAGO");
+  //     this.pedido = null;
+  //     this.estadoPedido
+      
+  //     this.ocupaMesa = false;
+  //     sessionStorage.removeItem('mesaOcupada');
+  //   }
+  // }
+
 
 
   reserva() {
@@ -97,15 +127,18 @@ export class PagesClienteMenuPage {
   }
 
   estadoPedido() {
-    
+    let usuarioNoTienePedido =  true;
+
+
     this.pedidoService.traerPedidos().subscribe(pedidos => {
       pedidos.forEach(pedido => {
-        
+    
         if (  (pedido.tipo == 'restaurant') 
-              && (pedido.estado !== 'pagado') 
+              && (pedido.estado !== 'pagado' && pedido.estado !== 'cancelado') 
               && (pedido.mesaId == JSON.parse(sessionStorage.getItem("mesaOcupada")).id &&
                   pedido.cliente.id == JSON.parse(sessionStorage.getItem("usuario")).id)
             ) {            
+             
               this.pedido = pedido;
               
             }
@@ -113,24 +146,43 @@ export class PagesClienteMenuPage {
         if (pedido.tipo == 'delivery' 
             && pedido.estado !== 'pagado' 
             && pedido.cliente.id == JSON.parse(sessionStorage.getItem("usuario")).id 
+            && pedido.estado !== 'cancelado'
             ) {
                   
-              
+            usuarioNoTienePedido = false;
             this.pedido = pedido;       
             this.tieneChat= true;  
                         
         }
       
-     
-      
+        if(this.pedido !== undefined){
+          if(this.pedido.id == pedido.id  && pedido.estado == 'pagado'){          
+            this.tieneChat =  false;
+            if(this.pedido.tipo == 'restaurant'){
+              sessionStorage.removeItem('mesaOcupada');
+              this.ocupaMesa = false;
+            } 
+            this.pedido =  undefined;
+            
+            showAlert(this.alertController, "MUCHAS GRACIAS POR ELEGIRNOS!", "Te esperamos nuevamente!", this.soundsService, 'success');
+                     
+          }
+
+          if(this.pedido.id == pedido.id  && pedido.estado == 'cancelado'){
+            this.tieneChat =  false;
+            showAlert(this.alertController, "LO SENTIMOS!", "TU PEDIDO FUE CANCELADO", this.soundsService, 'error');            
+            this.pedido =  undefined;
+          }
+
+
+        }
       });
     })
 
+   
   }
 
   OcuparMesa() {
-    //this.mesasProvider.CambiarEstadoMesaOcupada();
-    //this.HabilitarBotones();
     this.mesasProvider.TraerMesas();
 
     var usuario = JSON.parse(sessionStorage.getItem('usuario'));
@@ -161,7 +213,7 @@ export class PagesClienteMenuPage {
               this.ocupaMesa = true;
 
               this.estadoPedido();
-
+              
               sessionStorage.setItem("mesaOcupada", JSON.stringify(mesa));
 
             }, (error) => {
@@ -220,6 +272,8 @@ export class PagesClienteMenuPage {
       this.tieneChat= false;
     }
   }
+
+  
 
 
 }

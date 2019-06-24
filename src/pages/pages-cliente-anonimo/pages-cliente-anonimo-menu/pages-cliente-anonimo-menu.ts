@@ -24,7 +24,7 @@ import { SoundsService } from '../../../services/sounds-service';
 export class PagesClienteAnonimoMenuPage {
 
   usuario: Usuario;
-  ocupaMesa: boolean;
+  ocupaMesa: Promise<boolean>;
   pedido : Pedido;
 
   @ViewChild(Navbar) navBar: Navbar;
@@ -115,7 +115,9 @@ export class PagesClienteAnonimoMenuPage {
             
             console.log('Documento editado exitósamente');
             
-            this.ocupaMesa = true;
+            //this.ocupaMesa = true;
+            this.ocupaMesa = this.usuarioService.RelacionUsuarioMesa();  
+            
 
             sessionStorage.setItem("mesaOcupada", JSON.stringify(mesa));               
 

@@ -7,9 +7,9 @@ export class Pedido {
     mesaId: string;
     cliente: Usuario;
     estado: string; //Estados: 
-                        // -Restaurant {"solicitado","pendiente","proceso","terminado","entregado","recibido","solicita_cuenta", "pagado"}
-                        // -Delivery   {"solicitado","pendiente","proceso","terminado","en_camino","entregado","recibido","pagado"} 
-    
+                        // -Restaurant {"solicitado", "pendiente" || "cancelado","proceso","terminado","entregado","recibido","solicita_cuenta", "pagado"}
+                        // -Delivery   {"solicitado","pendiente || "cancelado","proceso","terminado","en_camino","entregado","recibido","pagado"} 
+                        
     costo: number;
     descuento_10: boolean;
     descuento_bebida: boolean;

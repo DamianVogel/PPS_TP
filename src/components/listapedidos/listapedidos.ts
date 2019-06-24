@@ -187,9 +187,42 @@ export class ListapedidosComponent {
         {
           text: 'Pago',
           handler: () => {
-             this.pedidosProv.Cobrar(pedido);
-             
-             //this.navCtrl.pop().then(()=>{this.mesaProv.LiberarMesa(this.mesa)})
+            
+            let loading = this.loadingController.create({
+              spinner: 'hide',
+              content: `
+                <ion-content padding>
+                  <img id="spinner" src="assets/img/spinner.gif"> 
+                </ion-content>`,
+              duration: 5000
+            });
+        
+            loading.onDidDismiss(() => {
+              console.log('Dismissed loading');
+            });
+            
+            loading.present();
+            
+            this.pedidoService.actualizarUnPedido(pedido.id).update({
+            
+              'estado': 'pagado'
+            
+            }).then(() => {
+              loading.dismiss();
+              console.log('Documento editado exitósamente');
+            
+            }).catch(err =>{
+              loading.dismiss();
+              let loadingError = this.loadingController.create({
+                spinner: 'hide',
+                content: 'Ocurrio un error, por favor intentalo de nuevo',
+                duration: 5000
+              });
+        
+              loadingError.present();
+        
+              
+            });
              
           }
         },
