@@ -14,37 +14,37 @@
 
   #### Alta de productos (platos y bebidas) (25/05/2019 - 26/05/2019)
   
-  9) Se carga el nombre, la descripción, tiempo promedio de elaboración y el precio.
-  10) Con 3 fotos tomadas del celular.
-  11) Lector de código QR relacionado con los productos.
-  12) Esta acción la podrá realizar el cocinero o el bar tender.
+  - Se carga el nombre, la descripción, tiempo promedio de elaboración y el precio.
+  - Con 3 fotos tomadas del celular.
+  - Lector de código QR relacionado con los productos.
+  - Esta acción la podrá realizar el cocinero o el bar tender.
 
   #### Qr de ingreso al local (26/05/2019 - 04/06/2019)
   
-  21) Para ponerse en la lista de espera (Leo QR y me agrego a la lista de espera)
-  22) Para acceder a la encuesta de antiguos usuarios. (Supervisor)
+  - Para ponerse en la lista de espera (Leo QR y me agrego a la lista de espera)
+  - Para acceder a la encuesta de antiguos usuarios. (Supervisor)
   
   #### Encuestas - Supervisor (04/06/2019 - 05/06/2019)
   
-  34) Puede seleccionar un empleado o un cliente para cargar un formulario con datos referentes al mismo.
-  35) Con mínimo un tipo de cada uno de estos controles (range, input, radio, check, select).
-  36) Mostrar los gráficos de las estadísticas obtenidas de cada uno de los ítems de ese empleado / cliente según corresponda.
+  - Puede seleccionar un empleado o un cliente para cargar un formulario con datos referentes al mismo.
+  - Con mínimo un tipo de cada uno de estos controles (range, input, radio, check, select).
+  - Mostrar los gráficos de las estadísticas obtenidas de cada uno de los ítems de ese empleado / cliente según corresponda.
   
   #### Gestión - Pedir platos y bebidas (15/06/2019 - 16/06/2019)
   
-  38) Se selecciona el plato / bebida y su cantidad.
-  39) Se pueden seleccionar desde un código Qr e indicar la cantidad.
+  - Se selecciona el plato / bebida y su cantidad.
+  - Se pueden seleccionar desde un código Qr e indicar la cantidad.
   
   #### Delivery - Realizar pedido con GPS o dirección. (16/06/2019 - 20/06/2019)
   
-  51) Se podrá realizar pedidos de productos (solo usuarios registrados)
-  52) Se podrá ingresar una dirección de entrega o se podrá tomar las coordenadas de GPS para saber dónde entregar el pedido, (al cargar una dirección, igualmente en nuestro sistema queda registrada la posición del GPS).
-  53) Se debe agregar el tiempo de demora del plato más la demora en el traslado, tomada por la distancia entre le local y la dirección de entrega.
-  54) Los pedidos los confirman el dueño o el supervisor.
+  - Se podrá realizar pedidos de productos (solo usuarios registrados)
+  - Se podrá ingresar una dirección de entrega o se podrá tomar las coordenadas de GPS para saber dónde entregar el pedido, (al cargar una dirección, igualmente en nuestro sistema queda registrada la posición del GPS).
+  - Se debe agregar el tiempo de demora del plato más la demora en el traslado, tomada por la distancia entre le local y la dirección de entrega.
+  - Los pedidos los confirman el dueño o el supervisor.
   
   #### Juegos - Juego 10% de descuento (05/06/2019 - 20/06/2019)
   
-  57) En caso de ganar se le descontará de la cuenta final el porcentaje correspondiente.
+  - En caso de ganar se le descontará de la cuenta final el porcentaje correspondiente.
   
   #### Requerimientos basicos
   
@@ -60,12 +60,12 @@
 
   #### Listado de funcionalidades mininas a ser evaluadas (PDF de git de fecha 08/06/2019)
   
-  7) Se le permite ver los productos y hacer el pedido para todos los comensales de la mesa.
-  14) Alta de un nuevo plato, lo ingresa el Chef (celular 2).
-  15) Se verifica la existencia en la carta por parte de un cliente (celular 1).
-  16) Alta de nueva bebida, la ingresa el Bar tender(celular 3). 
-  17) Se verifica la existencia en la carta por parte de un cliente (celular 1).
-  20) Hacer pedido por delivery, solo la puede realizar un cliente registrado.
+  - Se le permite ver los productos y hacer el pedido para todos los comensales de la mesa.
+  - Alta de un nuevo plato, lo ingresa el Chef (celular 2).
+  - Se verifica la existencia en la carta por parte de un cliente (celular 1).
+  - Alta de nueva bebida, la ingresa el Bar tender(celular 3). 
+  - Se verifica la existencia en la carta por parte de un cliente (celular 1).
+  - Hacer pedido por delivery, solo la puede realizar un cliente registrado.
   
 ## ==========================================
 
