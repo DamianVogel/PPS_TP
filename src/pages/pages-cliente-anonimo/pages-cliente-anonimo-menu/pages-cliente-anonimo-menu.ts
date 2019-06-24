@@ -67,6 +67,8 @@ export class PagesClienteAnonimoMenuPage {
   }
 
   ionViewDidLoad(){
+    
+  
     this.navBar.backButtonClick = (e:UIEvent)=>{
       
       this.soundsService.sound('logout');
@@ -76,6 +78,13 @@ export class PagesClienteAnonimoMenuPage {
       
       this.mesasProvider.LiberarMesa(mesa);
       
+      if(this.pedido !== undefined && this.pedido !== null){
+          this.pedidoService.actualizarUnPedido(this.pedido.id).update({
+            'estado':'cancelado'
+          }).then(()=>{
+        })
+      }  
+
       sessionStorage.removeItem('mesaOcupada');
       this.ocupaMesa = false;
       this.navCtrl.pop();
