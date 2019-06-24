@@ -5,6 +5,7 @@ import { File } from '@ionic-native/file';
 import { FileChooser } from '@ionic-native/file-chooser';
 import { showAlert, spin } from '../../../environments/environment';
 import { SoundsService } from '../../../services/sounds-service';
+import { Producto } from '../../../clases/Producto';
 
 declare var require: any;
 let converter = require('json-2-csv');
@@ -30,7 +31,25 @@ export class PagesProductoCargaMasivaPage {
   }
 
   cargaJSON() {
-
+    var superScope = this;
+    spin(this.modalController, true);
+    this.file.readAsText(this.file.externalRootDirectory, "test_alta.json").then(text => {
+      let productos: Array<Producto> = JSON.parse(text);
+      productos.forEach((producto, index) => {
+        superScope.productoService.cargarProducto(JSON.parse(JSON.stringify(producto))).then(() => {
+          if (index === productos.length - 1) {
+            spin(superScope.modalController, false);
+            showAlert(superScope.alertCtrl, "Exito", "Productos dado de alta con exito!", superScope.soundsService, 'success');
+          }
+        }).catch(error => {
+          spin(superScope.modalController, false);
+          showAlert(superScope.alertCtrl, "Error", error, superScope.soundsService, 'error');
+        });
+      });
+    }).catch(error => {
+      spin(superScope.modalController, false);
+      showAlert(superScope.alertCtrl, "Error", error, superScope.soundsService, 'error');
+    });
   }
 
   descargaJSON() {
@@ -49,7 +68,27 @@ export class PagesProductoCargaMasivaPage {
   }
 
   cargaCSV() {
-
+    var superScope = this;
+    spin(this.modalController, true);
+    this.file.readAsText(this.file.externalRootDirectory, "test_alta.csv").then(text => {
+      converter.csv2json(text, function (err, productos) {
+        if (err) throw err;
+        productos.forEach((producto, index) => {
+          superScope.productoService.cargarProducto(JSON.parse(JSON.stringify(producto))).then(() => {
+            if (index === productos.length - 1) {
+              spin(superScope.modalController, false);
+              showAlert(superScope.alertCtrl, "Exito", "Productos dado de alta con exito!", superScope.soundsService, 'success');
+            }
+          }).catch(error => {
+            spin(superScope.modalController, false);
+            showAlert(superScope.alertCtrl, "Error", error, superScope.soundsService, 'error');
+          });
+        });
+      });
+    }).catch(error => {
+      spin(superScope.modalController, false);
+      showAlert(superScope.alertCtrl, "Error", error, superScope.soundsService, 'error');
+    });
   }
 
   descargaCSV() {
