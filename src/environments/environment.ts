@@ -131,3 +131,8 @@ export const getImageURL = function (path: string): any {
   let imageRef = storageRef.child(path);
   return imageRef.getDownloadURL();
 }
+
+export const replaceAll = function(text, str1, str2, ignore?) 
+{
+    return text.replace(new RegExp(str1.replace(/([\/\,\!\\\^\$\{\}\[\]\(\)\.\*\+\?\|\<\>\-\&])/g,"\\$&"),(ignore?"gi":"g")),(typeof(str2)=="string")?str2.replace(/\$/g,"$$$$"):str2);
+} 
