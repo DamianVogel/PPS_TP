@@ -48,15 +48,15 @@
   
   #### Requerimientos basicos
   
-  1) Splash animado con ícono de la aplicación y el nombre de los alumnos.
-  2) Todo error o información mostrarlo con distintas ventanas. (DISTINTAS, ¡NO alerts!).
-  3) Sonidos distintos al iniciar y cerrar la aplicación.
-  4) Spinners, con el logo de la empresa, en todas las esperas. (TODAS).
-  5) Vibraciones al detectarse un error. (TODOS LOS ERRORES).
-  6) Distintos botones de usuario para testear el ingreso (flotantes, fijos, con distintas formas y distintas posiciones).
-  7) Generación de documentos (JSON / EXCEL).
-  8) Cargado de datos por medio de un archivo (JSON / EXCEL).
-  9) Gráficos estadísticos (torta, barra, etc.).
+  - Splash animado con ícono de la aplicación y el nombre de los alumnos.
+  - Todo error o información mostrarlo con distintas ventanas. (DISTINTAS, ¡NO alerts!).
+  - Sonidos distintos al iniciar y cerrar la aplicación.
+  - Spinners, con el logo de la empresa, en todas las esperas. (TODAS).
+  - Vibraciones al detectarse un error. (TODOS LOS ERRORES).
+  - Distintos botones de usuario para testear el ingreso (flotantes, fijos, con distintas formas y distintas posiciones).
+  - Generación de documentos (JSON / EXCEL).
+  - Cargado de datos por medio de un archivo (JSON / EXCEL).
+  - Gráficos estadísticos (torta, barra, etc.).
 
   #### Listado de funcionalidades mininas a ser evaluadas (PDF de git de fecha 08/06/2019)
   
