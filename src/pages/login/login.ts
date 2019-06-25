@@ -30,7 +30,8 @@ import { Platform } from 'ionic-angular';
 import { FcmProvider } from '../../providers/fcm/fcm';
 import { PagesMozoPage } from "../pages-mozo/pages-mozo";
 import { PagesDeliveryBoyPage } from "../pages-delivery-boy/pages-delivery-boy";
-
+import { EncuestaService } from '../../services/encuesta-service';
+import { PagesEncuestaIngresoEmpleadoPage} from '../../pages/pages-encuesta-ingreso-empleado/pages-encuesta-ingreso-empleado';
 
 @IonicPage()
 @Component({
@@ -62,7 +63,8 @@ export class LoginPage {
     public translateService: TranslateService,
     public objFirebase: AngularFirestore,
     public platform: Platform,
-    public fcm: FcmProvider
+    public fcm: FcmProvider,
+    public encuestaService: EncuestaService
   ) {
     this.translateService.get("LOGIN_ERROR").subscribe(value => {
       this.loginErrorString = value;
@@ -109,31 +111,64 @@ export class LoginPage {
               break;
 
             case "empleado":
+              this.encuestaService.traerEncuestasEmpleados().subscribe( encuestas =>{
+                
+                var today = new Date();
+                var dd = today.getDate();
+                var mm = today.getMonth()+1;
+                var yyyy = today.getFullYear();
 
-              switch(user.tipo) {
-                case "cocinero":
-                  this.navCtrl.push(CocineroMenuPage);
-                  break;
+                let hoy = mm + '/' + dd + '/' + yyyy;
+                
+                let realizaEncuesta = false;
 
-                case "bartender":
-                  this.navCtrl.push(BartenderMenuPage);
-                  break;
+                encuestas.forEach(encuesta => {
+                 let fechaenEncuesta = new Date(encuesta.timestamp);
 
-                case "mozo":
-                  this.navCtrl.push(PagesMozoPage);
-                  break;
+                  var diaEncuesta = fechaenEncuesta.getDate();
+                  var mesEncuesta = fechaenEncuesta.getMonth()+1; //January is 0!
+                  var anioEncuesta = fechaenEncuesta.getFullYear();
+  
+                  let fechaEncuesta = mesEncuesta + '/' + diaEncuesta + '/' + anioEncuesta;
+                  console.log(hoy+' '+fechaEncuesta );
+
+                  if(hoy == fechaEncuesta && encuesta.empleadoId == user.id){
+
+                    realizaEncuesta =  true;
+                    
+                    switch(user.tipo) {
+                      case "cocinero":
+                        this.navCtrl.push(CocineroMenuPage);
+                        break;
+      
+                      case "bartender":
+                        this.navCtrl.push(BartenderMenuPage);
+                        break;
+      
+                      case "mozo":
+                        this.navCtrl.push(PagesMozoPage);
+                        break;
+                         
+                      case "delivery":
+                          this.navCtrl.push(PagesDeliveryBoyPage);
+                          break;
+                    }
+                  }                  
+                });
 
                 
-                case "delivery":
-                    this.navCtrl.push(PagesDeliveryBoyPage);
-                    break;
+                if(!realizaEncuesta){
+                  this.navCtrl.push(PagesEncuestaIngresoEmpleadoPage, { "usuario": user });            
+                }
 
-                // default:
-                //   this.navCtrl.push(PagesEmpleadoPage);
-                //   break;
-              }
-              break;
 
+
+
+
+              })
+             
+            break;
+              
             case "cliente":
             if(user.estado=="Registrado")
             {

@@ -124,6 +124,8 @@ import { PagesProductoCargaMasivaPage } from '../pages/pages-producto/pages-prod
 import { FilePath } from '@ionic-native/file-path';
 import { PagesProductoListaPage } from '../pages/pages-producto/pages-producto-lista/pages-producto-lista';
 import { PagesProductoListaPageModule } from '../pages/pages-producto/pages-producto-lista/pages-producto-lista.module';
+import { PagesEncuestaIngresoEmpleadoPageModule } from '../pages/pages-encuesta-ingreso-empleado/pages-encuesta-ingreso-empleado.module';
+import { PagesEncuestaIngresoEmpleadoPage } from '../pages/pages-encuesta-ingreso-empleado/pages-encuesta-ingreso-empleado';
 
 export function provideSettings(storage: Storage) {
   /**
@@ -194,7 +196,8 @@ export function provideSettings(storage: Storage) {
     PagesDeliveryBoyPageModule,
     PagesChatPageModule,
     PagesProductoCargaMasivaPageModule,
-    PagesProductoListaPageModule
+    PagesProductoListaPageModule,
+    PagesEncuestaIngresoEmpleadoPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -229,7 +232,8 @@ export function provideSettings(storage: Storage) {
     PagesDeliveryBoyPage,
     PagesChatPage,
     PagesProductoCargaMasivaPage,
-    PagesProductoListaPage
+    PagesProductoListaPage,
+    PagesEncuestaIngresoEmpleadoPage
   ],
   providers: [
     Api,

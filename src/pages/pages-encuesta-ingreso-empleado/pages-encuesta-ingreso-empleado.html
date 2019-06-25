@@ -4,26 +4,30 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding class="bartenderMenu">
-  <button ion-button expand="block"
+  <!-- <button ion-button expand="block"
     class="menuButtonPPT ios button button-block button-solid ion-activatable ion-focusable hydrated"
-    (click)="mostrarEncuesta()">Cargar encuesta</button>
-  <button ion-button expand="block"
+    (click)="mostrarEncuesta()">Cargar encuesta</button> -->
+  <!-- <button ion-button expand="block"
     class="menuButtonPPT ios button button-block button-solid ion-activatable ion-focusable hydrated"
-    [disabled]="!encuestasCargadasUsuario" (click)="mostrarGrafico()">Mostrar grafico</button>
+    [disabled]="!encuestasCargadasUsuario" (click)="mostrarGrafico()">Mostrar grafico</button> -->
   <!--Form-->
-  <form *ngIf="encuestaMostrada">
+  <form>
     <ion-item padding class="formItem">
-      <ion-range min="1" max="5" color="secondary" snaps="true" pin="true" name="coordialidad"
-        placeholder="Coordialidad" [(ngModel)]="encuestaACargar.coordialidad">
-        <ion-label range-left>Coordialidad</ion-label>
+      <div>Encuesta del {{dia}}</div>
+    </ion-item>
+    
+    <ion-item padding class="formItem">
+      <ion-range min="1" max="5" color="secondary" snaps="true" pin="true" name="estadoPuestoTrabajo"
+        placeholder="Estado puesto trabajo" [(ngModel)]="encuestaACargar.estadoPuestoTrabajo">
+        <ion-label range-left>Estado Puesto de Trabajo</ion-label>
       </ion-range>
     </ion-item>
     <ion-item padding class="formItem">
-      <ion-input type="number" [(ngModel)]="encuestaACargar.puntualidad" name="puntualidad" placeholder="Puntualidad">
+      <ion-input type="number" [(ngModel)]="encuestaACargar.estadoBanos" name="estadoBanos" placeholder="Estado baños">
       </ion-input>
     </ion-item>
     <ion-item padding class="formItem">
-      <ion-select name="tipo" [(ngModel)]="encuestaACargar.responsabilidad" placeholder="Responsabilidad">
+      <ion-select name="tipo" [(ngModel)]="encuestaACargar.estadoSalon" placeholder="Estado Salon">
         <ion-option value="1">1</ion-option>
         <ion-option value="2">2</ion-option>
         <ion-option value="3">3</ion-option>
@@ -31,7 +35,7 @@
         <ion-option value="5">5</ion-option>
       </ion-select>
     </ion-item>
-    <ion-item padding class="formItem">
+    <!-- <ion-item padding class="formItem">
       <div>Conversacion</div>
       <br>
       <input type="radio" name="Conversacion" value="1" [(ngModel)]="encuestaACargar.conversacion"> 1
@@ -39,26 +43,20 @@
       <input type="radio" name="Conversacion" value="3" [(ngModel)]="encuestaACargar.conversacion"> 3
       <input type="radio" name="Conversacion" value="4" [(ngModel)]="encuestaACargar.conversacion"> 4
       <input type="radio" name="Conversacion" value="5" [(ngModel)]="encuestaACargar.conversacion"> 5
-    </ion-item>
-    <ion-item padding class="formItem">
-      <div>Limpieza</div>
-    </ion-item>
-    <ion-item padding class="formItem">
-      <ion-label>Limpia la mesa</ion-label>
-      <ion-checkbox color="secondary" id="limpiaMesa" name="limpiaMesa" [(ngModel)]="encuestaACargar.limpiaMesa">
-      </ion-checkbox>
-    </ion-item>
-    <ion-item padding class="formItem">
-      <ion-label>Limpia basura del piso</ion-label>
-      <ion-checkbox color="secondary" id="basuraPiso" name="basuraPiso" [(ngModel)]="encuestaACargar.basuraPiso">
-      </ion-checkbox>
-    </ion-item>
-    <!-- <ion-item padding class="formItem">
-      <ion-label>Usa limpiamente el baño</ion-label>
-      <ion-checkbox color="secondary" id="usaBienBano" name="usaBienBano" [(ngModel)]="encuestaACargar.usaBienBano">
-      </ion-checkbox>
     </ion-item> -->
-    <button ion-button type="submit" block large (click)="cargar()">Cargar encuesta</button>
+   
+    <ion-item padding class="formItem">
+      <ion-label>Mesas limpias</ion-label>
+      <ion-checkbox color="secondary" id="limpiaMesas" name="limpiaMesas" [(ngModel)]="encuestaACargar.limpiaMesas">
+      </ion-checkbox>
+    </ion-item>
+    <ion-item padding class="formItem">
+      <ion-label>Piso limpios</ion-label>
+      <ion-checkbox color="secondary" id="basuraPisos" name="basuraPisos" [(ngModel)]="encuestaACargar.basuraPisos">
+      </ion-checkbox>
+    </ion-item>
+   
+    <button ion-button type="submit" block large (click)="cargar()">Guardar</button>
   </form>
   <!--Grafico-->
   <!-- <ion-card id="grafico" class="backgroundCard_graph">
