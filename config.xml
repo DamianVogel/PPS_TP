@@ -99,5 +99,6 @@
     <plugin name="cordova-plugin-firebase" spec="https://github.com/dpa99c/cordova-plugin-firebase#GH-1057-April-05-android-build-issue" />
     <plugin name="cordova-plugin-file" spec="6.0.1" />
     <plugin name="cordova-plugin-filechooser" spec="1.2.0" />
+    <plugin name="cordova-plugin-filepath" spec="1.5.5" />
     <engine name="android" spec="8.0.0" />
 </widget>
