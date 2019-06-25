@@ -6,6 +6,7 @@ import { PedidoService } from '../../../services/pedidos-service';
 import { Pedido } from '../../../clases/Pedido';
 import { SoundsService } from '../../../services/sounds-service';
 import { PagesProductoCargaMasivaPage } from '../../pages-producto/pages-producto-carga-masiva/pages-producto-carga-masiva';
+import { PagesProductoListaPage } from '../../pages-producto/pages-producto-lista/pages-producto-lista';
 
 
 @IonicPage()
@@ -20,20 +21,20 @@ export class BartenderMenuPage {
   @ViewChild(Navbar) navBar: Navbar;
 
   constructor(
-    public navCtrl: NavController, 
-    public navParams: NavParams, 
+    public navCtrl: NavController,
+    public navParams: NavParams,
     public actionSheetController: ActionSheetController,
     public pedidosService: PedidoService,
     private soundsService: SoundsService
-    ) {
-      //this.CargarPedidosPendientes();
+  ) {
+    //this.CargarPedidosPendientes();
   }
 
-  ionViewDidLoad(){
-    this.navBar.backButtonClick = (e:UIEvent)=>{
+  ionViewDidLoad() {
+    this.navBar.backButtonClick = (e: UIEvent) => {
       this.soundsService.sound('logout');
       this.navCtrl.pop();
-     }
+    }
   }
 
   presentActionSheet() {
@@ -51,6 +52,12 @@ export class BartenderMenuPage {
           this.navCtrl.push(PagesProductoCargaMasivaPage);
         }
       }, {
+        text: 'Lista',
+        icon: 'list-box',
+        handler: () => {
+          this.navCtrl.push(PagesProductoListaPage);
+        }
+      }, {
         text: 'Cancelar',
         icon: 'close',
         role: 'cancel',
@@ -63,23 +70,23 @@ export class BartenderMenuPage {
   }
 
 
-  CargarPedidosPendientes(filtro: string){
+  CargarPedidosPendientes(filtro: string) {
     //SE TRAEN TODOS LOS PEDIDOS.
-    this.pedidosService.traerPedidos().subscribe( pedidos => {
+    this.pedidosService.traerPedidos().subscribe(pedidos => {
       var array = new Array<Pedido>();
       pedidos.forEach(pedido => {
-        array.push(pedido);      
+        array.push(pedido);
       });
-    
 
-     // SE FILTRAN LOS PEDIDOS PENDIENTES
-     this.pedidos = array.filter( pedido =>   pedido.estado == filtro || pedido.estado == 'proceso');
-      
-    
+
+      // SE FILTRAN LOS PEDIDOS PENDIENTES
+      this.pedidos = array.filter(pedido => pedido.estado == filtro || pedido.estado == 'proceso');
+
+
       //POR CADA PEDIDO UN ARRAY DE PRODUCTOS. SE LE ASIGNA EL ID DE ACUERDO AL INDICE
       //PARA PODER FILTRAR Y SABER EXACTAMENTE QUE SE DEBE MODIFICAR.
-      this.pedidos.forEach( pedido => {
-        pedido.productos.forEach( (producto,index) => {
+      this.pedidos.forEach(pedido => {
+        pedido.productos.forEach((producto, index) => {
           producto.id = index;
         })
       })
@@ -89,12 +96,12 @@ export class BartenderMenuPage {
       Por tipo de producto / responsable.
       
       */
-     
+
     })
 
-    
+
   }
 
-  
+
 
 }

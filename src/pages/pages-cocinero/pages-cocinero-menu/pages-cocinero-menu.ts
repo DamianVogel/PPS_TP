@@ -6,6 +6,7 @@ import { PedidoService } from '../../../services/pedidos-service';
 import { Pedido } from '../../../clases/Pedido';
 import { SoundsService } from '../../../services/sounds-service';
 import { PagesProductoCargaMasivaPage } from '../../pages-producto/pages-producto-carga-masiva/pages-producto-carga-masiva';
+import { PagesProductoListaPage } from '../../pages-producto/pages-producto-lista/pages-producto-lista';
 
 
 
@@ -17,23 +18,23 @@ import { PagesProductoCargaMasivaPage } from '../../pages-producto/pages-product
 export class CocineroMenuPage {
 
   pedidos: Array<Pedido>;
-  
+
   @ViewChild(Navbar) navBar: Navbar;
 
   constructor(
-    public navCtrl: NavController, 
-    public navParams: NavParams, 
+    public navCtrl: NavController,
+    public navParams: NavParams,
     public actionSheetController: ActionSheetController,
     public pedidosService: PedidoService,
     private soundsService: SoundsService
-    ) {
+  ) {
   }
 
-  ionViewDidLoad(){
-    this.navBar.backButtonClick = (e:UIEvent)=>{
+  ionViewDidLoad() {
+    this.navBar.backButtonClick = (e: UIEvent) => {
       this.soundsService.sound('logout');
       this.navCtrl.pop();
-     }
+    }
   }
 
   presentActionSheet() {
@@ -51,6 +52,12 @@ export class CocineroMenuPage {
           this.navCtrl.push(PagesProductoCargaMasivaPage);
         }
       }, {
+        text: 'Lista',
+        icon: 'list-box',
+        handler: () => {
+          this.navCtrl.push(PagesProductoListaPage);
+        }
+      }, {
         text: 'Cancelar',
         icon: 'close',
         role: 'cancel',
@@ -62,36 +69,36 @@ export class CocineroMenuPage {
     actionSheet.present();
   }
 
-  CargarPedidosPendientes(filtro: string){
-    
-    this.pedidosService.traerPedidos().subscribe( pedidos => {
+  CargarPedidosPendientes(filtro: string) {
+
+    this.pedidosService.traerPedidos().subscribe(pedidos => {
       var array = new Array<Pedido>();
       pedidos.forEach(pedido => {
-        array.push(pedido);      
+        array.push(pedido);
       });
-    
-      
-      this.pedidos = array.filter( pedido =>   pedido.estado == filtro || pedido.estado == 'proceso');
+
+
+      this.pedidos = array.filter(pedido => pedido.estado == filtro || pedido.estado == 'proceso');
       //this.pedidos = array.filter( pedido => pedido.estado == filtro );
-      
-      this.pedidos.forEach( pedido => {
-        pedido.productos.forEach( (producto,index) => {
+
+      this.pedidos.forEach(pedido => {
+        pedido.productos.forEach((producto, index) => {
           producto.id = index;
         })
       })
 
       console.log(this.pedidos);
 
-      
+
 
       /*
       this.pedidos.forEach( pedido =>{
         pedido.productos = pedido.productos.filter( producto => producto.tipo == 'comida');
       })
       */
-     
+
     })
-   
+
   }
 
 }
