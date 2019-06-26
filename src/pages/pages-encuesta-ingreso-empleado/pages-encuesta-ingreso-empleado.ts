@@ -1,11 +1,17 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Navbar, AlertController, ModalController } from 'ionic-angular';
 import { Usuario } from '../../clases/usuario';
 import { EncuestaService } from '../../services/encuesta-service';
 import { Encuesta_empleado } from '../../clases/Encuesta_empleado';
 import { showAlert, spin, getRandomColor, round } from '../../environments/environment';
 import { Chart } from 'chart.js';
 import { SoundsService } from '../../services/sounds-service';
+import { BartenderMenuPage } from "../pages-bartender/pages-bartender-menu/pages-bartender-menu";
+import { CocineroMenuPage } from "../pages-cocinero/pages-cocinero-menu/pages-cocinero-menu";
+
+import { PagesMozoPage } from "../pages-mozo/pages-mozo";
+import { PagesDeliveryBoyPage } from "../pages-delivery-boy/pages-delivery-boy";
+import { Subscription } from 'rxjs/Subscription';
 /**
  * Generated class for the PagesEncuestaIngresoEmpleadoPage page.
  *
@@ -32,6 +38,9 @@ export class PagesEncuestaIngresoEmpleadoPage {
 
   dia: string;
 
+  subscriber: Subscription;
+  @ViewChild(Navbar) navBar: Navbar;
+
   @ViewChild('doughnutCanvas') doughnutCanvas;
 
   doughnutChart: any;
@@ -57,13 +66,24 @@ export class PagesEncuestaIngresoEmpleadoPage {
     this.cargarEncuestas();
   }
 
+  ionViewDidLoad() {
+    this.navBar.backButtonClick = (e: UIEvent) => {
+      this.soundsService.sound('logout');
+      if(this.subscriber !== undefined || this.subscriber !== null){
+        this.subscriber.unsubscribe();
+      }
+      this.navCtrl.pop();
+    }
+  }
+
+
   inicializarEncuesta() {
     this.encuestaACargar = new Encuesta_empleado();
     //this.encuestaACargar.coordialidad = 1;
   }
 
   cargarEncuestas() {
-    this.encuestaService.traerEncuestasEmpleados().subscribe(encuestas => {
+    this.subscriber = this.encuestaService.traerEncuestasEmpleados().subscribe(encuestas => {
       this.encuestas = encuestas;
       this.validarEncuestaCargada();
     })
@@ -180,17 +200,44 @@ export class PagesEncuestaIngresoEmpleadoPage {
       
       this.encuestaACargar.timestamp =  new Date();
       
-      this.encuestaService.cargarEncuestaEmpleado(this.encuestaACargar.dameJSON()).then(() => {
+    this.encuestaService.cargarEncuestaEmpleado(this.encuestaACargar.dameJSON()).then(() => {
+        //this.subscriber.unsubscribe();     
         spin(this.modalController, false);
         showAlert(this.alertController, "Exito", "Encuesta dada de alta exitosamente", this.soundsService, 'success');
-        this.navCtrl.pop();
+        this.subscriber.unsubscribe();
+        switch(this.usuario.tipo) {
+          case "cocinero":
+            this.navCtrl.pop().then(()=>{
+              this.navCtrl.push(CocineroMenuPage);
+            });
+            break;
+
+          case "bartender":
+            this.navCtrl.pop().then(()=>{
+             this.navCtrl.push(BartenderMenuPage);
+            });
+            break;
+
+          case "mozo":
+            this.navCtrl.pop().then(()=>{
+              this.navCtrl.push(PagesMozoPage);
+            });
+            break;
+             
+          case "delivery":
+            this.navCtrl.pop().then(()=>{
+              this.navCtrl.push(PagesDeliveryBoyPage);
+            });  
+            break;
+        }
+        
       })
         .catch(error => {
           console.log(error);
           spin(this.modalController, false);
         });
     }
-    
+    //this.navCtrl.pop();
   }
 
   mostrarGrafico() {
