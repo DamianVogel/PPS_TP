@@ -111,7 +111,8 @@ export class LoginPage {
               break;
 
             case "empleado":
-              this.encuestaService.traerEncuestasEmpleados().subscribe( encuestas =>{
+              
+              let test = this.encuestaService.traerEncuestasEmpleados().subscribe( encuestas =>{
                 
                 var today = new Date();
                 var dd = today.getDate();
@@ -135,9 +136,10 @@ export class LoginPage {
                   if(hoy == fechaEncuesta && encuesta.empleadoId == user.id){
 
                     realizaEncuesta =  true;
-                    
+                    test.unsubscribe();
                     switch(user.tipo) {
                       case "cocinero":
+      
                         this.navCtrl.push(CocineroMenuPage);
                         break;
       
@@ -158,6 +160,7 @@ export class LoginPage {
 
                 
                 if(!realizaEncuesta){
+                  test.unsubscribe();
                   this.navCtrl.push(PagesEncuestaIngresoEmpleadoPage, { "usuario": user });            
                 }
 

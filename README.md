@@ -137,8 +137,31 @@
   5)  Propina en pedido:
       * Persistencia de la propina en cada pedido en base al grado de satisfaccion.
   
-  5)  TEST QA:
+  6)  TEST QA:
       * Test de todo el flujo de la aplicacion desde la generacion de un pedido por un usuario anonimo como por usuario registrado validando que acciones puede realizar y cuales de acuerdo a su perfil.
+
+#### COMPONENTES LISTA PEDIDOS \ PRODUCTOS - CAMBIO DE ESTADO EN PEDIDO - ENCUESTA INGRESO EMPLEADO #### (22/06 al 29/06)
+
+  1) Componentes Lista Pedido \ Producto:
+      * Correccion al mostrar pedido y liberar mesas cuando el evento de pago se recibo por parte del mozo.
+
+  2) Componente Productos en Cocinero y Bar Tendedr:
+      * Muestra cantidad.
+  
+  3) Estado Cancelado:
+      * Al recibir estado 'cancelado' por parte del mozo, desencadenara todos los eventos relacionados en la pagina cliente registrado y anonimo.
+
+  4) Creacion de encuesta ingreso empleado:
+      * Al ingresar cada empleado solicitara realizar la encuesta si ese dia no aun no fue realizado.
+
+  5) Muestra grafico de ingreso de empleados en pagina dueño.
+
+
+
+
+
+
+
 
 ## ==========================================
 
