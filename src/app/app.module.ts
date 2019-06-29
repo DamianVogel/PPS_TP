@@ -126,6 +126,8 @@ import { PagesProductoListaPage } from '../pages/pages-producto/pages-producto-l
 import { PagesProductoListaPageModule } from '../pages/pages-producto/pages-producto-lista/pages-producto-lista.module';
 import { PagesEncuestaIngresoEmpleadoPageModule } from '../pages/pages-encuesta-ingreso-empleado/pages-encuesta-ingreso-empleado.module';
 import { PagesEncuestaIngresoEmpleadoPage } from '../pages/pages-encuesta-ingreso-empleado/pages-encuesta-ingreso-empleado';
+import { PagesEncuestaClientePageModule } from '../pages/pages-encuesta-cliente/pages-encuesta-cliente.module';
+import { PagesEncuestaClientePage } from '../pages/pages-encuesta-cliente/pages-encuesta-cliente';
 
 export function provideSettings(storage: Storage) {
   /**
@@ -197,7 +199,8 @@ export function provideSettings(storage: Storage) {
     PagesChatPageModule,
     PagesProductoCargaMasivaPageModule,
     PagesProductoListaPageModule,
-    PagesEncuestaIngresoEmpleadoPageModule
+    PagesEncuestaIngresoEmpleadoPageModule,
+    PagesEncuestaClientePageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -233,7 +236,8 @@ export function provideSettings(storage: Storage) {
     PagesChatPage,
     PagesProductoCargaMasivaPage,
     PagesProductoListaPage,
-    PagesEncuestaIngresoEmpleadoPage
+    PagesEncuestaIngresoEmpleadoPage,
+    PagesEncuestaClientePage
   ],
   providers: [
     Api,

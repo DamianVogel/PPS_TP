@@ -13,6 +13,7 @@
     <solicitud-mesa [ocupaMesa]="ocupaMesa" [tieneChat]="tieneChat"></solicitud-mesa>
     <button [disabled]="ocupaMesa || tieneChat" ion-button expand="block" class="menuButtonPPT ios button button-block button-solid ion-activatable ion-focusable hydrated" (click)="OcuparMesa()">Ocupar Mesa con QR</button>
     <button [disabled]="!tieneChat" ion-button expand="block" class="menuButtonPPT ios button button-block button-solid ion-activatable ion-focusable hydrated" (click)="Chat()">Chat</button>
+    <button [disabled]="!pedido" ion-button expand="block" class="menuButtonPPT ios button button-block button-solid ion-activatable ion-focusable hydrated" (click)="Encuesta()">Encuesta</button>
    
     
     
