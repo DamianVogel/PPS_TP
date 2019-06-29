@@ -18,6 +18,7 @@ import { PagesChatPage } from '../../pages-chat/pages-chat';
 import { ReservasProvider } from '../../../providers/reservas/reservas';
 import { getImageURL, SPINNER_IMG, showAlert, round, spin } from '../../../environments/environment';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { PagesEncuestaClientePage } from '../../pages-encuesta-cliente/pages-encuesta-cliente';
 
 
 
@@ -309,7 +310,10 @@ export class PagesClienteMenuPage {
     }
   }
 
-  
+  Encuesta()
+  {
+    this.navCtrl.push(PagesEncuestaClientePage,{"pedido":this.pedido});
+  }
 
 
 }
